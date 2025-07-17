@@ -1,11 +1,6 @@
-<<<<<<< Updated upstream
 # Lost-and-Found_desk_App
 
-A small CRUD system for a Lost &amp; Found using Tkinter and Sqlite3 in python.
-=======
-# Lost-and-Found_desk_App
-
-A small CRUD system for a Lost & Found App using Tkinter in Python.
+A small CRUD system for a Lost & Found App using Tkinter and Sqlite3 in Python.
 
 Here,
 
