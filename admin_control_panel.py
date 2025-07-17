@@ -4,13 +4,34 @@ root.geometry("1000x700")
 root.title("Lost and Found Desk - Admin Panel")
 root.resizable(0, 0)
 
+# Global variable to track if lost item window is open
+lost_window = None
+
+# Function to handle lost item 
 def lost():
+    global lost_window
     
-    # Creating a new window for lost item details
-    lost_window = Toplevel() 
-    lost_window.configure(bg="white") 
+    # Check if window is already open
+    if lost_window is not None and lost_window.winfo_exists():
+        lost_window.lift()  # Bring existing window to front
+        return
+    # Check if window is already open
+    if lost_window is not None and lost_window.winfo_exists():
+        lost_window.lift()  # Bring existing window to front
+        return
+    
+    lost_window = Toplevel()  # --> Create new window
+    lost_window.configure(bg="white") # --> configure method is used to set the background color of the window
     lost_window.title("Update records")
     lost_window.geometry("800x700")
+    
+    # Handle window close event to reset the global variable
+    def on_closing():
+        global lost_window
+        lost_window.destroy()
+        lost_window = None
+    
+    lost_window.protocol("WM_DELETE_WINDOW", on_closing)
 
     lbl_registration = Label(lost_window, text="Lost Item Details", font=("aerial", 16, "bold"), bg="blue", fg="white")
     lbl_registration.place(x=120, y=20)
@@ -45,10 +66,9 @@ def lost():
     submit_button = Button(lost_window, text="Submit", width=15, font=("aerial", 12), bg="green", fg="white", bd=2, relief="raised")
     submit_button.place(x=200, y=500)
 
-# Main window widgets
-
 lbl_registration = Label(root, text="Admin Control Panel", font=("aerial", 16, "bold"), bg="blue", fg="white")
 lbl_registration.place(x=120, y=20)
+
 
 # name
 lbl_fullname = Label(root, text="Full Name", bg="white", font=("aerial", 12))
@@ -77,6 +97,7 @@ lost_btn = Button(root, text="Lost", width=10, font=("aerial", 11), bg="lightblu
 lost_btn.place(x=180, y=200)
 found_btn = Button(root, text="Found", width=10, font=("aerial", 11), bg="lightgreen", padx=5, pady=5)
 found_btn.place(x=300, y=200)
+
 
 
 root.mainloop()
