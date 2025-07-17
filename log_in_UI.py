@@ -7,7 +7,7 @@ root.resizable(0, 0)
 
 # Creating a frame to box the login form
 login_frame = Frame(root, relief="raised", bd=2, padx=20, pady=20)
-login_frame.grid(row=0, column=0, padx=50, pady=50, sticky="e")
+login_frame.grid(row=0, column=0, padx=50, pady=170, sticky="e")
 
 # entry fields for username and password using grid within the frame
 Label(login_frame, text="Username:").grid(row=0, column=0, padx=10, pady=10, sticky="e")
