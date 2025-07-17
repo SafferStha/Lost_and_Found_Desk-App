@@ -49,7 +49,7 @@ Here,
 
 ## Requirements
 
-- Python 3.x
+- Python 3
 - Tkinter
 - SQLite3
 - Other dependencies listed in `requirements.txt`
