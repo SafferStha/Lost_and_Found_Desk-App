@@ -25,7 +25,7 @@ lbl_phone.place(x=50, y=160)
 phone = Entry(root, width=35, font=("aerial", 11))
 phone.place(x=180, y=160)
 
-# item type radio buttons
+# item type 
 lbl_item_type = Label(root, text="Item Type", bg="white", font=("aerial", 12))
 lbl_item_type.place(x=50, y=200)
 
