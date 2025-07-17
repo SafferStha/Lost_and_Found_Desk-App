@@ -18,7 +18,7 @@ password_entry = Entry(login_frame, show="*", width=20, relief="sunken", bd=2)
 password_entry.grid(row=1, column=1, padx=10, pady=10)
 
 # login button
-login_button = Button(login_frame, text="Login")
+login_button = Button(login_frame, text="Login", width=15, relief="raised", bd=2)
 login_button.grid(row=2, column=0, columnspan=2, pady=20)
 
 root.mainloop()
