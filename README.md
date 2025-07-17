@@ -79,4 +79,3 @@ If you would like to contribute to this project, please follow these steps:
 5. Create a pull request describing your changes.
 
 ---
->>>>>>> Stashed changes
