@@ -2,7 +2,8 @@ from tkinter import *
 
 root = Tk()
 root.title("Lost and Found Desk - Login")
-root.geometry("400x300")
+root.geometry("900x600")
+root.resizable(0, 0)
 
 # Creating a frame to box the login form
 login_frame = Frame(root, relief="raised", bd=2, padx=20, pady=20)
