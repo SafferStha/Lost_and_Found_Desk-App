@@ -1,58 +1,120 @@
-# Lost-and-Found_desk_App
+# Lost & Found Desk App
 
-A small CRUD system for a Lost & Found App using Tkinter and Sqlite3 in Python.
-
-Here,
-
-- Admins can perform CRUD operations on the instructors as well as sessions.
-- Instructors can register students to the academy.
-- The system will match the requirements of the students with the qualifications of the instructors and suggest a suitable instructor that the admin can then assign to the student.
+A modern Lost & Found management system built with Python Tkinter and SQLite3. This application provides an intuitive interface for managing lost and found items with search functionality and a clean tabular display.
 
 ## Features
 
-- User-friendly GUI built with Tkinter.
-- Admin functionalities to manage instructors and sessions.
-- Instructors can register students.
-- Sessions management to match instructors with students.
-- Admin login with default credentials.
-- CRUD operations for instructors and sessions.
-- Students can view their assigned instructors and session details.
-- Admin Control Panel for managing the application.
-- Login Screen with default username and password - "admin"
-- Admin Control Panel to Manage Instructors and Sessions.
-- CRUD operations allowed to the Admin.
-- Instructor Control Panel
-- Sessions Panel - to match the instructors with the students. (Admin View)
-- Sessions Panel - Assigning Instructors
-- Students can register themselves.
-- Students can view their assigned instructors and session details.
+### Admin Interface
+- **Modern Dashboard**: Clean, professional interface with blue color scheme
+- **Item Management**: Report lost and found items with detailed information
+- **Search Functionality**: Search items by name, category, or location
+- **Table View**: Comprehensive table displaying all items with sortable columns
+- **Real-time Updates**: Automatically refresh table when new items are added
+
+### Database Features
+- SQLite3 database for reliable data storage
+- Separate tables for lost and found items
+- User management system with admin authentication
+- Automatic database initialization with default admin user
+
+### User Experience
+- **Responsive Design**: Modern GUI that matches professional standards
+- **Color-coded Buttons**: 
+  - Yellow for "Report Lost Item"
+  - Green for "Report Found Item" 
+  - Blue for "Search Items"
+- **Easy Navigation**: Intuitive button layout and search controls
+- **Data Validation**: Error handling for database operations
 
 ## Installation
 
 1. Clone the repository:
-
    ```bash
    git clone https://github.com/yourusername/Lost-and-Found_desk_App.git
    ```
 
 2. Navigate to the project directory:
-
    ```bash
    cd Lost-and-Found_desk_App
    ```
 
 3. Install the required packages:
-
    ```bash
    pip install -r requirements.txt
    ```
 
-## Requirements
+## Usage
 
-- Python 3
-- Tkinter
-- SQLite3
-- Other dependencies listed in `requirements.txt`
+### Running the Application
+
+1. **Start the Admin Panel**:
+   ```bash
+   python admin_control_panel.py
+   ```
+
+2. **Add Sample Data** (Optional):
+   ```bash
+   python add_sample_data.py
+   ```
+
+3. **Test the Setup**:
+   ```bash
+   python test_admin.py
+   ```
+
+### Default Credentials
+- **Admin Email**: admin@lost-found.com
+- **Admin Password**: admin123
+
+### Application Interface
+
+The admin interface includes:
+
+1. **Header**: "Lost & Found Desk - Welcome Aayush Raut"
+2. **Action Buttons**:
+   - Report Lost Item (Yellow)
+   - Report Found Item (Green) 
+   - Search Items (Blue)
+3. **Search Bar**: With "Search" and "Show All" buttons
+4. **Data Table**: Displays all items with columns:
+   - ID
+   - Item Name
+   - Category
+   - Type (Lost/Found)
+   - Date
+   - Location
+   - Status
+
+### Adding Items
+
+1. Click "Report Lost Item" or "Report Found Item"
+2. Fill in the form with:
+   - Item Name
+   - Item Category
+   - Date (Lost/Found)
+   - Location (Lost/Found)
+   - Description
+3. Click "Submit" to add the item
+
+### Searching Items
+
+1. Enter search terms in the search box
+2. Click "Search" to filter results
+3. Click "Show All" to display all items
+
+> ## Requirements
+>- Python 3
+>- Tkinter
+>- SQLite3
+>- Other dependencies listed in `requirements.txt`
+
+> **Note**
+>
+> This is a note
+
+> **Warning**
+>
+> This is a warning
 
 ## Usage
 
