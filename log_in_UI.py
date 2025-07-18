@@ -71,31 +71,31 @@ def register_user():
     lbl_registration.place(x=150, y=20)
 
     # Full Name
-    lbl_full_name = Label(register_window, text="Full Name:", bg="black", font=("Arial", 12), fg="white")
+    lbl_full_name = Label(register_window, text="Full Name:", bg="black", font=("Arial", 11), fg="white")
     lbl_full_name.place(x=50, y=80)
     full_name_entry = Entry(register_window, width=35, font=("Arial", 11), bd=2, relief="raised")
     full_name_entry.place(x=180, y=80)
 
     # Email
-    lbl_email = Label(register_window, text="Email:", bg="black", font=("Arial", 12), fg="white")
+    lbl_email = Label(register_window, text="Email:", bg="black", font=("Arial", 11), fg="white")
     lbl_email.place(x=50, y=130)
     email_entry = Entry(register_window, width=35, font=("Arial", 11), bd=2, relief="raised")
     email_entry.place(x=180, y=130)
 
     # Phone
-    lbl_phone = Label(register_window, text="Phone:", bg="black", font=("Arial", 12), fg="white")
+    lbl_phone = Label(register_window, text="Phone:", bg="black", font=("Arial", 11), fg="white")
     lbl_phone.place(x=50, y=180)
     phone_entry = Entry(register_window, width=35, font=("Arial", 11), bd=2, relief="raised")
     phone_entry.place(x=180, y=180)
 
     # Password
-    lbl_password = Label(register_window, text="Password:", bg="black", font=("Arial", 12), fg="white")
+    lbl_password = Label(register_window, text="Password:", bg="black", font=("Arial", 11), fg="white")
     lbl_password.place(x=50, y=230)
     password_entry = Entry(register_window, show="*", width=35, font=("Arial", 11), bd=2, relief="raised")
     password_entry.place(x=180, y=230)
 
     # Confirm Password
-    lbl_confirm_password = Label(register_window, text="Confirm Password:", bg="black", font=("Arial", 12), fg="white")
+    lbl_confirm_password = Label(register_window, text="Confirm Password:", bg="black", font=("Arial", 11), fg="white")
     lbl_confirm_password.place(x=50, y=280)
     confirm_password_entry = Entry(register_window, show="*", width=35, font=("Arial", 11), bd=2, relief="raised")
     confirm_password_entry.place(x=180, y=280)
