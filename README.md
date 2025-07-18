@@ -5,6 +5,7 @@ A modern Lost & Found management system built with Python Tkinter and SQLite3. T
 ## Features
 
 ### Admin Interface
+
 - **Modern Dashboard**: Clean, professional interface with blue color scheme
 - **Item Management**: Report lost and found items with detailed information
 - **Search Functionality**: Search items by name, category, or location
@@ -12,69 +13,38 @@ A modern Lost & Found management system built with Python Tkinter and SQLite3. T
 - **Real-time Updates**: Automatically refresh table when new items are added
 
 ### Database Features
-- SQLite3 database for reliable data storage
-- Separate tables for lost and found items
-- User management system with admin authentication
+
+- **SQLite3 Database**: Lightweight and efficient database for storing item data
+- **Reliable Storage**: SQLite3 database for reliable data storage
+- **Separate Tables**: Distinct tables for lost and found items to maintain organization
+- **User Management**: User management system with admin authentication
 - Automatic database initialization with default admin user
 
 ### User Experience
+
 - **Responsive Design**: Modern GUI that matches professional standards
-- **Color-coded Buttons**: 
-  - Yellow for "Report Lost Item"
-  - Green for "Report Found Item" 
-  - Blue for "Search Items"
+- **Color-coded Buttons**:
+  - Red for "Reporting Lost Item"
+  - Green for "Reporting Found Item"
+  - Blue for "Searching Items"
 - **Easy Navigation**: Intuitive button layout and search controls
 - **Data Validation**: Error handling for database operations
-
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/Lost-and-Found_desk_App.git
-   ```
-
-2. Navigate to the project directory:
-   ```bash
-   cd Lost-and-Found_desk_App
-   ```
-
-3. Install the required packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## Usage
-
-### Running the Application
-
-1. **Start the Admin Panel**:
-   ```bash
-   python admin_control_panel.py
-   ```
-
-2. **Add Sample Data** (Optional):
-   ```bash
-   python add_sample_data.py
-   ```
-
-3. **Test the Setup**:
-   ```bash
-   python test_admin.py
-   ```
+- **User-friendly Forms**: Simple forms for reporting items with clear instructions
 
 ### Default Credentials
-- **Admin Email**: admin@lost-found.com
-- **Admin Password**: admin123
+
+- **User Name**: admin
+- **Password**: admin123
 
 ### Application Interface
 
 The admin interface includes:
 
-1. **Header**: "Lost & Found Desk - Welcome Aayush Raut"
+1. **Header**: "Lost & Found Desk - Welcome Admin"
 2. **Action Buttons**:
-   - Report Lost Item (Yellow)
-   - Report Found Item (Green) 
-   - Search Items (Blue)
+   - Reporting Lost Item (Red)
+   - Reporting Found Item (Green)
+   - Searching Items (Blue)
 3. **Search Bar**: With "Search" and "Show All" buttons
 4. **Data Table**: Displays all items with columns:
    - ID
@@ -102,32 +72,36 @@ The admin interface includes:
 2. Click "Search" to filter results
 3. Click "Show All" to display all items
 
-> ## Requirements
->- Python 3
->- Tkinter
->- SQLite3
->- Other dependencies listed in `requirements.txt`
+## Requirements
 
-> **Note**
->
-> This is a note
+- Python 3
+- Tkinter
+- SQLite3
 
-> **Warning**
->
-> This is a warning
+### Getting Started
 
-## Usage
+1. Clone the repository:
 
-1. Run the application:
+   ```bash
+   git clone https://github.com/yourusername/Lost-and-Found_desk_App.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd Lost-and-Found_desk_App
+   ```
+
+3. Run the application:
 
    ```bash
    python app.py
    ```
 
-2. Access the application through the provided GUI.
-3. Use the default credentials to log in:
+4. Access the application through the provided GUI.
+5. Use the default credentials to log in:
    - Username: `admin`
-   - Password: `admin`
-4. Explore the features as an Admin or Instructor.
+   - Password: `admin123`
+6. Explore the features as an Admin or Instructor.
 
 ---
