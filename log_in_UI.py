@@ -23,10 +23,10 @@ def handle_login():
         messagebox.showerror("Error", "Please enter both username and password!")
         return
     
-    
+
     if username == "admin" and password == "admin123":
         messagebox.showinfo("Success", f"Welcome back, {username}!")
-        
+
     else:
         messagebox.showerror("Error", "Invalid username or password!")
         password_entry.delete(0, END)  # Clearing password field for security
@@ -36,19 +36,31 @@ def register_user():
 
     global register_window
 
-    #  for Checking if window is already open
+    # to Check if window is already open
     if register_window is not None and register_window.winfo_exists():
-        register_window.lift()  # Bringing existing window to front
+        register_window.lift()  # to Bring existing window to front
         return
 
     register_window = Toplevel()  # --> Creating new window
     register_window.configure(bg="black") # --> configure method is used to set the background color of the window
     register_window.title("User Registration")
     register_window.geometry("500x600")
+    
+    # to Make window modal (stays on top and blocks interaction with parent)
+    register_window.transient(root)  # Making it a transient window for root
+    register_window.grab_set()  # Making it modal - blocks interaction with parent
+    register_window.focus_set()  # Giving focus to the registration window
 
-    # to Handle window close event to reset the global variable
+    # to Center the window on screen
+    register_window.geometry("500x600+{}+{}".format(
+        int((register_window.winfo_screenwidth() - 500) / 2),
+        int((register_window.winfo_screenheight() - 600) / 2)
+    ))
+
+    # Handle window close event to reset the global variable
     def on_closing():
         global register_window
+        register_window.grab_release()  # to Release the modal grab
         register_window.destroy()
         register_window = None
 
@@ -130,6 +142,7 @@ def register_user():
         confirm_password_entry.delete(0, END)
         
         # Close registration window
+        register_window.grab_release()  # to Release the modal grab before closing
         on_closing()
         
     # Submit and Cancel buttons
