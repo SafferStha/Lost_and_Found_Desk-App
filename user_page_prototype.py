@@ -90,11 +90,11 @@ def report_lost_item():
         # Close window
         on_closing()
 
-    submit_button = Button(lost_window, text="Submit Report", width=15, font=("Arial", 12), bg="#4CAF50", fg="white", bd=2, relief="raised", command=submit_lost_item)
+    submit_button = Button(lost_window, text="Submit Report", width=12, font=("Arial", 12), bg="#4CAF50", fg="white", bd=2, relief="raised", command=submit_lost_item)
     submit_button.place(x=200, y=420)
     
-    cancel_button = Button(lost_window, text="Cancel", width=15, font=("Arial", 12), bg="#f44336", fg="white", bd=2, relief="raised", command=on_closing)
-    cancel_button.place(x=320, y=420)
+    cancel_button = Button(lost_window, text="Cancel", width=12, font=("Arial", 12), bg="#f44336", fg="white", bd=2, relief="raised", command=on_closing)
+    cancel_button.place(x=340, y=420)
 
 # Header Frame
 header_frame = Frame(root, bg="#4A9EFF", height=80)
