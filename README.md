@@ -1,9 +1,6 @@
 # Lost & Found Desk App
 
-
 A modern Lost & Found management system built with Python Tkinter and SQLite3. This application provides an intuitive interface for managing lost and found items with search functionality and a clean tabular display.
-
-
 
 ## Features
 
@@ -21,11 +18,8 @@ A modern Lost & Found management system built with Python Tkinter and SQLite3. T
 - **Reliable Storage**: SQLite3 database for reliable data storage
 - **Separate Tables**: Distinct tables for lost and found items to maintain organization
 - **User Management**: User management system with admin authentication
-
-- Automatic database initialization with default admin user
-
 - **Data Integrity**: Ensures data integrity with proper validation and error handling
-
+- **Automatic Initialization**: Database initializes with a default admin user on first run
 
 ### User Experience
 
