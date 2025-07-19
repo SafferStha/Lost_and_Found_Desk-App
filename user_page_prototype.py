@@ -7,6 +7,8 @@ root.title("Lost & Found - Welcome User")
 root.resizable(0, 0)
 root.configure(bg="black")
 
+
+
 # Header Frame
 header_frame = Frame(root, bg="#4A9EFF", height=80)
 header_frame.pack(fill=X)
@@ -48,5 +50,19 @@ search_btn.pack(side=LEFT, padx=10, pady=15)
 
 show_all_btn = Button(search_frame, text="Show All", width=10, font=("Arial", 10), bg="#E91E63", fg="white", relief="flat", cursor="hand2")
 show_all_btn.pack(side=LEFT, padx=5, pady=15)
+
+# Table Frame
+table_frame = Frame(root, bg="white")
+table_frame.pack(fill=BOTH, expand=True, padx=50, pady=(0, 50))
+
+# Create Treeview for table
+columns = ("ID", "Item Name", "Category", "Type", "Date", "Location", "Status")
+tree = ttk.Treeview(table_frame, columns=columns, show="headings", height=15)
+
+# Define column headings
+for col in columns:
+    tree.heading(col, text=col)
+    tree.column(col, anchor="center")
+tree.pack(fill=BOTH, expand=True)
 
 root.mainloop()
