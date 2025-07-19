@@ -59,10 +59,22 @@ table_frame.pack(fill=BOTH, expand=True, padx=50, pady=(0, 50))
 columns = ("ID", "Item Name", "Category", "Type", "Date", "Location", "Status")
 tree = ttk.Treeview(table_frame, columns=columns, show="headings", height=15)
 
-# Define column headings
-for col in columns:
-    tree.heading(col, text=col)
-    tree.column(col, anchor="center")
-tree.pack(fill=BOTH, expand=True)
+# Define column headings and widths
+tree.heading("ID", text="ID")
+tree.heading("Item Name", text="Item Name")
+tree.heading("Category", text="Category")
+tree.heading("Type", text="Type")
+tree.heading("Date", text="Date")
+tree.heading("Location", text="Location")
+tree.heading("Status", text="Status")
+
+# Set column widths
+tree.column("ID", width=50, anchor=CENTER)
+tree.column("Item Name", width=150, anchor=W)
+tree.column("Category", width=120, anchor=W)
+tree.column("Type", width=80, anchor=CENTER)
+tree.column("Date", width=100, anchor=CENTER)
+tree.column("Location", width=150, anchor=W)
+tree.column("Status", width=100, anchor=CENTER)
 
 root.mainloop()
