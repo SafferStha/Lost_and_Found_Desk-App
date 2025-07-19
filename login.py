@@ -5,22 +5,36 @@ import sys
 import os
 
 root = Tk()
-root.title("Lost & Found Desk - Login")
-root.geometry("900x600")
+root.title("Lost & Found Desktop - Login")
+root.geometry("1000x600")
 root.resizable(0, 0)
 
 # Setting the background color
 canvas = Canvas(root, width=900, height=600, highlightthickness=0)
 canvas.place(x=0, y=0, relwidth=1, relheight=1)
 
-# Drawing a gradient from blue to purple
+# Drawing a gradient from darkblue to skyblue/lightblue
+def get_gradient_color(i):
+    # Gradient from dark blue (#001848) to light blue (#87ceeb)
+    start_rgb = (0, 24, 72)      # dark blue
+    end_rgb = (135, 206, 235)    # light blue (skyblue)
+    ratio = i / 599
+    r = int(start_rgb[0] + (end_rgb[0] - start_rgb[0]) * ratio)
+    g = int(start_rgb[1] + (end_rgb[1] - start_rgb[1]) * ratio)
+    b = int(start_rgb[2] + (end_rgb[2] - start_rgb[2]) * ratio)
+    return f'#{r:02x}{g:02x}{b:02x}'
+
+root.update_idletasks()  # Ensure geometry is updated
+window_width = root.winfo_width()
 for i in range(600):  # window height
-    r = 30 + int(i * 0.2)
-    g = 30 + int(i * 0.1)
-    b = 100 + int(i * 0.2)
-    r, g, b = min(r, 255), min(g, 255), min(b, 255)
-    color = f'#{r:02x}{g:02x}{b:02x}'
-    canvas.create_line(0, i, 900, i, fill=color)
+    color = get_gradient_color(i)
+    canvas.create_line(0, i, window_width, i, fill=color)
+    canvas.create_line(0, i+1, window_width, i+1, fill=color)  # fill the gap for smoother gradient
+
+for i in range(600):  # window height
+    color = get_gradient_color(i)
+    canvas.create_line(0, i, 1000, i, fill=color)
+    canvas.create_line(0, i+1, 1000, i+1, fill=color)  # fill the gap for smoother gradient
 
 # Global variable for register window
 register_window = None
@@ -73,9 +87,18 @@ def register_user():
         register_window.lift()
         return
     register_window = Toplevel()
-    register_window.configure(bg="black")
     register_window.title("User Registration")
     register_window.geometry("500x600")
+    register_window.resizable(0, 0)
+
+    # Create canvas for gradient background
+    reg_canvas = Canvas(register_window, width=500, height=600, highlightthickness=0)
+    reg_canvas.place(x=0, y=0, relwidth=1, relheight=1)
+
+    # Draw the same gradient as login page
+    for i in range(600):
+        color = get_gradient_color(i)
+        reg_canvas.create_line(0, i, 500, i, fill=color)
 
     def on_closing():
         global register_window
@@ -84,33 +107,38 @@ def register_user():
 
     register_window.protocol("WM_DELETE_WINDOW", on_closing)
 
-    lbl_registration = Label(register_window, text="User Registration", font=("Arial", 18, "bold"), bg="blue", fg="white")
-    lbl_registration.place(x=150, y=20)
+    lbl_registration = Label(register_window, text="User Registration", font=("Impact", 22), fg="black", bg=None)
+    reg_canvas.create_window(250, 40, window=lbl_registration, anchor="center")
 
-    lbl_full_name = Label(register_window, text="Full Name:", bg="black", font=("Arial", 12), fg="white")
-    lbl_full_name.place(x=50, y=80)
-    full_name_entry = Entry(register_window, width=35, font=("Arial", 11), bd=2, relief="raised")
-    full_name_entry.place(x=180, y=80)
+    # Full Name
+    lbl_full_name = Label(register_window, text="Full Name:", font=("Arial", 12, "bold"), fg="black", bg=None)
+    reg_canvas.create_window(150, 120, window=lbl_full_name, anchor="center")
+    full_name_entry = Entry(register_window, width=25, font=("Arial", 11), bd=2, relief="sunken")
+    reg_canvas.create_window(350, 120, window=full_name_entry, anchor="center")
 
-    lbl_email = Label(register_window, text="Email:", bg="black", font=("Arial", 12), fg="white")
-    lbl_email.place(x=50, y=130)
-    email_entry = Entry(register_window, width=35, font=("Arial", 11), bd=2, relief="raised")
-    email_entry.place(x=180, y=130)
+    # Email
+    lbl_email = Label(register_window, text="Email:", font=("Arial", 12, "bold"), fg="black", bg=None)
+    reg_canvas.create_window(150, 170, window=lbl_email, anchor="center")
+    email_entry = Entry(register_window, width=25, font=("Arial", 11), bd=2, relief="sunken")
+    reg_canvas.create_window(350, 170, window=email_entry, anchor="center")
 
-    lbl_phone = Label(register_window, text="Phone:", bg="black", font=("Arial", 12), fg="white")
-    lbl_phone.place(x=50, y=180)
-    phone_entry = Entry(register_window, width=35, font=("Arial", 11), bd=2, relief="raised")
-    phone_entry.place(x=180, y=180)
+    # Phone
+    lbl_phone = Label(register_window, text="Phone:", font=("Arial", 12, "bold"), fg="black", bg=None)
+    reg_canvas.create_window(150, 220, window=lbl_phone, anchor="center")
+    phone_entry = Entry(register_window, width=25, font=("Arial", 11), bd=2, relief="sunken")
+    reg_canvas.create_window(350, 220, window=phone_entry, anchor="center")
 
-    lbl_password = Label(register_window, text="Password:", bg="black", font=("Arial", 12), fg="white")
-    lbl_password.place(x=50, y=230)
-    password_entry_reg = Entry(register_window, show="*", width=35, font=("Arial", 11), bd=2, relief="raised")
-    password_entry_reg.place(x=180, y=230)
+    # Password
+    lbl_password = Label(register_window, text="Password:", font=("Arial", 12, "bold"), fg="black", bg=None)
+    reg_canvas.create_window(150, 270, window=lbl_password, anchor="center")
+    password_entry_reg = Entry(register_window, show="*", width=25, font=("Arial", 11), bd=2, relief="sunken")
+    reg_canvas.create_window(350, 270, window=password_entry_reg, anchor="center")
 
-    lbl_confirm_password = Label(register_window, text="Confirm Password:", bg="black", font=("Arial", 12), fg="white")
-    lbl_confirm_password.place(x=50, y=280)
-    confirm_password_entry = Entry(register_window, show="*", width=35, font=("Arial", 11), bd=2, relief="raised")
-    confirm_password_entry.place(x=180, y=280)
+    # Confirm Password
+    lbl_confirm_password = Label(register_window, text="Confirm Password:", font=("Arial", 12, "bold"), fg="black", bg=None)
+    reg_canvas.create_window(150, 320, window=lbl_confirm_password, anchor="center")
+    confirm_password_entry = Entry(register_window, show="*", width=25, font=("Arial", 11), bd=2, relief="sunken")
+    reg_canvas.create_window(350, 320, window=confirm_password_entry, anchor="center")
 
     def handle_registration():
         full_name = full_name_entry.get().strip()
@@ -141,32 +169,40 @@ def register_user():
         confirm_password_entry.delete(0, END)
         on_closing()
 
-    submit_button = Button(register_window, text="Register", width=15, font=("Arial", 12), bg="green", fg="white", bd=2, relief="raised", command=handle_registration)
-    submit_button.place(x=120, y=350)
-    cancel_button = Button(register_window, text="Cancel", width=15, font=("Arial", 12), bg="red", fg="white", bd=2, relief="raised", command=on_closing)
-    cancel_button.place(x=270, y=350)
+    # Center the buttons
+    submit_button = Button(register_window, text="Register", width=15, font=("Arial", 12, "bold"), bg="lightgreen", fg="black", bd=2, relief="raised", command=handle_registration)
+    reg_canvas.create_window(150, 410, window=submit_button, anchor="center")
+    cancel_button = Button(register_window, text="Cancel", width=15, font=("Arial", 12, "bold"), bg="lightcoral", fg="black", bd=2, relief="raised", command=on_closing)
+    reg_canvas.create_window(350, 410, window=cancel_button, anchor="center")
+
+    # Add footer similar to login page
+    footer_reg = Label(register_window, text="Join the Lost & Found community!", font=("Arial", 12, "bold"), fg="#111111", bg=None)
+    reg_canvas.create_window(250, 500, window=footer_reg, anchor="center")
 
 # --- Login fields directly on canvas ---
-username_label = Label(root, text="Username:", font=("Arial", 13), bg=None, fg="black")
-canvas.create_window(350, 200, window=username_label)
+# Username field - properly centered
+username_label = Label(root, text="Username:", font=("Arial", 13, "bold"), bg=None, fg="black")
+canvas.create_window(350, 280, window=username_label, anchor="center")
 
 username_entry = Entry(root, width=30, relief="sunken", bd=2)
-canvas.create_window(490, 199.5, window=username_entry)
+canvas.create_window(550, 280, window=username_entry, anchor="center")
 
-password_label = Label(root, text="Password:", font=("Arial", 13), bg=None, fg="black")
-canvas.create_window(350, 270, window=password_label)
+# Password field - properly centered
+password_label = Label(root, text="Password:", font=("Arial", 13, "bold"), bg=None, fg="black")
+canvas.create_window(350, 320, window=password_label, anchor="center")
 
 password_entry = Entry(root, show="*", width=30, relief="sunken", bd=2)
-canvas.create_window(490, 269.5, window=password_entry)
+canvas.create_window(550, 320, window=password_entry, anchor="center")
 
-login_btn = Button(root, text="Login", width=10, fg="black", font=("Arial", 11), bg="lightblue", command=handle_login)
-canvas.create_window(450, 350, window=login_btn)
+# Buttons - centered horizontally
+login_btn = Button(root, text="Login", width=10, fg="black", font=("Arial", 13, "bold"), bg="skyblue", command=handle_login)
+canvas.create_window(500, 380, window=login_btn, anchor="center")
 
-register_btn = Button(root, text="Register", width=12, fg="black", font=("Arial", 11), bg="lightgreen", command=register_user)
-canvas.create_window(450, 400, window=register_btn)
+register_btn = Button(root, text="Register", width=12, fg="black", font=("Arial", 13, "bold"), bg="lightgreen", command=register_user)
+canvas.create_window(500, 420, window=register_btn, anchor="center")
 
 # --- App name typewriter effect ---
-def typewriter_effect_canvas(text, canvas, item_id, delay=100):
+def typewriter_effect_canvas(text, canvas, item_id, delay=100, on_complete=None):
     displayed_text = ""
     def update_text(i=0):
         nonlocal displayed_text
@@ -174,16 +210,28 @@ def typewriter_effect_canvas(text, canvas, item_id, delay=100):
             displayed_text += text[i]
             canvas.itemconfig(item_id, text=displayed_text)
             root.after(delay, update_text, i+1)
+        else:
+            if on_complete:
+                on_complete()
     update_text()
 
-app_name_text = canvas.create_text(270, 50, text="", font=("Segoe UI", 25, "bold"), fill="white", anchor="nw")
-typewriter_effect_canvas("Lost & Found Desk App", canvas, app_name_text)
+# Center the text horizontally (500 is center of 1000px window)
+app_name_text = canvas.create_text(500, 90, text="", font=("Impact", 30, "bold"), fill="white", anchor="center")
+app_name_text2 = canvas.create_text(500, 135, text="", font=("Lato", 20), fill="white", anchor="center")
+typewriter_effect_canvas(
+    "Lost & Found Desktop App", canvas, app_name_text,
+    delay=100,
+    on_complete=lambda: typewriter_effect_canvas(
+        "Find what you're looking for!", canvas, app_name_text2, delay=100
+    )
+)
+
 # --- Footer ---
 footer_text = canvas.create_text(
-    450, 520,  # x, y position (centered at bottom)
-    text="Powered by The Dobermans",
-    font=("Arial", 12, "italic"),
-    fill="#222222",
+    500, 570,  # x, y position (centered at bottom)
+    text="Powered by Team Doberman",
+    font=("Arial", 15, "bold"),
+    fill="#111111",
     anchor="center"
 )
 
