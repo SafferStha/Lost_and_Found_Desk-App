@@ -7,7 +7,48 @@ root.title("Lost & Found - Welcome User")
 root.resizable(0, 0)
 root.configure(bg="black")
 
+# Function to handle lost item reporting
+def report_lost_item():
+    
+    lost_window = Toplevel()  # --> Create new window
+    lost_window.title("Report Lost Item")
+    lost_window.geometry("600x500")
+    lost_window.configure(bg="black")
+    lost_window.resizable(0, 0)
 
+    # Main heading
+    lbl_registration = Label(lost_window, text="Report Lost Item", font=("Arial", 18, "bold"), bg="#FF5722", fg="white")
+    lbl_registration.place(x=200, y=20)
+
+    # Item Name
+    lbl_item_name = Label(lost_window, text="Item Name:", bg="black", font=("Arial", 12), fg="white")
+    lbl_item_name.place(x=50, y=80)
+    item_name = Entry(lost_window, width=35, font=("Arial", 11), bd=2, relief="raised")
+    item_name.place(x=180, y=80)
+
+    # Item Category
+    lbl_item_category = Label(lost_window, text="Item Category:", bg="black", font=("Arial", 12), fg="white")
+    lbl_item_category.place(x=50, y=120)
+    item_category = Entry(lost_window, width=35, font=("Arial", 11), bd=2, relief="raised")
+    item_category.place(x=180, y=120)
+
+    # Date Lost
+    lbl_date_lost = Label(lost_window, text="Date Lost:", bg="black", font=("Arial", 12), fg="white")
+    lbl_date_lost.place(x=50, y=160)
+    date_lost = Entry(lost_window, width=35, font=("Arial", 11), bd=2, relief="raised")
+    date_lost.place(x=180, y=160)
+
+    # Location Lost
+    lbl_location_lost = Label(lost_window, text="Location Lost:", bg="black", font=("Arial", 12), fg="white")
+    lbl_location_lost.place(x=50, y=200)
+    location_lost = Entry(lost_window, width=35, font=("Arial", 11), bd=2, relief="raised")
+    location_lost.place(x=180, y=200)
+
+    # Description
+    lbl_description = Label(lost_window, text="Description:", bg="black", font=("Arial", 12), fg="white")
+    lbl_description.place(x=50, y=240)
+    description = Text(lost_window, width=35, height=8, font=("Arial", 11), bd=2, relief="raised")
+    description.place(x=180, y=240)
 
 # Header Frame
 header_frame = Frame(root, bg="#4A9EFF", height=80)
@@ -24,7 +65,7 @@ button_frame.pack(fill=X, pady=20)
 button_frame.pack_propagate(False)
 
 # Action Buttons with connected functions
-report_lost_btn = Button(button_frame, text="Report Lost Item", width=18, height=2, font=("Arial", 12, "bold"), bg="#FF4D4D", fg="black", relief="flat", cursor="hand2")
+report_lost_btn = Button(button_frame, text="Report Lost Item", width=18, height=2, font=("Arial", 12, "bold"), bg="#FFB84D", fg="black", relief="flat", cursor="hand2")
 report_lost_btn.pack(side=LEFT, padx=30, pady=10)
 
 report_found_btn = Button(button_frame, text="Report Found Item", width=18, height=2, font=("Arial", 12, "bold"), bg="#4CAF50", fg="white", relief="flat", cursor="hand2")
