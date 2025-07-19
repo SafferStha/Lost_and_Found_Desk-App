@@ -77,4 +77,18 @@ tree.column("Date", width=100, anchor=CENTER)
 tree.column("Location", width=150, anchor=W)
 tree.column("Status", width=100, anchor=CENTER)
 
+# Add scrollbar
+scrollbar = ttk.Scrollbar(table_frame, orient=VERTICAL)
+tree.configure(yscrollcommand=scrollbar.set)
+
+# Pack the treeview and scrollbar
+tree.pack(side=LEFT, fill=BOTH, expand=True)
+scrollbar.pack(side=RIGHT, fill=Y)
+
+# Style the treeview
+style = ttk.Style()
+style.theme_use("clam")
+style.configure("Treeview.Heading", font=("Arial", 11, "bold"), background="#f0f0f0")
+style.configure("Treeview", font=("Arial", 10), rowheight=25)
+
 root.mainloop()
