@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream:login.py
 from tkinter import *
 from tkinter import messagebox
 import subprocess
@@ -207,4 +208,164 @@ register_btn.grid(row=3, column=1, padx=10, pady=20, sticky="w")
 Label(root, text="Lost & Found Desk App", font=("Arial", 25, "italic", "bold"), bg="black", fg="white").grid(row=0, column=3, columnspan=2, padx=20, pady=(50, 10), sticky="w")
 Label(root, text="Find what you're looking for!", font=("Arial", 12, "bold"), bg="black", fg="white").grid(row=1, column=3, columnspan=2, padx=20, pady=(0, 10), sticky="w")
 
+=======
+from tkinter import *
+from tkinter import messagebox
+
+root = Tk()
+root.title("Lost & Found Desk - Login")
+root.geometry("900x600")
+root.resizable(0, 0)
+
+# Setting the background color
+canvas = Canvas(root, width=900, height=600, highlightthickness=0)
+canvas.place(x=0, y=0, relwidth=1, relheight=1)
+
+# Drawing a gradient from blue to purple
+for i in range(600):  # window height
+    r = 30 + int(i * 0.2)
+    g = 30 + int(i * 0.1)
+    b = 100 + int(i * 0.2)
+    r, g, b = min(r, 255), min(g, 255), min(b, 255)
+    color = f'#{r:02x}{g:02x}{b:02x}'
+    canvas.create_line(0, i, 900, i, fill=color)
+
+# Global variable for register window
+register_window = None
+
+# Function to handle login
+def handle_login():
+    username = username_entry.get().strip()
+    password = password_entry.get()
+    if not username or not password:
+        messagebox.showerror("Error", "Please enter both username and password!")
+        return
+    if username == "admin" and password == "admin123":
+        messagebox.showinfo("Success", f"Welcome back, {username}!")
+    else:
+        messagebox.showerror("Error", "Invalid username or password!")
+        password_entry.delete(0, END)
+
+# function for registering a new user
+def register_user():
+    global register_window
+    if register_window is not None and register_window.winfo_exists():
+        register_window.lift()
+        return
+    register_window = Toplevel()
+    register_window.configure(bg="black")
+    register_window.title("User Registration")
+    register_window.geometry("500x600")
+
+    def on_closing():
+        global register_window
+        register_window.destroy()
+        register_window = None
+
+    register_window.protocol("WM_DELETE_WINDOW", on_closing)
+
+    lbl_registration = Label(register_window, text="User Registration", font=("Arial", 18, "bold"), bg="blue", fg="white")
+    lbl_registration.place(x=150, y=20)
+
+    lbl_full_name = Label(register_window, text="Full Name:", bg="black", font=("Arial", 12), fg="white")
+    lbl_full_name.place(x=50, y=80)
+    full_name_entry = Entry(register_window, width=35, font=("Arial", 11), bd=2, relief="raised")
+    full_name_entry.place(x=180, y=80)
+
+    lbl_email = Label(register_window, text="Email:", bg="black", font=("Arial", 12), fg="white")
+    lbl_email.place(x=50, y=130)
+    email_entry = Entry(register_window, width=35, font=("Arial", 11), bd=2, relief="raised")
+    email_entry.place(x=180, y=130)
+
+    lbl_phone = Label(register_window, text="Phone:", bg="black", font=("Arial", 12), fg="white")
+    lbl_phone.place(x=50, y=180)
+    phone_entry = Entry(register_window, width=35, font=("Arial", 11), bd=2, relief="raised")
+    phone_entry.place(x=180, y=180)
+
+    lbl_password = Label(register_window, text="Password:", bg="black", font=("Arial", 12), fg="white")
+    lbl_password.place(x=50, y=230)
+    password_entry_reg = Entry(register_window, show="*", width=35, font=("Arial", 11), bd=2, relief="raised")
+    password_entry_reg.place(x=180, y=230)
+
+    lbl_confirm_password = Label(register_window, text="Confirm Password:", bg="black", font=("Arial", 12), fg="white")
+    lbl_confirm_password.place(x=50, y=280)
+    confirm_password_entry = Entry(register_window, show="*", width=35, font=("Arial", 11), bd=2, relief="raised")
+    confirm_password_entry.place(x=180, y=280)
+
+    def handle_registration():
+        full_name = full_name_entry.get().strip()
+        email = email_entry.get().strip()
+        phone = phone_entry.get().strip()
+        password = password_entry_reg.get()
+        confirm_password = confirm_password_entry.get()
+        if not all([full_name, email, phone, password, confirm_password]):
+            messagebox.showerror("Error", "Please fill all fields!")
+            return
+        if "@" not in email or "." not in email:
+            messagebox.showerror("Error", "Please enter a valid email address!")
+            return
+        if not phone.isdigit() or len(phone) < 10:
+            messagebox.showerror("Error", "Please enter a valid phone number (at least 10 digits)!")
+            return
+        if password != confirm_password:
+            messagebox.showerror("Error", "Passwords do not match!")
+            return
+        if len(password) < 6:
+            messagebox.showerror("Error", "Password must be at least 6 characters!")
+            return
+        messagebox.showinfo("Success", f"Registration successful!\nWelcome, {full_name}!")
+        full_name_entry.delete(0, END)
+        email_entry.delete(0, END)
+        phone_entry.delete(0, END)
+        password_entry_reg.delete(0, END)
+        confirm_password_entry.delete(0, END)
+        on_closing()
+
+    submit_button = Button(register_window, text="Register", width=15, font=("Arial", 12), bg="green", fg="white", bd=2, relief="raised", command=handle_registration)
+    submit_button.place(x=120, y=350)
+    cancel_button = Button(register_window, text="Cancel", width=15, font=("Arial", 12), bg="red", fg="white", bd=2, relief="raised", command=on_closing)
+    cancel_button.place(x=270, y=350)
+
+# --- Login fields directly on canvas ---
+username_label = Label(root, text="Username:", font=("Arial", 13), bg=None, fg="black")
+canvas.create_window(350, 200, window=username_label)
+
+username_entry = Entry(root, width=30, relief="sunken", bd=2)
+canvas.create_window(490, 199.5, window=username_entry)
+
+password_label = Label(root, text="Password:", font=("Arial", 13), bg=None, fg="black")
+canvas.create_window(350, 270, window=password_label)
+
+password_entry = Entry(root, show="*", width=30, relief="sunken", bd=2)
+canvas.create_window(490, 269.5, window=password_entry)
+
+login_btn = Button(root, text="Login", width=10, fg="black", font=("Arial", 11), bg="lightblue", command=handle_login)
+canvas.create_window(450, 350, window=login_btn)
+
+register_btn = Button(root, text="Register", width=12, fg="black", font=("Arial", 11), bg="lightgreen", command=register_user)
+canvas.create_window(450, 400, window=register_btn)
+
+# --- App name typewriter effect ---
+def typewriter_effect_canvas(text, canvas, item_id, delay=100):
+    displayed_text = ""
+    def update_text(i=0):
+        nonlocal displayed_text
+        if i < len(text):
+            displayed_text += text[i]
+            canvas.itemconfig(item_id, text=displayed_text)
+            root.after(delay, update_text, i+1)
+    update_text()
+
+app_name_text = canvas.create_text(270, 50, text="", font=("Segoe UI", 25, "bold"), fill="white", anchor="nw")
+typewriter_effect_canvas("Lost & Found Desk App", canvas, app_name_text)
+# --- Footer ---
+footer_text = canvas.create_text(
+    450, 520,  # x, y position (centered at bottom)
+    text="Powered by The Dobermans",
+    font=("Arial", 12, "italic"),
+    fill="#222222",
+    anchor="center"
+)
+
+>>>>>>> Stashed changes:log_in_UI.py
 root.mainloop()
