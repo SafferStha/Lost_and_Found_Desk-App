@@ -1,5 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
+import subprocess
+import sys
+import os
 
 root = Tk()
 root.title("Lost & Found Desk - Login")
@@ -22,18 +25,46 @@ for i in range(600):  # window height
 # Global variable for register window
 register_window = None
 
+# Function to open admin control panel
+def open_admin_panel():
+    try:
+        # Get the directory of the current script
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        admin_panel_path = os.path.join(current_dir, "admin_control_panel.py")
+        
+        # Clear login fields for security
+        username_entry.delete(0, END)
+        password_entry.delete(0, END)
+        
+        # Hide the login window
+        root.withdraw()
+        
+        # Open admin control panel
+        subprocess.run([sys.executable, admin_panel_path])
+        
+        # Show login window again when admin panel closes
+        root.deiconify()
+        
+    except Exception as e:
+        messagebox.showerror("Error", f"Could not open admin panel: {str(e)}")
+        root.deiconify()  # Show login window if error occurs
+
 # Function to handle login
 def handle_login():
     username = username_entry.get().strip()
     password = password_entry.get()
+    
+    # Basic validation
     if not username or not password:
         messagebox.showerror("Error", "Please enter both username and password!")
         return
+    
     if username == "admin" and password == "admin123":
         messagebox.showinfo("Success", f"Welcome back, {username}!")
+        open_admin_panel()  # Open admin control panel
     else:
         messagebox.showerror("Error", "Invalid username or password!")
-        password_entry.delete(0, END)
+        password_entry.delete(0, END)  # Clearing password field for security
 
 # function for registering a new user
 def register_user():
