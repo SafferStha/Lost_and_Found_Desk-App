@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 
 root = Tk()
 root.geometry("1200x800")
@@ -9,12 +10,24 @@ root.configure(bg="black")
 
 # Function to handle lost item reporting
 def report_lost_item():
+    global lost_window
+    
+    # Check if window is already open
+
     
     lost_window = Toplevel()  # --> Create new window
     lost_window.title("Report Lost Item")
     lost_window.geometry("600x500")
     lost_window.configure(bg="black")
     lost_window.resizable(0, 0)
+    
+    # Handle window close event to reset the global variable
+    def on_closing():
+        global lost_window
+        lost_window.destroy()
+        lost_window = None
+
+    lost_window.protocol("WM_DELETE_WINDOW", on_closing)
 
     # Main heading
     lbl_registration = Label(lost_window, text="Report Lost Item", font=("Arial", 18, "bold"), bg="#FF5722", fg="white")
@@ -49,6 +62,39 @@ def report_lost_item():
     lbl_description.place(x=50, y=240)
     description = Text(lost_window, width=35, height=8, font=("Arial", 11), bd=2, relief="raised")
     description.place(x=180, y=240)
+
+    # Submit button with functionality
+    def submit_lost_item():
+        # Get all field values
+        name = item_name.get().strip()
+        category = item_category.get().strip()
+        date = date_lost.get().strip()
+        location = location_lost.get().strip()
+        desc = description.get("1.0", END).strip()
+        
+        # Basic validation
+        if not all([name, category, date, location, desc]):
+            messagebox.showerror("Error", "Please fill all fields!")
+            return
+        
+        # Success message
+        messagebox.showinfo("Success", "Lost item report submitted successfully!")
+        
+        # Clear fields
+        item_name.delete(0, END)
+        item_category.delete(0, END)
+        date_lost.delete(0, END)
+        location_lost.delete(0, END)
+        description.delete("1.0", END)
+        
+        # Close window
+        on_closing()
+
+    submit_button = Button(lost_window, text="Submit Report", width=15, font=("Arial", 12), bg="#4CAF50", fg="white", bd=2, relief="raised", command=submit_lost_item)
+    submit_button.place(x=200, y=420)
+    
+    cancel_button = Button(lost_window, text="Cancel", width=15, font=("Arial", 12), bg="#f44336", fg="white", bd=2, relief="raised", command=on_closing)
+    cancel_button.place(x=320, y=420)
 
 # Header Frame
 header_frame = Frame(root, bg="#4A9EFF", height=80)
