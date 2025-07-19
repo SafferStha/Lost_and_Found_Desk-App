@@ -16,8 +16,6 @@ header_frame.pack_propagate(False)
 header_label = Label(header_frame, text="Lost & Found Desk - Welcome User", font=("Arial", 20, "bold"), bg="#4A9EFF", fg="white")
 header_label.pack(pady=20)
 
-root.mainloop()
-
 # Button Frame
 button_frame = Frame(root, bg="black", height=80)
 button_frame.pack(fill=X, pady=20)
@@ -32,3 +30,7 @@ report_found_btn.pack(side=LEFT, padx=30, pady=10)
 
 search_items_btn = Button(button_frame, text="Search Items", width=18, height=2, font=("Arial", 12, "bold"), bg="#00BCD4", fg="white", relief="flat", cursor="hand2")
 search_items_btn.pack(side=LEFT, padx=30, pady=10)
+
+
+
+root.mainloop()
