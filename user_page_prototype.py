@@ -31,6 +31,22 @@ report_found_btn.pack(side=LEFT, padx=30, pady=10)
 search_items_btn = Button(button_frame, text="Search Items", width=18, height=2, font=("Arial", 12, "bold"), bg="#00BCD4", fg="white", relief="flat", cursor="hand2")
 search_items_btn.pack(side=LEFT, padx=30, pady=10)
 
+# Search Frame
+search_frame = Frame(root, bg="black", height=60)
+search_frame.pack(fill=X, pady=(0, 20))
+search_frame.pack_propagate(False)
 
+# Search Label and Entry
+search_label = Label(search_frame, text="Search:", font=("Arial", 12), bg="black", fg="white")
+search_label.pack(side=LEFT, padx=(50, 10), pady=15)
+
+search_entry = Entry(search_frame, width=50, font=("Arial", 11), relief="solid", bd=1)
+search_entry.pack(side=LEFT, pady=15)
+
+search_btn = Button(search_frame, text="Search", width=10, font=("Arial", 10), bg="#2196F3", fg="white", relief="flat", cursor="hand2")
+search_btn.pack(side=LEFT, padx=10, pady=15)
+
+show_all_btn = Button(search_frame, text="Show All", width=10, font=("Arial", 10), bg="#E91E63", fg="white", relief="flat", cursor="hand2")
+show_all_btn.pack(side=LEFT, padx=5, pady=15)
 
 root.mainloop()
