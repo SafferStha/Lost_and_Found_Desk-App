@@ -24,7 +24,7 @@ button_frame.pack(fill=X, pady=20)
 button_frame.pack_propagate(False)
 
 # Action Buttons with connected functions
-report_lost_btn = Button(button_frame, text="Report Lost Item", width=18, height=2, font=("Arial", 12, "bold"), bg="#FFB84D", fg="black", relief="flat", cursor="hand2")
+report_lost_btn = Button(button_frame, text="Report Lost Item", width=18, height=2, font=("Arial", 12, "bold"), bg="#FF4D4D", fg="black", relief="flat", cursor="hand2")
 report_lost_btn.pack(side=LEFT, padx=30, pady=10)
 
 report_found_btn = Button(button_frame, text="Report Found Item", width=18, height=2, font=("Arial", 12, "bold"), bg="#4CAF50", fg="white", relief="flat", cursor="hand2")
