@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream:login.py
 from tkinter import *
 from tkinter import messagebox
 import subprocess
@@ -208,7 +207,6 @@ register_btn.grid(row=3, column=1, padx=10, pady=20, sticky="w")
 Label(root, text="Lost & Found Desk App", font=("Arial", 25, "italic", "bold"), bg="black", fg="white").grid(row=0, column=3, columnspan=2, padx=20, pady=(50, 10), sticky="w")
 Label(root, text="Find what you're looking for!", font=("Arial", 12, "bold"), bg="black", fg="white").grid(row=1, column=3, columnspan=2, padx=20, pady=(0, 10), sticky="w")
 
-=======
 from tkinter import *
 from tkinter import messagebox
 
@@ -367,5 +365,4 @@ footer_text = canvas.create_text(
     anchor="center"
 )
 
->>>>>>> Stashed changes:log_in_UI.py
 root.mainloop()
