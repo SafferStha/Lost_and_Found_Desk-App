@@ -121,6 +121,12 @@ def report_found_item():
     item_category = Entry(found_window, width=35, font=("Arial", 11), bd=2, relief="raised")
     item_category.place(x=180, y=120)
 
+    # Date Found
+    lbl_date_found = Label(found_window, text="Date Found:", bg="black", font=("Arial", 12), fg="white")
+    lbl_date_found.place(x=50, y=160)
+    date_found = Entry(found_window, width=35, font=("Arial", 11), bd=2, relief="raised")
+    date_found.place(x=180, y=160)
+
 
 
 
