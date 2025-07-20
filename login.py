@@ -91,6 +91,8 @@ def register_user():
     register_window.title("User Registration")
     register_window.geometry("500x600")
     register_window.resizable(0, 0)
+    register_window.grab_set()  # Make window modal
+    register_window.transient(root)  # Keep on top of parent
 
     # Create canvas for gradient background
     reg_canvas = Canvas(register_window, width=500, height=600, highlightthickness=0,)
