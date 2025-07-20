@@ -12,6 +12,25 @@ root.configure(bg="black")
 lost_window = None
 found_window = None
 
+# Advanced Search Window
+def advanced_search():
+    search_window = Toplevel()
+    search_window.title("Advanced Search")
+    search_window.geometry("400x320")
+    search_window.resizable(0, 0)
+    search_window.configure(bg="white")
+
+    # Heading
+    lbl_heading = Label(search_window, text="Advanced Search", font=("Arial", 20, "bold"), bg="white", fg="black")
+    lbl_heading.place(x=60, y=20)
+
+    # Search Term
+    lbl_term = Label(search_window, text="Search Term:", font=("Arial", 12), bg="white", fg="black")
+    lbl_term.place(x=30, y=70)
+    entry_term = Entry(search_window, width=22, font=("Arial", 12), bd=1, relief="solid")
+    entry_term.place(x=140, y=70)
+
+
 # Function to handle lost item reporting
 def report_lost_item():
     global lost_window
@@ -222,7 +241,7 @@ report_lost_btn.pack(side=LEFT, padx=30, pady=10)
 report_found_btn = Button(button_frame, text="Report Found Item", width=18, height=2, font=("Arial", 12, "bold"), bg="#4CAF50", fg="white", relief="flat", cursor="hand2", command=report_found_item)
 report_found_btn.pack(side=LEFT, padx=30, pady=10)
 
-search_items_btn = Button(button_frame, text="Search Items", width=18, height=2, font=("Arial", 12, "bold"), bg="#00BCD4", fg="white", relief="flat", cursor="hand2")
+search_items_btn = Button(button_frame, text="Search Items", width=18, height=2, font=("Arial", 12, "bold"), bg="#00BCD4", fg="white", relief="flat", cursor="hand2", command=advanced_search)
 search_items_btn.pack(side=LEFT, padx=30, pady=10)
 
 # Search Frame
