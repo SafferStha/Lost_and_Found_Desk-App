@@ -41,6 +41,15 @@ def advanced_search():
     rb_found = Radiobutton(search_window, text="Found", variable=type_var, value="Found", font=("Arial", 11), bg="white")
     rb_found.place(x=260, y=110)
 
+        # Category
+    lbl_category = Label(search_window, text="Category:", font=("Arial", 12), bg="white", fg="black")
+    lbl_category.place(x=30, y=150)
+    category_var = StringVar()
+    combo_category = ttk.Combobox(search_window, textvariable=category_var, font=("Arial", 12), state="readonly", width=18)
+    combo_category['values'] = ("All", "Electronics", "Bags", "Books", "Personal Items", "Keys", "Clothing", "Jewelry", "Documents", "Sports Equipment", "Stationery", "Accessories", "Mobile Phones", "Laptops", "Wallets", "Shoes", "Umbrellas", "Water Bottles", "Glasses", "Watches", "Headphones", "Chargers", "USB Drives", "Cards", "Other")
+    combo_category.current(0)
+    combo_category.place(x=140, y=150)
+
 
 # Function to handle lost item reporting
 def report_lost_item():
