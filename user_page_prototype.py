@@ -99,11 +99,26 @@ def report_lost_item():
 
 def report_found_item():
 
+    global found_window
+
+    # Check if window is already open
+    if found_window is not None and found_window.winfo_exists():
+        found_window.lift()  # Bring existing window to front
+        return
+
     found_window = Toplevel()  # --> Create new window
     found_window.configure(bg="black")
     found_window.title("Report Found Item")
     found_window.geometry("600x500")
     found_window.resizable(0, 0)
+
+    # Handle window close event to reset the global variable
+    def on_closing():
+        global found_window
+        found_window.destroy()
+        found_window = None
+
+    found_window.protocol("WM_DELETE_WINDOW", on_closing)
 
     # Main heading
     lbl_registration = Label(found_window, text="Report Found Item", font=("Arial", 18, "bold"), bg="#4CAF50", fg="white")
@@ -163,13 +178,15 @@ def report_found_item():
         location_found.delete(0, END)
         description.delete("1.0", END)
 
+        # Close window
+        on_closing()
 
     submit_button = Button(found_window, text="Submit Report", width=15, font=("Arial", 12), 
                           bg="#4CAF50", fg="white", bd=2, relief="raised", command=submit_found_item)
     submit_button.place(x=200, y=420)
     
     cancel_button = Button(found_window, text="Cancel", width=15, font=("Arial", 12), 
-                          bg="#f44336", fg="white", bd=2, relief="raised")
+                          bg="#f44336", fg="white", bd=2, relief="raised", command=on_closing)
     cancel_button.place(x=320, y=420)
 
 
