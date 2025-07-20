@@ -269,9 +269,24 @@ def report_found_item():
     cancel_button.place(x=340, y=420)
 
 
+# Function for main search bar
+def quick_search():
+    search_term = search_entry.get().strip()
+    
+    # Check if search term is empty
+    if not search_term:
+        messagebox.showerror("Error", "Please enter a search term!")
+        return
+    
+    # TODO: to Add database search functionality here
+    # For now, just showing what would be searched
+    messagebox.showinfo("Quick Search", f"Searching for: '{search_term}'\n\n(Database search functionality will be added later)")
 
-        
-
+# Function for show all items
+def show_all_items():
+    # TODO: to Add database functionality to show all items
+    # For now, just showing a message
+    messagebox.showinfo("Show All", "Loading all items...\n\n(Database functionality will be added later)")
 
 
 # Header Frame
@@ -310,10 +325,10 @@ search_label.pack(side=LEFT, padx=(50, 10), pady=15)
 search_entry = Entry(search_frame, width=50, font=("Arial", 11), relief="solid", bd=1)
 search_entry.pack(side=LEFT, pady=15)
 
-search_btn = Button(search_frame, text="Search", width=10, font=("Arial", 10), bg="#2196F3", fg="white", relief="flat", cursor="hand2")
+search_btn = Button(search_frame, text="Search", width=10, font=("Arial", 10), bg="#2196F3", fg="white", relief="flat", cursor="hand2", command=quick_search)
 search_btn.pack(side=LEFT, padx=10, pady=15)
 
-show_all_btn = Button(search_frame, text="Show All", width=10, font=("Arial", 10), bg="#E91E63", fg="white", relief="flat", cursor="hand2")
+show_all_btn = Button(search_frame, text="Show All", width=10, font=("Arial", 10), bg="#E91E63", fg="white", relief="flat", cursor="hand2", command=show_all_items)
 show_all_btn.pack(side=LEFT, padx=5, pady=15)
 
 # Table Frame
