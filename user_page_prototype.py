@@ -50,8 +50,23 @@ def advanced_search():
     combo_category.current(0)
     combo_category.place(x=140, y=150)
 
+    # Button commands
+    def do_search():
+        search_term = entry_term.get().strip()
+        item_type = type_var.get()
+        category = category_var.get()
+        
+        # Check if search term is empty
+        if not search_term:
+            messagebox.showerror("Error", "Please enter a search term!")
+            return
+        
+        # TODO: to Add database search functionality here
+        # For now, just showing what would be searched
+        messagebox.showinfo("Search", f"Searching for: '{search_term}'\nType: {item_type}\nCategory: {category}\n\n(Database search functionality will be added later)")
+        
     # Buttons
-    btn_search = Button(search_window, text="Search", font=("Arial", 12, "bold"), bg="#21759b", fg="white", width=10)
+    btn_search = Button(search_window, text="Search", font=("Arial", 12, "bold"), bg="#21759b", fg="white", width=10, command=do_search)
     btn_search.place(x=70, y=220)
     btn_cancel = Button(search_window, text="Cancel", font=("Arial", 12, "bold"), bg="#c0392b", fg="white", width=10)
     btn_cancel.place(x=210, y=220)
