@@ -30,6 +30,17 @@ def advanced_search():
     entry_term = Entry(search_window, width=22, font=("Arial", 12), bd=1, relief="solid")
     entry_term.place(x=140, y=70)
 
+        # Item Type
+    lbl_type = Label(search_window, text="Item Type:", font=("Arial", 12), bg="white", fg="black")
+    lbl_type.place(x=30, y=110)
+    type_var = StringVar(value="All")
+    rb_all = Radiobutton(search_window, text="All", variable=type_var, value="All", font=("Arial", 11), bg="white")
+    rb_all.place(x=130, y=110)
+    rb_lost = Radiobutton(search_window, text="Lost", variable=type_var, value="Lost", font=("Arial", 11), bg="white")
+    rb_lost.place(x=190, y=110)
+    rb_found = Radiobutton(search_window, text="Found", variable=type_var, value="Found", font=("Arial", 11), bg="white")
+    rb_found.place(x=260, y=110)
+
 
 # Function to handle lost item reporting
 def report_lost_item():
