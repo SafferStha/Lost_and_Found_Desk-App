@@ -139,6 +139,13 @@ def report_found_item():
     description = Text(found_window, width=35, height=8, font=("Arial", 11), bd=2, relief="raised")
     description.place(x=180, y=240)
 
+    submit_button = Button(found_window, text="Submit Report", width=15, font=("Arial", 12), 
+                          bg="#4CAF50", fg="white", bd=2, relief="raised")
+    submit_button.place(x=200, y=420)
+    
+    cancel_button = Button(found_window, text="Cancel", width=15, font=("Arial", 12), 
+                          bg="#f44336", fg="white", bd=2, relief="raised")
+    cancel_button.place(x=320, y=420)
 
 
 
