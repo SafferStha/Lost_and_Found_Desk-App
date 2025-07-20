@@ -127,6 +127,18 @@ def report_found_item():
     date_found = Entry(found_window, width=35, font=("Arial", 11), bd=2, relief="raised")
     date_found.place(x=180, y=160)
 
+    # Location Found
+    lbl_location_found = Label(found_window, text="Location Found:", bg="black", font=("Arial", 12), fg="white")
+    lbl_location_found.place(x=50, y=200)
+    location_found = Entry(found_window, width=35, font=("Arial", 11), bd=2, relief="raised")
+    location_found.place(x=180, y=200)
+
+    # Description
+    lbl_description = Label(found_window, text="Description:", bg="black", font=("Arial", 12), fg="white")
+    lbl_description.place(x=50, y=240)
+    description = Text(found_window, width=35, height=8, font=("Arial", 11), bd=2, relief="raised")
+    description.place(x=180, y=240)
+
 
 
 
