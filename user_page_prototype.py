@@ -8,12 +8,18 @@ root.title("Lost & Found - Welcome User")
 root.resizable(0, 0)
 root.configure(bg="black")
 
+# Global variables for window management
+lost_window = None
+found_window = None
+
 # Function to handle lost item reporting
 def report_lost_item():
     global lost_window
     
     # Check if window is already open
-
+    if lost_window is not None and lost_window.winfo_exists():
+        lost_window.lift()  # Bring existing window to front
+        return
     
     lost_window = Toplevel()  # --> Create new window
     lost_window.title("Report Lost Item")
