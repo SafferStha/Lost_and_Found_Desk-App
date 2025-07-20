@@ -11,14 +11,25 @@ root.configure(bg="black")
 # Global variables for window management
 lost_window = None
 found_window = None
+search_window = None
 
 # Advanced Search Window
 def advanced_search():
+    global search_window
+    if search_window is not None and search_window.winfo_exists():
+        search_window.lift()
+        return    
     search_window = Toplevel()
     search_window.title("Advanced Search")
     search_window.geometry("400x320")
     search_window.resizable(0, 0)
     search_window.configure(bg="white")
+
+    def on_closing():
+        global search_window
+        search_window.destroy()
+        search_window = None
+    search_window.protocol("WM_DELETE_WINDOW", on_closing)
 
     # Heading
     lbl_heading = Label(search_window, text="Advanced Search", font=("Arial", 20, "bold"), bg="white", fg="black")
@@ -64,11 +75,13 @@ def advanced_search():
         # TODO: to Add database search functionality here
         # For now, just showing what would be searched
         messagebox.showinfo("Search", f"Searching for: '{search_term}'\nType: {item_type}\nCategory: {category}\n\n(Database search functionality will be added later)")
-        
+                # Close search window after successful search
+        on_closing()
+
     # Buttons
     btn_search = Button(search_window, text="Search", font=("Arial", 12, "bold"), bg="#21759b", fg="white", width=10, command=do_search)
     btn_search.place(x=70, y=220)
-    btn_cancel = Button(search_window, text="Cancel", font=("Arial", 12, "bold"), bg="#c0392b", fg="white", width=10)
+    btn_cancel = Button(search_window, text="Cancel", font=("Arial", 12, "bold"), bg="#c0392b", fg="white", width=10, command=on_closing)
     btn_cancel.place(x=210, y=220)
 
 
