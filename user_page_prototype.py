@@ -369,6 +369,6 @@ scrollbar.pack(side=RIGHT, fill=Y)
 style = ttk.Style()
 style.theme_use("clam")
 style.configure("Treeview.Heading", font=("Arial", 11, "bold"), background="#f0f0f0")
-
+style.configure("Treeview", font=("Arial", 10), rowheight=25)
 
 root.mainloop()
