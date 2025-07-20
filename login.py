@@ -181,8 +181,8 @@ typewriter_effect_canvas("Lost & Found Desk App", canvas, app_name_text)
 # --- Footer ---
 footer_text = canvas.create_text(
     450, 520,  # x, y position (centered at bottom)
-    text="Powered by TEAM DOBERMANs",
-    font=("Courier New", 12, "bold"),
+    text="Powered by The Dobermans",
+    font=("Arial", 12, "italic"),
     fill="#222222",
     anchor="center"
 )
