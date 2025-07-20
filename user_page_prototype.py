@@ -30,7 +30,7 @@ def advanced_search():
     entry_term = Entry(search_window, width=22, font=("Arial", 12), bd=1, relief="solid")
     entry_term.place(x=140, y=70)
 
-        # Item Type
+    # Item Type
     lbl_type = Label(search_window, text="Item Type:", font=("Arial", 12), bg="white", fg="black")
     lbl_type.place(x=30, y=110)
     type_var = StringVar(value="All")
@@ -41,7 +41,7 @@ def advanced_search():
     rb_found = Radiobutton(search_window, text="Found", variable=type_var, value="Found", font=("Arial", 11), bg="white")
     rb_found.place(x=260, y=110)
 
-        # Category
+    # Category
     lbl_category = Label(search_window, text="Category:", font=("Arial", 12), bg="white", fg="black")
     lbl_category.place(x=30, y=150)
     category_var = StringVar()
@@ -49,6 +49,12 @@ def advanced_search():
     combo_category['values'] = ("All", "Electronics", "Bags", "Books", "Personal Items", "Keys", "Clothing", "Jewelry", "Documents", "Sports Equipment", "Stationery", "Accessories", "Mobile Phones", "Laptops", "Wallets", "Shoes", "Umbrellas", "Water Bottles", "Glasses", "Watches", "Headphones", "Chargers", "USB Drives", "Cards", "Other")
     combo_category.current(0)
     combo_category.place(x=140, y=150)
+
+    # Buttons
+    btn_search = Button(search_window, text="Search", font=("Arial", 12, "bold"), bg="#21759b", fg="white", width=10)
+    btn_search.place(x=70, y=220)
+    btn_cancel = Button(search_window, text="Cancel", font=("Arial", 12, "bold"), bg="#c0392b", fg="white", width=10)
+    btn_cancel.place(x=210, y=220)
 
 
 # Function to handle lost item reporting
