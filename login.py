@@ -227,7 +227,7 @@ typewriter_effect_canvas(
 )
 # --- Footer ---
 footer_text = canvas.create_text(
-    450, 520,  # x, y position (centered at bottom)
+    500, 520,  # x, y position (centered at bottom; 500 is center for 1000px width)
     text="Powered by TEAM DOBERMANs",
     font=("Courier New", 12, "bold"),
     fill="#222222",
