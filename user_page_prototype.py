@@ -139,8 +139,33 @@ def report_found_item():
     description = Text(found_window, width=35, height=8, font=("Arial", 11), bd=2, relief="raised")
     description.place(x=180, y=240)
 
+    # Submit button with functionality
+    def submit_found_item():
+        # Get all field values
+        name = item_name.get().strip()
+        category = item_category.get().strip()
+        date = date_found.get().strip()
+        location = location_found.get().strip()
+        desc = description.get("1.0", END).strip()
+        
+        # Basic validation
+        if not all([name, category, date, location, desc]):
+            messagebox.showerror("Error", "Please fill all fields!")
+            return
+        
+        # Success message
+        messagebox.showinfo("Success", "Found item report submitted successfully!")
+        
+        # Clear fields
+        item_name.delete(0, END)
+        item_category.delete(0, END)
+        date_found.delete(0, END)
+        location_found.delete(0, END)
+        description.delete("1.0", END)
+
+
     submit_button = Button(found_window, text="Submit Report", width=15, font=("Arial", 12), 
-                          bg="#4CAF50", fg="white", bd=2, relief="raised")
+                          bg="#4CAF50", fg="white", bd=2, relief="raised", command=submit_found_item)
     submit_button.place(x=200, y=420)
     
     cancel_button = Button(found_window, text="Cancel", width=15, font=("Arial", 12), 
