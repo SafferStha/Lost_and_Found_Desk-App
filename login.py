@@ -93,13 +93,22 @@ def register_user():
     register_window.resizable(0, 0)
 
     # Create canvas for gradient background
-    reg_canvas = Canvas(register_window, width=500, height=600, highlightthickness=0)
+    reg_canvas = Canvas(register_window, width=500, height=600, highlightthickness=0,)
     reg_canvas.place(x=0, y=0, relwidth=1, relheight=1)
-
-    # Draw the same gradient as login page
-    for i in range(600):
-        color = get_gradient_color(i)
+    def get_gradient_color_1(i):
+        # Gradient from dark blue (#001848) to light blue (#87ceeb)
+        start_rgb = (0, 24, 72)      # dark blue
+        end_rgb = (135, 206, 235)    # light blue (skyblue)
+        ratio = i / 599
+        r = int(start_rgb[0] + (end_rgb[0] - start_rgb[0]) * ratio)
+        g = int(start_rgb[1] + (end_rgb[1] - start_rgb[1]) * ratio)
+        b = int(start_rgb[2] + (end_rgb[2] - start_rgb[2]) * ratio)
+        return f'#{r:02x}{g:02x}{b:02x}'
+    get_gradient_color_1
+    for i in range(600):  # window height
+        color = get_gradient_color_1(i)
         reg_canvas.create_line(0, i, 500, i, fill=color)
+        reg_canvas.create_line(0, i+1, 500, i+1, fill=color)  # fill the gap for smoother gradient
 
     def on_closing():
         global register_window
