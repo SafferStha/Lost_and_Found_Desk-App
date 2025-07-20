@@ -171,9 +171,9 @@ def register_user():
         on_closing()
 
     # Center the buttons
-    submit_button = Button(register_window, text="Register", width=15, font=("Arial", 12, "bold"), bg="lightgreen", fg="black", bd=2, relief="raised", command=handle_registration)
+    submit_button = Button(register_window, text="Register", width=15, font=("Arial", 12, "bold"), bg="lightgreen", fg="black", relief="raised", command=handle_registration)
     reg_canvas.create_window(150, 410, window=submit_button, anchor="center")
-    cancel_button = Button(register_window, text="Cancel", width=15, font=("Arial", 12, "bold"), bg="lightcoral", fg="black", bd=2, relief="raised", command=on_closing)
+    cancel_button = Button(register_window, text="Cancel", width=15, font=("Arial", 12, "bold"), bg="lightcoral", fg="black", relief="raised", command=on_closing)
     reg_canvas.create_window(350, 410, window=cancel_button, anchor="center")
 
     # Add footer similar to login page
@@ -182,24 +182,24 @@ def register_user():
 
 # --- Login fields directly on canvas ---
 # Username field - properly centered
-username_label = Label(root, text="Username", font=("Calibri", 13), bg=get_gradient_color(170), fg="white")
-canvas.create_window(442, 200, window=username_label, anchor="center")
+username_label = Label(root, text="Username", font=("Calibri", 14), bg=get_gradient_color(170), fg="white")
+canvas.create_window(400, 196, window=username_label, anchor="center")
 
-username_entry = Entry(root, width=30, relief="sunken", bd=2)
+username_entry = Entry(root, width=27, font=("Calibri", 14), relief="sunken", )
 canvas.create_window(498, 220, window=username_entry, anchor="center")
 
 # Password field - properly centered
-password_label = Label(root, text="Password", font=("Calibri", 13), bg=get_gradient_color(260), fg="white")
-canvas.create_window(440, 260, window=password_label, anchor="center")
+password_label = Label(root, text="Password", font=("Calibri", 15), bg=get_gradient_color(260), fg="white")
+canvas.create_window(400, 263, window=password_label, anchor="center")
 
-password_entry = Entry(root, show="*", width=30, relief="sunken", bd=2)
-canvas.create_window(498, 280, window=password_entry, anchor="center")
+password_entry = Entry(root, show="*", width=27, font=("Calibri", 14), relief="sunken", )
+canvas.create_window(498, 285, window=password_entry, anchor="center")
 
 # Buttons - centered horizontally
-login_btn = Button(root, text="Login", width=10, fg="black", font=("Arial", 13, "bold"), bg="skyblue", command=handle_login)
+login_btn = Button(root, text="Login", width=10, fg="black", font=("Arial", 13), bg="skyblue", command=handle_login)
 canvas.create_window(500, 370, window=login_btn, anchor="center")
 
-register_btn = Button(root, text="Register", width=12, fg="black", font=("Arial", 13, "bold"), bg="lightgreen", command=register_user)
+register_btn = Button(root, text="Register", width=12, fg="black", font=("Arial", 13), bg="lightgreen", command=register_user)
 canvas.create_window(500, 420, window=register_btn, anchor="center")
 
 # --- App name typewriter effect ---
