@@ -117,37 +117,37 @@ def register_user():
 
     register_window.protocol("WM_DELETE_WINDOW", on_closing)
 
-    lbl_registration = Label(register_window, text="User Registration", font=("Impact", 22), fg="black", bg=None)
+    lbl_registration = Label(register_window, text="User Registration", font=("Impact", 22), fg="white", bg=get_gradient_color_1(40))
     reg_canvas.create_window(250, 40, window=lbl_registration, anchor="center")
 
     # Full Name
-    lbl_full_name = Label(register_window, text="Full Name:", font=("Arial", 12, "bold"), fg="black", bg=None)
+    lbl_full_name = Label(register_window, text="Full Name:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(120))
     reg_canvas.create_window(150, 120, window=lbl_full_name, anchor="center")
-    full_name_entry = Entry(register_window, width=25, font=("Arial", 11), bd=2, relief="sunken")
+    full_name_entry = Entry(register_window, width=25, font=("Arial", 11), relief="sunken")
     reg_canvas.create_window(350, 120, window=full_name_entry, anchor="center")
 
     # Email
-    lbl_email = Label(register_window, text="Email:", font=("Arial", 12, "bold"), fg="black", bg=None)
+    lbl_email = Label(register_window, text="Email:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(170))
     reg_canvas.create_window(150, 170, window=lbl_email, anchor="center")
-    email_entry = Entry(register_window, width=25, font=("Arial", 11), bd=2, relief="sunken")
+    email_entry = Entry(register_window, width=25, font=("Arial", 11),  relief="sunken")
     reg_canvas.create_window(350, 170, window=email_entry, anchor="center")
 
     # Phone
-    lbl_phone = Label(register_window, text="Phone:", font=("Arial", 12, "bold"), fg="black", bg=None)
+    lbl_phone = Label(register_window, text="Phone:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(220))
     reg_canvas.create_window(150, 220, window=lbl_phone, anchor="center")
-    phone_entry = Entry(register_window, width=25, font=("Arial", 11), bd=2, relief="sunken")
+    phone_entry = Entry(register_window, width=25, font=("Arial", 11), relief="sunken")
     reg_canvas.create_window(350, 220, window=phone_entry, anchor="center")
 
     # Password
-    lbl_password = Label(register_window, text="Password:", font=("Arial", 12, "bold"), fg="black", bg=None)
+    lbl_password = Label(register_window, text="Password:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(270))
     reg_canvas.create_window(150, 270, window=lbl_password, anchor="center")
-    password_entry_reg = Entry(register_window, show="*", width=25, font=("Arial", 11), bd=2, relief="sunken")
+    password_entry_reg = Entry(register_window, show="*", width=25, font=("Arial", 11),  relief="sunken")
     reg_canvas.create_window(350, 270, window=password_entry_reg, anchor="center")
 
     # Confirm Password
-    lbl_confirm_password = Label(register_window, text="Confirm Password:", font=("Arial", 12, "bold"), fg="black", bg=None)
+    lbl_confirm_password = Label(register_window, text="Confirm Password:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(320))
     reg_canvas.create_window(150, 320, window=lbl_confirm_password, anchor="center")
-    confirm_password_entry = Entry(register_window, show="*", width=25, font=("Arial", 11), bd=2, relief="sunken")
+    confirm_password_entry = Entry(register_window, show="*", width=25, font=("Arial", 11), relief="sunken")
     reg_canvas.create_window(350, 320, window=confirm_password_entry, anchor="center")
 
     def handle_registration():
@@ -180,13 +180,13 @@ def register_user():
         on_closing()
 
     # Center the buttons
-    submit_button = Button(register_window, text="Register", width=15, font=("Arial", 12, "bold"), bg="lightgreen", fg="black", relief="raised", command=handle_registration)
+    submit_button = Button(register_window, text="Register", width=15, font=("Arial", 12, "bold"), bg="lightgreen", fg="black", command=handle_registration)
     reg_canvas.create_window(150, 410, window=submit_button, anchor="center")
-    cancel_button = Button(register_window, text="Cancel", width=15, font=("Arial", 12, "bold"), bg="lightcoral", fg="black", relief="raised", command=on_closing)
+    cancel_button = Button(register_window, text="Cancel", width=15, font=("Arial", 12, "bold"), bg="lightcoral", fg="black", command=on_closing)
     reg_canvas.create_window(350, 410, window=cancel_button, anchor="center")
 
     # Add footer similar to login page
-    footer_reg = Label(register_window, text="Join the Lost & Found community!", font=("Arial", 12, "bold"), fg="#111111", bg=None)
+    footer_reg = Label(register_window, text="Join the Lost & Found community!", font=("Arial", 12, "bold"), fg="#111111", bg=get_gradient_color_1(500))
     reg_canvas.create_window(250, 500, window=footer_reg, anchor="center")
 
 # --- Login fields directly on canvas ---
