@@ -96,6 +96,38 @@ def report_lost_item():
     cancel_button = Button(lost_window, text="Cancel", width=12, font=("Arial", 12), bg="#f44336", fg="white", bd=2, relief="raised", command=on_closing)
     cancel_button.place(x=340, y=420)
 
+
+def report_found_item():
+
+    found_window = Toplevel()  # --> Create new window
+    found_window.configure(bg="black")
+    found_window.title("Report Found Item")
+    found_window.geometry("600x500")
+    found_window.resizable(0, 0)
+
+    # Main heading
+    lbl_registration = Label(found_window, text="Report Found Item", font=("Arial", 18, "bold"), bg="#4CAF50", fg="white")
+    lbl_registration.place(x=200, y=20)
+
+    # Item Name
+    lbl_item_name = Label(found_window, text="Item Name:", bg="black", font=("Arial", 12), fg="white")
+    lbl_item_name.place(x=50, y=80)
+    item_name = Entry(found_window, width=35, font=("Arial", 11), bd=2, relief="raised")
+    item_name.place(x=180, y=80)
+
+    # Item Category
+    lbl_item_category = Label(found_window, text="Item Category:", bg="black", font=("Arial", 12), fg="white")
+    lbl_item_category.place(x=50, y=120)
+    item_category = Entry(found_window, width=35, font=("Arial", 11), bd=2, relief="raised")
+    item_category.place(x=180, y=120)
+
+
+
+
+        
+
+
+
 # Header Frame
 header_frame = Frame(root, bg="#4A9EFF", height=80)
 header_frame.pack(fill=X)
@@ -114,7 +146,7 @@ button_frame.pack_propagate(False)
 report_lost_btn = Button(button_frame, text="Report Lost Item", width=18, height=2, font=("Arial", 12, "bold"), bg="#FFB84D", fg="black", relief="flat", cursor="hand2",command=report_lost_item)
 report_lost_btn.pack(side=LEFT, padx=30, pady=10)
 
-report_found_btn = Button(button_frame, text="Report Found Item", width=18, height=2, font=("Arial", 12, "bold"), bg="#4CAF50", fg="white", relief="flat", cursor="hand2")
+report_found_btn = Button(button_frame, text="Report Found Item", width=18, height=2, font=("Arial", 12, "bold"), bg="#4CAF50", fg="white", relief="flat", cursor="hand2", command=report_found_item)
 report_found_btn.pack(side=LEFT, padx=30, pady=10)
 
 search_items_btn = Button(button_frame, text="Search Items", width=18, height=2, font=("Arial", 12, "bold"), bg="#00BCD4", fg="white", relief="flat", cursor="hand2")
