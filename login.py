@@ -19,9 +19,10 @@ def get_gradient_color(i):
     start_rgb = (0, 24, 72)      # dark blue
     end_rgb = (135, 206, 235)    # light blue (skyblue)
     ratio = i / 599
-    r = int(start_rgb[0] + (end_rgb[0] - start_rgb[0]) * ratio)
-    g = int(start_rgb[1] + (end_rgb[1] - start_rgb[1]) * ratio)
-    b = int(start_rgb[2] + (end_rgb[2] - start_rgb[2]) * ratio)
+    r = 30 + int(i * 0.2)
+    g = 30 + int(i * 0.1)
+    b = 100 + int(i * 0.2)
+    r, g, b = min(r, 255), min(g, 255), min(b, 255)
     return f'#{r:02x}{g:02x}{b:02x}'
 
 root.update_idletasks()  # Ensure geometry is updated
