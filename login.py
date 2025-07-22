@@ -290,12 +290,11 @@ typewriter_effect_canvas(
         on_complete=lambda: run_blink_sequence(0, is_first=True)
     )
 )
-# --- Footer ---
-footer_text = canvas.create_text(
-    500, 520,  # x, y position (centered at bottom; 500 is center for 1000px width)
-    text="Powered by TEAM DOBERMANs",
-    font=("Courier New", 12, "bold"),
-    fill="#222222",
+footer_text1 = canvas.create_text(
+    500, 553,  # x, y position (centered at bottom)
+    text="Turning 'lost' into 'found' together.", 
+    font=("Open Sans", 12, "bold"),
+    fill="#000000",
     anchor="center"
 )
 
