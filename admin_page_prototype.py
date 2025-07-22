@@ -12,6 +12,7 @@ root.configure(bg="white")
 add_lost_window = None
 add_found_window = None
 edit_user_window = None
+dark_mode = False
 
 # Header Frame
 header_frame = Frame(root, bg="#2196F3", height=80)
@@ -250,7 +251,7 @@ action_frame.pack(fill=X, padx=20, pady=10)
 action_frame.pack_propagate(False)
 
 # Action buttons
-Button(action_frame, text="Add Lost Item", font=("Arial", 12, "bold"), bg="#FF9800", 
+Button(action_frame, text="Add Lost Item", font=("Arial", 12, "bold"), bg="#FF3300", 
        fg="white", width=15, height=2,command=add_lost_item).pack(side=LEFT, padx=10, pady=10)
 
 Button(action_frame, text="Add Found Item", font=("Arial", 12, "bold"), bg="#4CAF50", 
@@ -439,7 +440,6 @@ stats_label.pack(pady=50)
 
 
 # Load initial data
-refresh_table()
 load_users()
 
 root.mainloop()
