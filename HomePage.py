@@ -4,7 +4,7 @@ import tkinter.ttk as ttk
 COLUMNS = ("ID", "Item Name", "Category", "Type", "Date", "Location", "Status")
 
 root = tk.Tk()
-root.geometry("1100x700")
+root.geometry("1200x700")
 root.title("Lost & Found App - Admin Control Panel")
 root.resizable(1, 1)
 
