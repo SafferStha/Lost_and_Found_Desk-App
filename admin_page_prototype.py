@@ -351,6 +351,22 @@ def edit_user():
     email.place(x=200, y=y_pos)
     email.insert(0, user_data[2] if len(user_data) > 2 else "")
 
+    # Phone
+    y_pos += 40
+    Label(form_frame, text="Phone:", font=("Arial", 12), bg="black", fg="white").place(x=50, y=y_pos)
+    phone = Entry(form_frame, width=30, font=("Arial", 11), bd=1, relief="solid")
+    phone.place(x=200, y=y_pos)
+    phone.insert(0, user_data[3] if len(user_data) > 3 else "")
+    
+    # User Type
+    y_pos += 40
+    Label(form_frame, text="User Type:", font=("Arial", 12), bg="black", fg="white").place(x=50, y=y_pos)
+    user_type = ttk.Combobox(form_frame, width=28, font=("Arial", 11), state="readonly")
+    user_type['values'] = ('admin', 'user')
+    user_type.place(x=200, y=y_pos)
+    user_type.set(user_data[4] if len(user_data) > 4 else "user")
+
+
 
 
 def load_users():
