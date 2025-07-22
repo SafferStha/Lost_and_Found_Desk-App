@@ -82,24 +82,59 @@ def add_lost_item():
     # Basic form fields
     y_pos = 50
     
+    #Item Name   
     Label(form_frame, text="Item Name:", font=("Arial", 12), bg="black", fg="white").place(x=50, y=y_pos)
     item_name = Entry(form_frame, width=30, font=("Arial", 11), bd=1, relief="solid")
     item_name.place(x=200, y=y_pos)
     
+    #Category 
     y_pos += 40
     Label(form_frame, text="Category:", font=("Arial", 12), bg="black", fg="white").place(x=50, y=y_pos)
     category = Entry(form_frame, width=30, font=("Arial", 11), bd=1, relief="solid")
     category.place(x=200, y=y_pos)
     
+    # Date Lost
+    y_pos += 40
+    Label(form_frame, text="Date Lost:", font=("Arial", 12), bg="black", fg="white").place(x=50, y=y_pos)
+    date_lost = Entry(form_frame, width=30, font=("Arial", 11), bd=1, relief="solid")
+    date_lost.place(x=200, y=y_pos)
+    
+    # Location Lost
+    y_pos += 40
+    Label(form_frame, text="Location Lost:", font=("Arial", 12), bg="black", fg="white").place(x=50, y=y_pos)
+    location_lost = Entry(form_frame, width=30, font=("Arial", 11), bd=1, relief="solid")
+    location_lost.place(x=200, y=y_pos)
+    
+    # Description
+    y_pos += 40
+    Label(form_frame, text="Description:", font=("Arial", 12), bg="black", fg="white").place(x=50, y=y_pos)
+    description = Text(form_frame, width=30, height=4, font=("Arial", 11), bd=1, relief="solid")
+    description.place(x=200, y=y_pos)
+    
+    # Contact Info
+    y_pos += 120
+    Label(form_frame, text="Contact Info:", font=("Arial", 12), bg="black", fg="white").place(x=50, y=y_pos)
+    contact_info = Entry(form_frame, width=30, font=("Arial", 11), bd=1, relief="solid")
+    contact_info.place(x=200, y=y_pos)
+    
     def submit_lost_item():
-        if not item_name.get().strip() or not category.get().strip():
-            messagebox.showerror("Error", "Please fill required fields!")
+        # Validate all fields
+        if not all([
+            item_name.get().strip(),
+            category.get().strip(),
+            date_lost.get().strip(),
+            location_lost.get().strip(),
+            description.get("1.0", END).strip(),
+            contact_info.get().strip()
+        ]):
+            messagebox.showerror("Error", "Please fill all fields!")
             return
+        #If all validation pass
         messagebox.showinfo("Success", "Lost item added successfully!")
         on_closing()
     
     # Buttons
-    y_pos += 100
+    y_pos += 50
     Button(form_frame, text="Submit", font=("Arial", 12, "bold"), bg="#28a745", fg="white", 
            width=12, command=submit_lost_item).place(x=200, y=y_pos)
     Button(form_frame, text="Cancel", font=("Arial", 12, "bold"), bg="#dc3545", fg="white", 
