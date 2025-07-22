@@ -366,6 +366,23 @@ def edit_user():
     user_type.place(x=200, y=y_pos)
     user_type.set(user_data[4] if len(user_data) > 4 else "user")
 
+    def update_user():
+        # Validate fields
+        if not all([full_name.get().strip(), email.get().strip(), phone.get().strip()]):
+            messagebox.showerror("Error", "Please fill all fields!")
+            return
+        
+        if "@" not in email.get() or "." not in email.get():
+            messagebox.showerror("Error", "Please enter a valid email address!")
+            return
+        
+        # Refresh the users table
+        load_users()
+        
+        messagebox.showinfo("Success", "User updated successfully!")
+        on_closing()
+
+
 
 
 
