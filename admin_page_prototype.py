@@ -4,7 +4,7 @@ from tkinter import ttk, messagebox
 # Main window setup
 root = Tk()
 root.geometry("1200x700")
-root.title("Lost & Found - Admin Panel")
+root.title("Lost & Found - Admin Control Panel")
 root.resizable(0, 0)
 root.configure(bg="white")
 

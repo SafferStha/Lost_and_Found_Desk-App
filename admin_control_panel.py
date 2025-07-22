@@ -1,7 +1,7 @@
 from tkinter import *
 root = Tk()
-root.geometry("1000x700")
-root.title("Lost and Found Desk - Admin Panel")
+root.geometry("1200x700")
+root.title("Lost and Found Desk - Admin Login Panel")
 root.resizable(0, 0)
 root.configure(bg="black")
 
