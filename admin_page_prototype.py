@@ -11,6 +11,7 @@ root.configure(bg="white")
 # Global variables for window management
 add_lost_window = None
 add_found_window = None
+edit_user_window = None
 
 # Header Frame
 header_frame = Frame(root, bg="#2196F3", height=80)
@@ -280,6 +281,41 @@ tree.pack(side=LEFT, fill=BOTH, expand=True)
 scrollbar.pack(side=RIGHT, fill=Y)
 
 # Users Management Tab Content
+def edit_user():
+    global edit_user_window
+    
+    # Get selected item
+    selected = users_tree.selection()
+    if not selected:
+        messagebox.showerror("Error", "Please select a user to edit!")
+        return
+    
+    if edit_user_window is not None and edit_user_window.winfo_exists():
+        edit_user_window.lift()
+        return
+    
+    # Get selected user data
+    item = users_tree.item(selected[0])
+    user_data = item['values']
+    
+    edit_user_window = Toplevel()
+    edit_user_window.title("Edit User")
+    edit_user_window.geometry("600x500")
+    edit_user_window.resizable(0, 0)
+    edit_user_window.configure(bg="black")
+    edit_user_window.grab_set()
+    edit_user_window.transient(root)
+    
+    def on_closing():
+        global edit_user_window
+        edit_user_window.destroy()
+        edit_user_window = None
+    
+    edit_user_window.protocol("WM_DELETE_WINDOW", on_closing)
+    
+    messagebox.showinfo("Info", "Edit user dialog opened (placeholder)")
+    on_closing()
+
 def load_users():
     # Clear existing users
     for item in users_tree.get_children():
