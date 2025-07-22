@@ -285,8 +285,9 @@ app_name_text2 = canvas.create_text(500, 135, text="", font=("Lato", 20), fill="
 typewriter_effect_canvas(
     "Lost & Found Desktop App", canvas, app_name_text,
     delay=100,
-    on_complete=lambda: typewriter_effect_canvas(
-        "Find what you're looking for!", canvas, app_name_text2, delay=100
+    on_complete=lambda: typewriter_effect(
+        "Connecting what's lost with those who are looking!", canvas, app_name_text2, delay=100,
+        on_complete=lambda: run_blink_sequence(0, is_first=True)
     )
 )
 # --- Footer ---
