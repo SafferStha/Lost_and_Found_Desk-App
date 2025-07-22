@@ -3,15 +3,16 @@ from tkinter import ttk
 from tkinter import messagebox
 
 root = Tk()
-root.geometry("1200x800")
+root.geometry("1100x700")
 root.title("Lost & Found - Welcome User")
 root.resizable(0, 0)
-root.configure(bg="black")
+root.configure(bg="white")  # Set initial background to light mode
 
 # Global variables for window management
 lost_window = None
 found_window = None
 search_window = None
+dark_mode = False
 
 # Advanced Search Window
 def advanced_search():
@@ -23,7 +24,11 @@ def advanced_search():
     search_window.title("Advanced Search")
     search_window.geometry("400x320")
     search_window.resizable(0, 0)
-    search_window.configure(bg="white")
+    
+    # Set background based on current mode
+    window_bg = "#2b2b2b" if dark_mode else "white"
+    text_color = "white" if dark_mode else "black"
+    search_window.configure(bg=window_bg)
 
     def on_closing():
         global search_window
@@ -32,28 +37,28 @@ def advanced_search():
     search_window.protocol("WM_DELETE_WINDOW", on_closing)
 
     # Heading
-    lbl_heading = Label(search_window, text="Advanced Search", font=("Arial", 20, "bold"), bg="white", fg="black")
+    lbl_heading = Label(search_window, text="Advanced Search", font=("Arial", 20, "bold"), bg=window_bg, fg=text_color)
     lbl_heading.place(x=60, y=20)
 
     # Search Term
-    lbl_term = Label(search_window, text="Search Term:", font=("Arial", 12), bg="white", fg="black")
+    lbl_term = Label(search_window, text="Search Term:", font=("Arial", 12), bg=window_bg, fg=text_color)
     lbl_term.place(x=30, y=70)
     entry_term = Entry(search_window, width=22, font=("Arial", 12), bd=1, relief="solid")
     entry_term.place(x=140, y=70)
 
     # Item Type
-    lbl_type = Label(search_window, text="Item Type:", font=("Arial", 12), bg="white", fg="black")
+    lbl_type = Label(search_window, text="Item Type:", font=("Arial", 12), bg=window_bg, fg=text_color)
     lbl_type.place(x=30, y=110)
     type_var = StringVar(value="All")
-    rb_all = Radiobutton(search_window, text="All", variable=type_var, value="All", font=("Arial", 11), bg="white")
+    rb_all = Radiobutton(search_window, text="All", variable=type_var, value="All", font=("Arial", 11), bg=window_bg, fg=text_color)
     rb_all.place(x=130, y=110)
-    rb_lost = Radiobutton(search_window, text="Lost", variable=type_var, value="Lost", font=("Arial", 11), bg="white")
+    rb_lost = Radiobutton(search_window, text="Lost", variable=type_var, value="Lost", font=("Arial", 11), bg=window_bg, fg=text_color)
     rb_lost.place(x=190, y=110)
-    rb_found = Radiobutton(search_window, text="Found", variable=type_var, value="Found", font=("Arial", 11), bg="white")
+    rb_found = Radiobutton(search_window, text="Found", variable=type_var, value="Found", font=("Arial", 11), bg=window_bg, fg=text_color)
     rb_found.place(x=260, y=110)
 
     # Category
-    lbl_category = Label(search_window, text="Category:", font=("Arial", 12), bg="white", fg="black")
+    lbl_category = Label(search_window, text="Category:", font=("Arial", 12), bg=window_bg, fg=text_color)
     lbl_category.place(x=30, y=150)
     category_var = StringVar()
     combo_category = ttk.Combobox(search_window, textvariable=category_var, font=("Arial", 12), state="readonly", width=18)
@@ -97,7 +102,11 @@ def report_lost_item():
     lost_window = Toplevel()  # --> Create new window
     lost_window.title("Report Lost Item")
     lost_window.geometry("600x500")
-    lost_window.configure(bg="black")
+    
+    # Set background based on current mode
+    window_bg = "#2b2b2b" if dark_mode else "white"
+    text_color = "white" if dark_mode else "black"
+    lost_window.configure(bg=window_bg)
     lost_window.resizable(0, 0)
     
     # Handle window close event to reset the global variable
@@ -113,31 +122,31 @@ def report_lost_item():
     lbl_registration.place(x=200, y=20)
 
     # Item Name
-    lbl_item_name = Label(lost_window, text="Item Name:", bg="black", font=("Arial", 12), fg="white")
+    lbl_item_name = Label(lost_window, text="Item Name:", bg=window_bg, font=("Arial", 12), fg=text_color)
     lbl_item_name.place(x=50, y=80)
     item_name = Entry(lost_window, width=35, font=("Arial", 11), bd=2, relief="raised")
     item_name.place(x=180, y=80)
 
     # Item Category
-    lbl_item_category = Label(lost_window, text="Item Category:", bg="black", font=("Arial", 12), fg="white")
+    lbl_item_category = Label(lost_window, text="Item Category:", bg=window_bg, font=("Arial", 12), fg=text_color)
     lbl_item_category.place(x=50, y=120)
     item_category = Entry(lost_window, width=35, font=("Arial", 11), bd=2, relief="raised")
     item_category.place(x=180, y=120)
 
     # Date Lost
-    lbl_date_lost = Label(lost_window, text="Date Lost:", bg="black", font=("Arial", 12), fg="white")
+    lbl_date_lost = Label(lost_window, text="Date Lost:", bg=window_bg, font=("Arial", 12), fg=text_color)
     lbl_date_lost.place(x=50, y=160)
     date_lost = Entry(lost_window, width=35, font=("Arial", 11), bd=2, relief="raised")
     date_lost.place(x=180, y=160)
 
     # Location Lost
-    lbl_location_lost = Label(lost_window, text="Location Lost:", bg="black", font=("Arial", 12), fg="white")
+    lbl_location_lost = Label(lost_window, text="Location Lost:", bg=window_bg, font=("Arial", 12), fg=text_color)
     lbl_location_lost.place(x=50, y=200)
     location_lost = Entry(lost_window, width=35, font=("Arial", 11), bd=2, relief="raised")
     location_lost.place(x=180, y=200)
 
     # Description
-    lbl_description = Label(lost_window, text="Description:", bg="black", font=("Arial", 12), fg="white")
+    lbl_description = Label(lost_window, text="Description:", bg=window_bg, font=("Arial", 12), fg=text_color)
     lbl_description.place(x=50, y=240)
     description = Text(lost_window, width=35, height=8, font=("Arial", 11), bd=2, relief="raised")
     description.place(x=180, y=240)
@@ -186,7 +195,11 @@ def report_found_item():
         return
 
     found_window = Toplevel()  # --> Create new window
-    found_window.configure(bg="black")
+    
+    # Set background based on current mode
+    window_bg = "#2b2b2b" if dark_mode else "white"
+    text_color = "white" if dark_mode else "black"
+    found_window.configure(bg=window_bg)
     found_window.title("Report Found Item")
     found_window.geometry("600x500")
     found_window.resizable(0, 0)
@@ -204,31 +217,31 @@ def report_found_item():
     lbl_registration.place(x=200, y=20)
 
     # Item Name
-    lbl_item_name = Label(found_window, text="Item Name:", bg="black", font=("Arial", 12), fg="white")
+    lbl_item_name = Label(found_window, text="Item Name:", bg=window_bg, font=("Arial", 12), fg=text_color)
     lbl_item_name.place(x=50, y=80)
     item_name = Entry(found_window, width=35, font=("Arial", 11), bd=2, relief="raised")
     item_name.place(x=180, y=80)
 
     # Item Category
-    lbl_item_category = Label(found_window, text="Item Category:", bg="black", font=("Arial", 12), fg="white")
+    lbl_item_category = Label(found_window, text="Item Category:", bg=window_bg, font=("Arial", 12), fg=text_color)
     lbl_item_category.place(x=50, y=120)
     item_category = Entry(found_window, width=35, font=("Arial", 11), bd=2, relief="raised")
     item_category.place(x=180, y=120)
 
     # Date Found
-    lbl_date_found = Label(found_window, text="Date Found:", bg="black", font=("Arial", 12), fg="white")
+    lbl_date_found = Label(found_window, text="Date Found:", bg=window_bg, font=("Arial", 12), fg=text_color)
     lbl_date_found.place(x=50, y=160)
     date_found = Entry(found_window, width=35, font=("Arial", 11), bd=2, relief="raised")
     date_found.place(x=180, y=160)
 
     # Location Found
-    lbl_location_found = Label(found_window, text="Location Found:", bg="black", font=("Arial", 12), fg="white")
+    lbl_location_found = Label(found_window, text="Location Found:", bg=window_bg, font=("Arial", 12), fg=text_color)
     lbl_location_found.place(x=50, y=200)
     location_found = Entry(found_window, width=35, font=("Arial", 11), bd=2, relief="raised")
     location_found.place(x=180, y=200)
 
     # Description
-    lbl_description = Label(found_window, text="Description:", bg="black", font=("Arial", 12), fg="white")
+    lbl_description = Label(found_window, text="Description:", bg=window_bg, font=("Arial", 12), fg=text_color)
     lbl_description.place(x=50, y=240)
     description = Text(found_window, width=35, height=8, font=("Arial", 11), bd=2, relief="raised")
     description.place(x=180, y=240)
@@ -299,12 +312,12 @@ header_label = Label(header_frame, text="Lost & Found Desk - Welcome User", font
 header_label.pack(pady=20)
 
 # Button Frame
-button_frame = Frame(root, bg="black", height=80)
+button_frame = Frame(root, bg="white", height=80)
 button_frame.pack(fill=X, pady=20)
 button_frame.pack_propagate(False)
 
 # Action Buttons with connected functions
-report_lost_btn = Button(button_frame, text="Report Lost Item", width=18, height=2, font=("Arial", 12, "bold"), bg="#FFB84D", fg="black", relief="flat", cursor="hand2",command=report_lost_item)
+report_lost_btn = Button(button_frame, text="Report Lost Item", width=18, height=2, font=("Arial", 12, "bold"), bg="#FF3300", fg="black", relief="flat", cursor="hand2",command=report_lost_item)
 report_lost_btn.pack(side=LEFT, padx=30, pady=10)
 
 report_found_btn = Button(button_frame, text="Report Found Item", width=18, height=2, font=("Arial", 12, "bold"), bg="#4CAF50", fg="white", relief="flat", cursor="hand2", command=report_found_item)
@@ -314,12 +327,12 @@ search_items_btn = Button(button_frame, text="Search Items", width=18, height=2,
 search_items_btn.pack(side=LEFT, padx=30, pady=10)
 
 # Search Frame
-search_frame = Frame(root, bg="black", height=60)
+search_frame = Frame(root, bg="white", height=60)
 search_frame.pack(fill=X, pady=(0, 20))
 search_frame.pack_propagate(False)
 
 # Search Label and Entry
-search_label = Label(search_frame, text="Search:", font=("Arial", 12), bg="black", fg="white")
+search_label = Label(search_frame, text="Search:", font=("Arial", 12), bg="white", fg="black")
 search_label.pack(side=LEFT, padx=(50, 10), pady=15)
 
 search_entry = Entry(search_frame, width=50, font=("Arial", 11), relief="solid", bd=1)
