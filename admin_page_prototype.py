@@ -85,4 +85,26 @@ tree.configure(yscrollcommand=scrollbar.set)
 tree.pack(side=LEFT, fill=BOTH, expand=True)
 scrollbar.pack(side=RIGHT, fill=Y)
 
+# Users Management Tab Content
+def load_users():
+    # Clear existing users
+    for item in users_tree.get_children():
+        users_tree.delete(item)
+    
+    # Users table is now empty - ready for real data
+
+# Users table
+users_columns = ("ID", "Full Name", "Email", "Phone", "Type")
+users_tree = ttk.Treeview(users_frame, columns=users_columns, show="headings", height=20)
+
+for col in users_columns:
+    users_tree.heading(col, text=col)
+    users_tree.column(col, width=200, anchor=W)
+
+users_tree.pack(fill=BOTH, expand=True, padx=20, pady=20)
+
+# Load initial data
+refresh_table()
+load_users()
+
 root.mainloop()
