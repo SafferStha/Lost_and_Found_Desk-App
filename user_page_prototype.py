@@ -308,8 +308,56 @@ header_frame.pack(fill=X)
 header_frame.pack_propagate(False)
 
 # Header Label
-header_label = Label(header_frame, text="Lost & Found Desk - Welcome User", font=("Arial", 20, "bold"), bg="#4A9EFF", fg="white")
-header_label.pack(pady=20)
+header_label = Label(header_frame, text="Lost & Found Desk - Welcome User", 
+                    font=("Arial", 20, "bold"), bg="#4A9EFF", fg="white")
+header_label.pack(side=LEFT, pady=20, padx=20)
+
+# Dark Mode Toggle Function
+def toggle_dark_mode():
+    global dark_mode
+    dark_mode = not dark_mode
+    
+    if dark_mode:
+        # Dark mode colors
+        header_bg = "#1a1a1a"
+        button_text = "☀️ Light Mode"
+        root_bg = "#2b2b2b"
+        frame_bg = "#2b2b2b"
+        table_bg = "#3b3b3b"
+        text_color = "white"
+    else:
+        # Light mode colors (original design)
+        header_bg = "#4A9EFF"
+        button_text = "🌙 Dark Mode"
+        root_bg = "white"
+        frame_bg = "white"
+        table_bg = "white"
+        text_color = "black"
+    
+    # Update main window
+    root.configure(bg=root_bg)
+    
+    # Update header
+    header_frame.configure(bg=header_bg)
+    header_label.configure(bg=header_bg)
+    
+    # Update button frame
+    button_frame.configure(bg=frame_bg)
+    
+    # Update search frame
+    search_frame.configure(bg=frame_bg)
+    search_label.configure(bg=frame_bg, fg=text_color)
+    
+    # Update table frame
+    table_frame.configure(bg=table_bg)
+    
+    # Update button text
+    dark_mode_btn.configure(text=button_text)
+
+# Dark Mode Toggle Button
+dark_mode_btn = Button(header_frame, text="🌙 Dark Mode", font=("Arial", 10, "bold"), 
+                      bg="white", fg="black", command=toggle_dark_mode)
+dark_mode_btn.pack(side=RIGHT, pady=20, padx=20)
 
 # Button Frame
 button_frame = Frame(root, bg="white", height=80)
