@@ -103,6 +103,24 @@ for col in users_columns:
 
 users_tree.pack(fill=BOTH, expand=True, padx=20, pady=20)
 
+# Reports Tab Content
+# Create simple stats display
+reports_content = Frame(reports_frame, bg="white")
+reports_content.pack(fill=BOTH, expand=True, padx=50, pady=50)
+
+# Stats display
+stats_text = """
+Total Items: 0
+Lost Items: 0
+Found Items: 0
+Active Items: 0
+Claimed Items: 0
+"""
+
+stats_label = Label(reports_content, text=stats_text, font=("Arial", 14), 
+                   bg="white", fg="black", justify=LEFT)
+stats_label.pack(pady=50)
+
 # Load initial data
 refresh_table()
 load_users()
