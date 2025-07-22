@@ -280,7 +280,7 @@ def typewriter_effect(text, canvas, item_id, delay=100, on_complete=None):
     update_text()
 
 # Center the text horizontally (500 is center of 1000px window)
-app_name_text = canvas.create_text(500, 90, text="", font=("Impact", 30, "bold"), fill="white", anchor="center")
+app_name_text = canvas.create_text(500, 90, text="", font=("Impact", 35, "bold"), fill="white", anchor="center")
 app_name_text2 = canvas.create_text(500, 135, text="", font=("Lato", 20), fill="white", anchor="center")
 typewriter_effect_canvas(
     "Lost & Found Desktop App", canvas, app_name_text,
