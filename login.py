@@ -282,8 +282,55 @@ def typewriter_effect(text, canvas, item_id, delay=100, on_complete=None):
 # Center the text horizontally (500 is center of 1000px window)
 app_name_text = canvas.create_text(500, 90, text="", font=("Impact", 35, "bold"), fill="white", anchor="center")
 app_name_text2 = canvas.create_text(500, 135, text="", font=("Lato", 20), fill="white", anchor="center")
-typewriter_effect_canvas(
-    "Lost & Found Desktop App", canvas, app_name_text,
+app_name_text3 = canvas.create_text(500, 170, text="", font=("Lato", 20), fill="white", anchor="center")
+# Sequence for typewriter and blink effects
+def run_blink_sequence(index=0, is_first=False):
+    blink_texts = [
+        "Every item has a story. Find yours!",
+        "Don't just wish it back, find it here.",
+        "Lost, but not forgotten. Found, and reunited.",
+        "Dedicated to reuniting you with what's yours.",
+        "Find what you've lost. Return what you've found.",
+        "Building bridges between the lost and the found.",
+        "Helping forgotten items remember their way home.",
+    ]
+    current_text = blink_texts[index]
+    next_index = (index + 1) % len(blink_texts)
+    next_text = blink_texts[next_index]
+    
+    if is_first:
+        # For the first text, start with blank text and fade in, wait 3 seconds, then start normal cycle
+        canvas.itemconfig(app_name_text3, text=current_text, fill="#3f2e85")  # Start invisible
+        fade_in_first(0, current_text, next_text)
+    else:
+        # Normal fade cycle for subsequent texts
+        blink_text_effect(
+            current_text, next_text, canvas, app_name_text3, delay=2000, fade_steps=20,
+            on_complete=lambda: run_blink_sequence(next_index)
+        )
+
+def fade_in_first(step, current_text, next_text, fade_steps=20):
+    # Fade from background color (#3f2e85) to white for the first text
+    def blend_color(c1, c2, t):
+        return tuple(int(c1[i] + (c2[i] - c1[i]) * t) for i in range(3))
+    # Convert #3f2e85 to RGB
+    bg_rgb = (63, 46, 133)  # #3f2e85 in RGB
+    white_rgb = (255, 255, 255)
+    t = step / fade_steps
+    r, g, b = blend_color(bg_rgb, white_rgb, t)
+    color = f'#{r:02x}{g:02x}{b:02x}'
+    canvas.itemconfig(app_name_text3, fill=color)
+    if step < fade_steps:
+        root.after(50, fade_in_first, step + 1, current_text, next_text, fade_steps)
+    else:
+        # Text is now fully white, wait 3 seconds, then start normal cycle
+        root.after(3000, lambda: blink_text_effect(
+            current_text, next_text, canvas, app_name_text3, delay=2000, fade_steps=20,
+            on_complete=lambda: run_blink_sequence(1)  # Start with index 1 for next text
+        ))
+
+typewriter_effect(
+    "Lost & Found Desktop App", canvas, app_name_text,  
     delay=100,
     on_complete=lambda: typewriter_effect(
         "Connecting what's lost with those who are looking!", canvas, app_name_text2, delay=100,
