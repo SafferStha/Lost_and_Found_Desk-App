@@ -41,6 +41,28 @@ style.theme_use("clam")
 style.configure("TNotebook.Tab", font=("Arial", 12, "bold"), padding=[20, 10])
 
 # Items Management Tab Content
+# Basic refresh function
+def refresh_table():
+    # Clear existing items
+    for item in tree.get_children():
+        tree.delete(item)
+    print("Table refreshed")
+
+# Action buttons frame
+action_frame = Frame(items_frame, bg="white", height=80)
+action_frame.pack(fill=X, padx=20, pady=10)
+action_frame.pack_propagate(False)
+
+# Action buttons
+Button(action_frame, text="Add Lost Item", font=("Arial", 12, "bold"), bg="#FF9800", 
+       fg="white", width=15, height=2).pack(side=LEFT, padx=10, pady=10)
+
+Button(action_frame, text="Add Found Item", font=("Arial", 12, "bold"), bg="#4CAF50", 
+       fg="white", width=15, height=2).pack(side=LEFT, padx=10, pady=10)
+
+Button(action_frame, text="Refresh", font=("Arial", 12, "bold"), bg="#2196F3", 
+       fg="white", width=15, height=2, command=refresh_table).pack(side=LEFT, padx=10, pady=10)
+
 # Table frame
 table_frame = Frame(items_frame, bg="white")
 table_frame.pack(fill=BOTH, expand=True, padx=20, pady=20)
