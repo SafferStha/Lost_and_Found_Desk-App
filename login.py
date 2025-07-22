@@ -6,7 +6,7 @@ import os
 
 root = Tk()
 root.title("Lost & Found Desktop - Login")
-root.geometry("1000x600")
+root.geometry("1100x600")
 root.resizable(0, 0)
 
 # Setting the background color
@@ -89,13 +89,13 @@ def register_user():
         return
     register_window = Toplevel()
     register_window.title("User Registration")
-    register_window.geometry("500x600")
+    register_window.geometry("1100x600")
     register_window.resizable(0, 0)
     register_window.grab_set()  # Make window modal
     register_window.transient(root)  # Keep on top of parent
 
     # Create canvas for gradient background
-    reg_canvas = Canvas(register_window, width=500, height=600, highlightthickness=0,)
+    reg_canvas = Canvas(register_window, width=1100, height=600, highlightthickness=0,)
     reg_canvas.place(x=0, y=0, relwidth=1, relheight=1)
     def get_gradient_color_1(i):
         # Gradient from dark blue (#001848) to light blue (#87ceeb)
@@ -109,8 +109,8 @@ def register_user():
     get_gradient_color_1
     for i in range(600):  # window height
         color = get_gradient_color_1(i)
-        reg_canvas.create_line(0, i, 500, i, fill=color)
-        reg_canvas.create_line(0, i+1, 500, i+1, fill=color)  # fill the gap for smoother gradient
+        reg_canvas.create_line(0, i, 1100, i, fill=color)
+        reg_canvas.create_line(0, i+1, 1100, i+1, fill=color)  # fill the gap for smoother gradient
 
     def on_closing():
         global register_window
@@ -181,37 +181,37 @@ def register_user():
         confirm_password_entry.delete(0, END)
         on_closing()
 
-    # Center the buttons
-    submit_button = Button(register_window, text="Register", width=15, font=("Arial", 12, "bold"), bg="lightgreen", fg="black", command=handle_registration)
-    reg_canvas.create_window(150, 410, window=submit_button, anchor="center")
-    cancel_button = Button(register_window, text="Cancel", width=15, font=("Arial", 12, "bold"), bg="lightcoral", fg="black", command=on_closing)
-    reg_canvas.create_window(350, 410, window=cancel_button, anchor="center")
+    # Center the buttons with original styling to match login page
+    submit_button = Button(register_window, text="Register", width=12, font=("Arial", 12), bg="lightgreen", fg="black", command=handle_registration)
+    reg_canvas.create_window(475, 450, window=submit_button, anchor="center")
+    cancel_button = Button(register_window, text="Cancel", width=10, font=("Arial", 12), bg="lightcoral", fg="black", command=on_closing)
+    reg_canvas.create_window(625, 450, window=cancel_button, anchor="center")
 
-    # Add footer similar to login page
-    footer_reg = Label(register_window, text="Join the Lost & Found community!", font=("Arial", 12, "bold"), fg="#111111", bg=get_gradient_color_1(500))
-    reg_canvas.create_window(250, 500, window=footer_reg, anchor="center")
+    # Add footer similar to login page (centered for 1100px width)
+    footer_reg = Label(register_window, text="Join the Lost & Found community!", font=("Arial", 12, "bold"), fg="#111111", bg=get_gradient_color_1(550))
+    reg_canvas.create_window(550, 550, window=footer_reg, anchor="center")
 
 # --- Login fields directly on canvas ---
 # Username field - properly centered
 username_label = Label(root, text="Username", font=("Calibri", 14), bg=get_gradient_color(250), fg="white")
-canvas.create_window(400, 265, window=username_label, anchor="center")
+canvas.create_window(450, 265, window=username_label, anchor="center")
 
-username_entry = Entry(root, width=27, font=("Calibri", 14), relief="sunken", )
-canvas.create_window(498, 290, window=username_entry, anchor="center")
+username_entry = Entry(root, width=27, font=("Calibri", 14) )
+canvas.create_window(550, 290, window=username_entry, anchor="center")
 
 # Password field - properly centered
 password_label = Label(root, text="Password", font=("Calibri", 15), bg=get_gradient_color(300), fg="white")
-canvas.create_window(400, 325, window=password_label, anchor="center")
+canvas.create_window(450, 325, window=password_label, anchor="center")
 
-password_entry = Entry(root, show="*", width=27, font=("Calibri", 14), relief="sunken", )
-canvas.create_window(498, 350, window=password_entry, anchor="center")
+password_entry = Entry(root, show="*", width=27, font=("Calibri", 14) )
+canvas.create_window(550, 350, window=password_entry, anchor="center")
 
-# Buttons - centered horizontally
+# Buttons - centered horizontally with original styling
 login_btn = Button(root, text="Login", width=10, fg="black", font=("Arial", 13), bg="skyblue", command=handle_login)
-canvas.create_window(500, 430, window=login_btn, anchor="center")
+canvas.create_window(550, 430, window=login_btn, anchor="center")
 
 register_btn = Button(root, text="Register", width=12, fg="black", font=("Arial", 13), bg="lightgreen", command=register_user)
-canvas.create_window(500, 480, window=register_btn, anchor="center")
+canvas.create_window(550, 480, window=register_btn, anchor="center")
 
 # --- App name typewriter effect ---
 def blink_text_effect(current_text, next_text, canvas, item_id, delay=3000, fade_steps=10, on_complete=None):
@@ -251,7 +251,7 @@ def blink_text_effect(current_text, next_text, canvas, item_id, delay=3000, fade
             root.after(delay // (fade_steps * 2), fade_in, step + 1)
         else:
             # Text is now fully white, wait 2.5 seconds before completing the cycle
-            root.after(2500, lambda: on_complete() if on_complete else None)
+            root.after(2550, lambda: on_complete() if on_complete else None)
     
     # Start the fade out effect
     fade_out(0)
@@ -279,10 +279,10 @@ def typewriter_effect(text, canvas, item_id, delay=100, on_complete=None):
                 on_complete()
     update_text()
 
-# Center the text horizontally (500 is center of 1000px window)
-app_name_text = canvas.create_text(500, 90, text="", font=("Impact", 35, "bold"), fill="white", anchor="center")
-app_name_text2 = canvas.create_text(500, 135, text="", font=("Lato", 20), fill="white", anchor="center")
-app_name_text3 = canvas.create_text(500, 170, text="", font=("Lato", 20), fill="white", anchor="center")
+# Center the text horizontally (550 is center of 1100px window)
+app_name_text = canvas.create_text(550, 90, text="", font=("Impact", 35, "bold"), fill="white", anchor="center")
+app_name_text2 = canvas.create_text(550, 135, text="", font=("Rockwell", 20), fill="white", anchor="center")
+app_name_text3 = canvas.create_text(550, 170, text="", font=("Rockwell", 20), fill="white", anchor="center")
 # Sequence for typewriter and blink effects
 def run_blink_sequence(index=0, is_first=False):
     blink_texts = [
@@ -338,7 +338,7 @@ typewriter_effect(
     )
 )
 footer_text1 = canvas.create_text(
-    500, 553,  # x, y position (centered at bottom)
+    550, 553,  # x, y position (centered at bottom)
     text="Turning 'lost' into 'found' together.", 
     font=("Open Sans", 12, "bold"),
     fill="#000000",
@@ -346,14 +346,14 @@ footer_text1 = canvas.create_text(
 )
 
 footer_text2 = canvas.create_text(
-    500, 570,  # x, y position (centered at bottom; 500 is center for 1000px width)
+    550, 570,  # x, y position (centered at bottom; 550 is center for 1100px width)
     text="Powered by TEAM DOBERMAN",
     font=("Open Sans", 11),
     fill="#000000",
     anchor="center"
 )
 footer_text3 = canvas.create_text(
-    500, 585,  # x, y position (centered at very bottom)
+    550, 585,  # x, y position (centered at very bottom)
     text="© 2025 All rights reserved",
     font=("Open Sans", 11),
     fill="#000000",
