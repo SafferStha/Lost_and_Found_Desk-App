@@ -8,6 +8,10 @@ root.title("Lost & Found - Admin Panel")
 root.resizable(0, 0)
 root.configure(bg="white")
 
+# Global variables for window management
+add_lost_window = None
+add_found_window = None
+
 # Header Frame
 header_frame = Frame(root, bg="#2196F3", height=80)
 header_frame.pack(fill=X)
@@ -41,6 +45,66 @@ style.theme_use("clam")
 style.configure("TNotebook.Tab", font=("Arial", 12, "bold"), padding=[20, 10])
 
 # Items Management Tab Content
+# Functions for adding items
+def add_lost_item():
+    global add_lost_window
+    if add_lost_window is not None and add_lost_window.winfo_exists():
+        add_lost_window.lift()
+        return
+    
+    add_lost_window = Toplevel()
+    add_lost_window.title("Add Lost Item")
+    add_lost_window.geometry("600x550")
+    add_lost_window.resizable(0, 0)
+    add_lost_window.configure(bg="black")
+    add_lost_window.grab_set()
+    add_lost_window.transient(root)
+    
+    def on_closing():
+        global add_lost_window
+        add_lost_window.destroy()
+        add_lost_window = None
+    
+    add_lost_window.protocol("WM_DELETE_WINDOW", on_closing)
+    
+    # Header
+    header_frame = Frame(add_lost_window, bg="#5DADE2", height=60)
+    header_frame.pack(fill=X)
+    header_frame.pack_propagate(False)
+    
+    Label(header_frame, text="Lost Item Details", font=("Arial", 18, "bold"), 
+          bg="#5DADE2", fg="white").pack(pady=15)
+    
+    # Form frame
+    form_frame = Frame(add_lost_window, bg="black")
+    form_frame.pack(fill=BOTH, expand=True, padx=40, pady=30)
+    
+    # Basic form fields
+    y_pos = 50
+    
+    Label(form_frame, text="Item Name:", font=("Arial", 12), bg="black", fg="white").place(x=50, y=y_pos)
+    item_name = Entry(form_frame, width=30, font=("Arial", 11), bd=1, relief="solid")
+    item_name.place(x=200, y=y_pos)
+    
+    y_pos += 40
+    Label(form_frame, text="Category:", font=("Arial", 12), bg="black", fg="white").place(x=50, y=y_pos)
+    category = Entry(form_frame, width=30, font=("Arial", 11), bd=1, relief="solid")
+    category.place(x=200, y=y_pos)
+    
+    def submit_lost_item():
+        if not item_name.get().strip() or not category.get().strip():
+            messagebox.showerror("Error", "Please fill required fields!")
+            return
+        messagebox.showinfo("Success", "Lost item added successfully!")
+        on_closing()
+    
+    # Buttons
+    y_pos += 100
+    Button(form_frame, text="Submit", font=("Arial", 12, "bold"), bg="#28a745", fg="white", 
+           width=12, command=submit_lost_item).place(x=200, y=y_pos)
+    Button(form_frame, text="Cancel", font=("Arial", 12, "bold"), bg="#dc3545", fg="white", 
+           width=12, command=on_closing).place(x=350, y=y_pos)
+    
 # Basic refresh function
 def refresh_table():
     # Clear existing items
@@ -56,7 +120,7 @@ action_frame.pack_propagate(False)
 
 # Action buttons
 Button(action_frame, text="Add Lost Item", font=("Arial", 12, "bold"), bg="#FF9800", 
-       fg="white", width=15, height=2).pack(side=LEFT, padx=10, pady=10)
+       fg="white", width=15, height=2,command=add_lost_item).pack(side=LEFT, padx=10, pady=10)
 
 Button(action_frame, text="Add Found Item", font=("Arial", 12, "bold"), bg="#4CAF50", 
        fg="white", width=15, height=2).pack(side=LEFT, padx=10, pady=10)
@@ -120,6 +184,7 @@ Claimed Items: 0
 stats_label = Label(reports_content, text=stats_text, font=("Arial", 14), 
                    bg="white", fg="black", justify=LEFT)
 stats_label.pack(pady=50)
+
 
 # Load initial data
 refresh_table()
