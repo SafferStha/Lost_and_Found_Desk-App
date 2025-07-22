@@ -193,25 +193,25 @@ def register_user():
 
 # --- Login fields directly on canvas ---
 # Username field - properly centered
-username_label = Label(root, text="Username", font=("Calibri", 14), bg=get_gradient_color(170), fg="white")
-canvas.create_window(400, 196, window=username_label, anchor="center")
+username_label = Label(root, text="Username", font=("Calibri", 14), bg=get_gradient_color(250), fg="white")
+canvas.create_window(400, 265, window=username_label, anchor="center")
 
 username_entry = Entry(root, width=27, font=("Calibri", 14), relief="sunken", )
-canvas.create_window(498, 220, window=username_entry, anchor="center")
+canvas.create_window(498, 290, window=username_entry, anchor="center")
 
 # Password field - properly centered
-password_label = Label(root, text="Password", font=("Calibri", 15), bg=get_gradient_color(260), fg="white")
-canvas.create_window(400, 263, window=password_label, anchor="center")
+password_label = Label(root, text="Password", font=("Calibri", 15), bg=get_gradient_color(300), fg="white")
+canvas.create_window(400, 325, window=password_label, anchor="center")
 
 password_entry = Entry(root, show="*", width=27, font=("Calibri", 14), relief="sunken", )
-canvas.create_window(498, 285, window=password_entry, anchor="center")
+canvas.create_window(498, 350, window=password_entry, anchor="center")
 
 # Buttons - centered horizontally
 login_btn = Button(root, text="Login", width=10, fg="black", font=("Arial", 13), bg="skyblue", command=handle_login)
-canvas.create_window(500, 370, window=login_btn, anchor="center")
+canvas.create_window(500, 430, window=login_btn, anchor="center")
 
 register_btn = Button(root, text="Register", width=12, fg="black", font=("Arial", 13), bg="lightgreen", command=register_user)
-canvas.create_window(500, 420, window=register_btn, anchor="center")
+canvas.create_window(500, 480, window=register_btn, anchor="center")
 
 # --- App name typewriter effect ---
 def typewriter_effect_canvas(text, canvas, item_id, delay=100, on_complete=None):
@@ -245,5 +245,6 @@ footer_text = canvas.create_text(
     fill="#222222",
     anchor="center"
 )
+
 
 root.mainloop()
