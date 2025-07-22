@@ -22,7 +22,54 @@ header_frame.pack_propagate(False)
 # Header Label
 header_label = Label(header_frame, text="Admin Panel - Welcome Administrator", 
                     font=("Arial", 20, "bold"), bg="#2196F3", fg="white")
-header_label.pack(pady=20)
+header_label.pack(side=LEFT, pady=20, padx=20)
+
+# Dark Mode Toggle Function
+def toggle_dark_mode():
+    global dark_mode
+    dark_mode = not dark_mode
+    
+    if dark_mode:
+        # Dark mode colors
+        bg_color = "#2b2b2b"
+        fg_color = "white"
+        header_bg = "#1a1a1a"
+        button_text = "☀️ Light Mode"
+    else:
+        # Light mode colors
+        bg_color = "white"
+        fg_color = "black"
+        header_bg = "#2196F3"
+        button_text = "🌙 Dark Mode"
+    
+    # Update main window
+    root.configure(bg=bg_color)
+    
+    # Update header
+    header_frame.configure(bg=header_bg)
+    header_label.configure(bg=header_bg)
+    
+    # Update tabs
+    items_frame.configure(bg=bg_color)
+    users_frame.configure(bg=bg_color)
+    reports_frame.configure(bg=bg_color)
+    
+    # Update action frames
+    action_frame.configure(bg=bg_color)
+    users_action_frame.configure(bg=bg_color)
+    table_frame.configure(bg=bg_color)
+    reports_content.configure(bg=bg_color)
+    
+    # Update stats label
+    stats_label.configure(bg=bg_color, fg=fg_color)
+    
+    # Update button text
+    dark_mode_btn.configure(text=button_text)
+
+# Dark Mode Toggle Button
+dark_mode_btn = Button(header_frame, text="🌙 Dark Mode", font=("Arial", 10, "bold"), 
+                      bg="white", fg="black", command=toggle_dark_mode)
+dark_mode_btn.pack(side=RIGHT, pady=20, padx=20)
 
 
 # Create Notebook for tabs
