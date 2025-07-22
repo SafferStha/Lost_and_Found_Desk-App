@@ -322,11 +322,12 @@ def edit_user():
     
     Label(header_frame, text="Edit User Details", font=("Arial", 18, "bold"), 
           bg="#5DADE2", fg="white").pack(pady=15)
-        # Form frame with black background
+
+    # Form frame with black background
     form_frame = Frame(edit_user_window, bg="black")
     form_frame.pack(fill=BOTH, expand=True, padx=40, pady=30)
     
-        # Form fields
+    # Form fields
     y_pos = 50
     
     # User ID (read-only)
@@ -381,7 +382,13 @@ def edit_user():
         
         messagebox.showinfo("Success", "User updated successfully!")
         on_closing()
-
+    
+    # Buttons
+    y_pos += 80
+    Button(form_frame, text="Update", font=("Arial", 12, "bold"), bg="#28a745", fg="white", 
+           width=12, command=update_user).place(x=200, y=y_pos)
+    Button(form_frame, text="Cancel", font=("Arial", 12, "bold"), bg="#dc3545", fg="white",
+           width=12, command=on_closing).place(x=350, y=y_pos)
 
 
 
