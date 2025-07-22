@@ -315,6 +315,14 @@ def edit_user():
     
     messagebox.showinfo("Info", "Edit user dialog opened (placeholder)")
     on_closing()
+    # Header
+    header_frame = Frame(edit_user_window, bg="#5DADE2", height=60)
+    header_frame.pack(fill=X)
+    header_frame.pack_propagate(False)
+    
+    Label(header_frame, text="Edit User Details", font=("Arial", 18, "bold"), 
+          bg="#5DADE2", fg="white").pack(pady=15)
+
 
 def load_users():
     # Clear existing users
