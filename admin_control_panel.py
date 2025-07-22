@@ -149,10 +149,10 @@ lbl_item_type = Label(root, text="Item Type", bg="black", font=("aerial", 12), f
 lbl_item_type.place(x=50, y=200)
 
 #  buttons for item type
-lost_btn = Button(root, text="Lost", width=10, font=("aerial", 11), bg="lightblue", padx=5, pady=5, command=lost)
-lost_btn.place(x=180, y=200)
+lost_btn = Button(root, text="Lost", width=10, font=("aerial", 11), bg="lightcoral", padx=5, pady=5, command=lost)
+lost_btn.place(x=200, y=200)
 found_btn = Button(root, text="Found", width=10, font=("aerial", 11), bg="lightgreen", padx=5, pady=5, command=found)
-found_btn.place(x=300, y=200)
+found_btn.place(x=340, y=200)
 
 
 
