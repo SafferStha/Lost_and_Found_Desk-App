@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
 
 # Main window setup
 root = Tk()
@@ -46,7 +46,8 @@ def refresh_table():
     # Clear existing items
     for item in tree.get_children():
         tree.delete(item)
-    print("Table refreshed")
+    # Table is now empty - ready for real data
+    messagebox.showinfo("Refresh", "Table refreshed successfully!")
 
 # Action buttons frame
 action_frame = Frame(items_frame, bg="white", height=80)
