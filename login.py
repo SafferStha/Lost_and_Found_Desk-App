@@ -119,38 +119,38 @@ def register_user():
 
     register_window.protocol("WM_DELETE_WINDOW", on_closing)
 
-    lbl_registration = Label(register_window, text="User Registration", font=("Impact", 22), fg="white", bg=get_gradient_color_1(40))
-    reg_canvas.create_window(250, 40, window=lbl_registration, anchor="center")
+    lbl_registration = Label(register_window, text="User Registration", font=("Impact", 30), fg="white", bg=get_gradient_color_1(70))
+    reg_canvas.create_window(550, 70, window=lbl_registration, anchor="center")
 
     # Full Name
-    lbl_full_name = Label(register_window, text="Full Name:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(120))
-    reg_canvas.create_window(150, 120, window=lbl_full_name, anchor="center")
-    full_name_entry = Entry(register_window, width=25, font=("Arial", 11), relief="sunken")
-    reg_canvas.create_window(350, 120, window=full_name_entry, anchor="center")
+    lbl_full_name = Label(register_window, text="Full Name:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(180))
+    reg_canvas.create_window(400, 160, window=lbl_full_name, anchor="center")
+    full_name_entry = Entry(register_window, width=25, font=("Arial", 11), bd=2, highlightthickness=0)
+    reg_canvas.create_window(700, 160, window=full_name_entry, anchor="center")
 
     # Email
-    lbl_email = Label(register_window, text="Email:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(170))
-    reg_canvas.create_window(150, 170, window=lbl_email, anchor="center")
-    email_entry = Entry(register_window, width=25, font=("Arial", 11),  relief="sunken")
-    reg_canvas.create_window(350, 170, window=email_entry, anchor="center")
+    lbl_email = Label(register_window, text="Email:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(230))
+    reg_canvas.create_window(400, 210, window=lbl_email, anchor="center")
+    email_entry = Entry(register_window, width=25, font=("Arial", 11), bd=2, highlightthickness=0)
+    reg_canvas.create_window(700, 210, window=email_entry, anchor="center")
 
     # Phone
-    lbl_phone = Label(register_window, text="Phone:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(220))
-    reg_canvas.create_window(150, 220, window=lbl_phone, anchor="center")
-    phone_entry = Entry(register_window, width=25, font=("Arial", 11), relief="sunken")
-    reg_canvas.create_window(350, 220, window=phone_entry, anchor="center")
+    lbl_phone = Label(register_window, text="Phone:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(280))
+    reg_canvas.create_window(400, 260, window=lbl_phone, anchor="center")
+    phone_entry = Entry(register_window, width=25, font=("Arial", 11), bd=2, highlightthickness=0)
+    reg_canvas.create_window(700, 260, window=phone_entry, anchor="center")
 
     # Password
-    lbl_password = Label(register_window, text="Password:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(270))
-    reg_canvas.create_window(150, 270, window=lbl_password, anchor="center")
-    password_entry_reg = Entry(register_window, show="*", width=25, font=("Arial", 11),  relief="sunken")
-    reg_canvas.create_window(350, 270, window=password_entry_reg, anchor="center")
+    lbl_password = Label(register_window, text="Password:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(330))
+    reg_canvas.create_window(400, 310, window=lbl_password, anchor="center")
+    password_entry_reg = Entry(register_window, show="*", width=25, font=("Arial", 11), bd=2, highlightthickness=0)
+    reg_canvas.create_window(700, 310, window=password_entry_reg, anchor="center")
 
     # Confirm Password
-    lbl_confirm_password = Label(register_window, text="Confirm Password:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(320))
-    reg_canvas.create_window(150, 320, window=lbl_confirm_password, anchor="center")
-    confirm_password_entry = Entry(register_window, show="*", width=25, font=("Arial", 11), relief="sunken")
-    reg_canvas.create_window(350, 320, window=confirm_password_entry, anchor="center")
+    lbl_confirm_password = Label(register_window, text="Confirm Password:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(380))
+    reg_canvas.create_window(400, 360, window=lbl_confirm_password, anchor="center")
+    confirm_password_entry = Entry(register_window, show="*", width=25, font=("Arial", 11), bd=2, highlightthickness=0)
+    reg_canvas.create_window(700, 360, window=confirm_password_entry, anchor="center")
 
     def handle_registration():
         full_name = full_name_entry.get().strip()
