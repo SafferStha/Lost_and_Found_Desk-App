@@ -40,4 +40,26 @@ style = ttk.Style()
 style.theme_use("clam")
 style.configure("TNotebook.Tab", font=("Arial", 12, "bold"), padding=[20, 10])
 
+# Items Management Tab Content
+# Table frame
+table_frame = Frame(items_frame, bg="white")
+table_frame.pack(fill=BOTH, expand=True, padx=20, pady=20)
+
+# Create Treeview for items table
+columns = ("ID", "Item Name", "Category", "Type", "Date", "Status")
+tree = ttk.Treeview(table_frame, columns=columns, show="headings", height=20)
+
+# Define column headings and widths
+for col in columns:
+    tree.heading(col, text=col)
+    tree.column(col, width=150, anchor=CENTER if col in ["ID", "Type", "Status"] else W)
+
+# Add scrollbar
+scrollbar = ttk.Scrollbar(table_frame, orient=VERTICAL, command=tree.yview)
+tree.configure(yscrollcommand=scrollbar.set)
+
+# Pack the treeview and scrollbar
+tree.pack(side=LEFT, fill=BOTH, expand=True)
+scrollbar.pack(side=RIGHT, fill=Y)
+
 root.mainloop()
