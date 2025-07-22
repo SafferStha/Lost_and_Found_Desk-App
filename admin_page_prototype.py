@@ -336,6 +336,20 @@ def edit_user():
     user_id.config(state="normal")
     user_id.insert(0, user_data[0] if user_data else "")
     user_id.config(state="readonly")
+    
+    # Full Name
+    y_pos += 40
+    Label(form_frame, text="Full Name:", font=("Arial", 12), bg="black", fg="white").place(x=50, y=y_pos)
+    full_name = Entry(form_frame, width=30, font=("Arial", 11), bd=1, relief="solid")
+    full_name.place(x=200, y=y_pos)
+    full_name.insert(0, user_data[1] if len(user_data) > 1 else "")
+    
+    # Email
+    y_pos += 40
+    Label(form_frame, text="Email:", font=("Arial", 12), bg="black", fg="white").place(x=50, y=y_pos)
+    email = Entry(form_frame, width=30, font=("Arial", 11), bd=1, relief="solid")
+    email.place(x=200, y=y_pos)
+    email.insert(0, user_data[2] if len(user_data) > 2 else "")
 
 
 
