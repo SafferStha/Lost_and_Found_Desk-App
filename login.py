@@ -298,5 +298,21 @@ footer_text1 = canvas.create_text(
     anchor="center"
 )
 
+footer_text2 = canvas.create_text(
+    500, 570,  # x, y position (centered at bottom; 500 is center for 1000px width)
+    text="Powered by TEAM DOBERMAN",
+    font=("Open Sans", 11),
+    fill="#000000",
+    anchor="center"
+)
+footer_text3 = canvas.create_text(
+    500, 585,  # x, y position (centered at very bottom)
+    text="© 2025 All rights reserved",
+    font=("Open Sans", 11),
+    fill="#000000",
+    anchor="center"
+)
+
+
 
 root.mainloop()
