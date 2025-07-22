@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 
 root = Tk()
-root.geometry("1100x700")
+root.geometry("1200x700")
 root.title("Lost & Found - Welcome User")
 root.resizable(0, 0)
 root.configure(bg="white")  # Set initial background to light mode
