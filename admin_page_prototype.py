@@ -323,6 +323,15 @@ def load_users():
     
     # Users table is now empty - ready for real data
 
+# Users action buttons frame
+users_action_frame = Frame(users_frame, bg="white", height=80)
+users_action_frame.pack(fill=X, padx=20, pady=10)
+users_action_frame.pack_propagate(False)
+
+# Edit User button
+Button(users_action_frame, text="Edit User", font=("Arial", 12, "bold"), bg="#FF9800", 
+       fg="white", width=15, height=2, command=edit_user).pack(side=LEFT, padx=10, pady=10)
+
 # Users table
 users_columns = ("ID", "Full Name", "Email", "Phone", "Type")
 users_tree = ttk.Treeview(users_frame, columns=users_columns, show="headings", height=20)
