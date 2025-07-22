@@ -322,6 +322,21 @@ def edit_user():
     
     Label(header_frame, text="Edit User Details", font=("Arial", 18, "bold"), 
           bg="#5DADE2", fg="white").pack(pady=15)
+        # Form frame with black background
+    form_frame = Frame(edit_user_window, bg="black")
+    form_frame.pack(fill=BOTH, expand=True, padx=40, pady=30)
+    
+        # Form fields
+    y_pos = 50
+    
+    # User ID (read-only)
+    Label(form_frame, text="User ID:", font=("Arial", 12), bg="black", fg="white").place(x=50, y=y_pos)
+    user_id = Entry(form_frame, width=30, font=("Arial", 11), bd=1, relief="solid", state="readonly")
+    user_id.place(x=200, y=y_pos)
+    user_id.config(state="normal")
+    user_id.insert(0, user_data[0] if user_data else "")
+    user_id.config(state="readonly")
+
 
 
 def load_users():
