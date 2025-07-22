@@ -214,7 +214,59 @@ register_btn = Button(root, text="Register", width=12, fg="black", font=("Arial"
 canvas.create_window(500, 480, window=register_btn, anchor="center")
 
 # --- App name typewriter effect ---
-def typewriter_effect_canvas(text, canvas, item_id, delay=100, on_complete=None):
+def blink_text_effect(current_text, next_text, canvas, item_id, delay=3000, fade_steps=10, on_complete=None):
+    # Set the canvas item's text to the current text
+    canvas.itemconfig(item_id, text=current_text)
+    # Fade colors from white to transparent and back
+    def fade_out(step):
+        # Fade from white to background color (#3f2e85)
+        def blend_color(c1, c2, t):
+            return tuple(int(c1[i] + (c2[i] - c1[i]) * t) for i in range(3))
+        white_rgb = (255, 255, 255)
+        # Convert #3f2e85 to RGB
+        bg_rgb = (63, 46, 133)  # #3f2e85 in RGB
+        t = step / fade_steps
+        r, g, b = blend_color(white_rgb, bg_rgb, t)
+        color = f'#{r:02x}{g:02x}{b:02x}'
+        canvas.itemconfig(item_id, fill=color)
+        if step < fade_steps:
+            root.after(delay // (fade_steps * 2), fade_out, step + 1)
+        else:
+            # Text is now fully faded out, change to next text and fade in
+            canvas.itemconfig(item_id, text=next_text)
+            fade_in(0)
+
+    def fade_in(step):
+        # Fade from background color (#3f2e85) to white
+        def blend_color(c1, c2, t):
+            return tuple(int(c1[i] + (c2[i] - c1[i]) * t) for i in range(3))
+        # Convert #3f2e85 to RGB
+        bg_rgb = (63, 46, 133)  # #3f2e85 in RGB
+        white_rgb = (255, 255, 255)
+        t = step / fade_steps
+        r, g, b = blend_color(bg_rgb, white_rgb, t)
+        color = f'#{r:02x}{g:02x}{b:02x}'
+        canvas.itemconfig(item_id, fill=color)
+        if step < fade_steps:
+            root.after(delay // (fade_steps * 2), fade_in, step + 1)
+        else:
+            # Text is now fully white, wait 2.5 seconds before completing the cycle
+            root.after(2500, lambda: on_complete() if on_complete else None)
+    
+    # Start the fade out effect
+    fade_out(0)
+
+def typewriter_effect(text, canvas, item_id, delay=100, on_complete=None):
+    """
+    Displays the given text on a Tkinter canvas item with a typewriter animation effect.
+
+    Args:
+        text (str): The text to display.
+        canvas (tkinter.Canvas): The canvas where the text will be shown.
+        item_id (int): The canvas text item ID to update.
+        delay (int, optional): Delay in milliseconds between each character. Defaults to 100.
+        on_complete (callable, optional): Function to call when animation completes. Defaults to None.
+    """
     displayed_text = ""
     def update_text(i=0):
         nonlocal displayed_text
