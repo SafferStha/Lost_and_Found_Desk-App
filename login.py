@@ -3,7 +3,26 @@ from tkinter import messagebox
 import subprocess
 import sys
 import os
+import sqlite3
 from db_connection import get_db_connection
+
+# Database initialization 
+def initialize_db():
+    conn = sqlite3.connect('lost_and_found.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL,
+        full_name TEXT,
+        email TEXT
+    )
+    ''')
+    conn.commit()
+    conn.close()
+
+initialize_db()
 
 root = Tk()
 root.title("Lost & Found Desktop - Login")
