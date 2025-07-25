@@ -209,19 +209,27 @@ def register_user():
         if not phone_entry.get().strip().isdigit() or len(phone_entry.get().strip()) < 10:
             messagebox.showerror("Error", "Please enter a valid phone number (at least 10 digits)!")
             return
+        result = None
         if password != confirm_password:
-            messagebox.showerror("Error", "Passwords do not match!")
-            return
-        if len(password) < 6:
-            messagebox.showerror("Error", "Password must be at least 6 characters!")
-            return
-        messagebox.showinfo("Success", f"Registration successful!\nWelcome, {full_name}!")
-        full_name_entry.delete(0, END)
-        email_entry.delete(0, END)
-        phone_entry.delete(0, END)
-        password_entry_reg.delete(0, END)
-        confirm_password_entry.delete(0, END)
-        on_closing()
+            result = "Passwords do not match!"
+        elif len(password) < 6:
+            result = "Password must be at least 6 characters!"
+        elif register_user_to_db(username, password, full_name, email):
+            result = f"Registration successful! Welcome, {full_name}!"
+        else:
+            result = "Username or email already exists!"
+
+        if result.startswith("Registration successful!"):
+            messagebox.showinfo("Success", result)
+            # Clear the registration fields
+            full_name_entry.delete(0, END)
+            email_entry.delete(0, END)
+            phone_entry.delete(0, END)
+            password_entry_reg.delete(0, END)
+            confirm_password_entry.delete(0, END)
+            on_closing()
+        else:
+            messagebox.showerror("Error", result)
 
     # Center the buttons with original styling to match login page
     submit_button = Button(register_window, text="Register", width=12, font=("Arial", 12), bg="lightgreen", fg="black", command=handle_registration)
