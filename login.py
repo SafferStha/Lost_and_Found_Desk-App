@@ -3,6 +3,7 @@ from tkinter import messagebox
 import subprocess
 import sys
 import os
+from db_connection import get_db_connection
 
 root = Tk()
 root.title("Lost & Found Desktop - Login")
@@ -65,6 +66,13 @@ def open_admin_panel():
         root.deiconify()  # Show login window if error occurs
 
 # Function to handle login
+def authenticate_user(username, password):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
+    user = cursor.fetchone()
+    conn.close()
+    return user is not None
 def handle_login():
     username = username_entry.get().strip()
     password = password_entry.get()
@@ -74,7 +82,7 @@ def handle_login():
         messagebox.showerror("Error", "Please enter both username and password!")
         return
     
-    if username == "admin" and password == "admin123":
+    if authenticate_user(username, password):
         messagebox.showinfo("Success", f"Welcome back, {username}!")
         open_admin_panel()  # Open admin control panel
     else:
