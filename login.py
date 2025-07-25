@@ -23,6 +23,19 @@ def initialize_db():
     conn.close()
 
 initialize_db()
+# User registration logic
+def register_user_to_db(username, password, full_name, email):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("INSERT INTO users (username, password, full_name, email) VALUES (?, ?, ?, ?)",
+                       (username, password, full_name, email))
+        conn.commit()
+        return True
+    except sqlite3.IntegrityError:
+        return False
+    finally:
+        conn.close()
 
 root = Tk()
 root.title("Lost & Found Desktop - Login")
@@ -185,16 +198,15 @@ def register_user():
     def handle_registration():
         full_name = full_name_entry.get().strip()
         email = email_entry.get().strip()
-        phone = phone_entry.get().strip()
         password = password_entry_reg.get()
         confirm_password = confirm_password_entry.get()
-        if not all([full_name, email, phone, password, confirm_password]):
+        if not all([full_name, email, phone_entry.get().strip(), password, confirm_password]):
             messagebox.showerror("Error", "Please fill all fields!")
             return
         if "@" not in email or "." not in email:
             messagebox.showerror("Error", "Please enter a valid email address!")
             return
-        if not phone.isdigit() or len(phone) < 10:
+        if not phone_entry.get().strip().isdigit() or len(phone_entry.get().strip()) < 10:
             messagebox.showerror("Error", "Please enter a valid phone number (at least 10 digits)!")
             return
         if password != confirm_password:
