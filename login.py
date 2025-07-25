@@ -45,7 +45,7 @@ def open_admin_panel():
     try:
         # Get the directory of the current script
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        admin_panel_path = os.path.join(current_dir, "admin_control_panel.py")
+        admin_panel_path = os.path.join(current_dir, "admin_page.py")
         
         # Clear login fields for security
         username_entry.delete(0, END)
