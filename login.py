@@ -44,9 +44,10 @@ register_window = None
 # Function to open admin control panel
 def open_admin_panel():
     try:
-        # Get the directory of the current script
+        
         current_dir = os.path.dirname(os.path.abspath(__file__))
         admin_panel_path = os.path.join(current_dir, "admin_page.py")
+        user_page_path = os.path.join(current_dir, "user_page_prototype.py")
         
         # Clear login fields for security
         username_entry.delete(0, END)
@@ -58,11 +59,13 @@ def open_admin_panel():
         # Open admin control panel
         subprocess.run([sys.executable, admin_panel_path])
         
-        # Show login window again when admin panel closes
+        # After admin panel closes, open user page prototype
+        subprocess.Popen([sys.executable, user_page_path])
+
         root.deiconify()
         
     except Exception as e:
-        messagebox.showerror("Error", f"Could not open admin panel: {str(e)}")
+        messagebox.showerror("Error", f"Could not open admin or user page: {str(e)}")
         root.deiconify()  # Show login window if error occurs
 
 # Function to handle login
