@@ -165,6 +165,12 @@ def register_user():
     lbl_registration = Label(register_window, text="User Registration", font=("Impact", 30), fg="white", bg=get_gradient_color_1(70))
     reg_canvas.create_window(550, 70, window=lbl_registration, anchor="center")
 
+    # Username
+    lbl_username = Label(register_window, text="Username:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(120))
+    reg_canvas.create_window(400, 120, window=lbl_username, anchor="center")
+    username_entry_reg = Entry(register_window, width=25, font=("Arial", 11), bd=2, highlightthickness=0)
+    reg_canvas.create_window(700, 120, window=username_entry_reg, anchor="center")
+
     # Full Name
     lbl_full_name = Label(register_window, text="Full Name:", font=("Arial", 12, "bold"), fg="white", bg=get_gradient_color_1(180))
     reg_canvas.create_window(400, 160, window=lbl_full_name, anchor="center")
@@ -196,17 +202,19 @@ def register_user():
     reg_canvas.create_window(700, 360, window=confirm_password_entry, anchor="center")
 
     def handle_registration():
+        username = username_entry_reg.get().strip()
         full_name = full_name_entry.get().strip()
         email = email_entry.get().strip()
+        phone = phone_entry.get().strip()
         password = password_entry_reg.get()
         confirm_password = confirm_password_entry.get()
-        if not all([full_name, email, phone_entry.get().strip(), password, confirm_password]):
+        if not all([username, full_name, email, phone, password, confirm_password]):
             messagebox.showerror("Error", "Please fill all fields!")
             return
         if "@" not in email or "." not in email:
             messagebox.showerror("Error", "Please enter a valid email address!")
             return
-        if not phone_entry.get().strip().isdigit() or len(phone_entry.get().strip()) < 10:
+        if not phone.isdigit() or len(phone) < 10:
             messagebox.showerror("Error", "Please enter a valid phone number (at least 10 digits)!")
             return
         result = None
@@ -222,6 +230,7 @@ def register_user():
         if result.startswith("Registration successful!"):
             messagebox.showinfo("Success", result)
             # Clear the registration fields
+            username_entry_reg.delete(0, END)
             full_name_entry.delete(0, END)
             email_entry.delete(0, END)
             phone_entry.delete(0, END)
