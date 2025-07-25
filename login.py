@@ -8,21 +8,24 @@ from db_connection import get_db_connection
 
 # Database initialization 
 def initialize_db():
-    conn = sqlite3.connect('lost_and_found.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT NOT NULL UNIQUE,
-        password TEXT NOT NULL,
-        full_name TEXT,
-        email TEXT
-    )
-    ''')
-    conn.commit()
-    conn.close()
+    try:
+        with sqlite3.connect('lost_and_found.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT NOT NULL UNIQUE,
+                password TEXT NOT NULL,
+                full_name TEXT,
+                email TEXT
+            )
+            ''')
+            conn.commit()
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
 
 initialize_db()
+
 # User registration logic
 def register_user_to_db(username, password, full_name, email):
     conn = get_db_connection()
