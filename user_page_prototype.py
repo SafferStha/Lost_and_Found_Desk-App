@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+# Database connection
+from db_connection import get_db_connection
 
 root = Tk()
 root.geometry("1200x700")
@@ -164,19 +166,23 @@ def report_lost_item():
         if not all([name, category, date, location, desc]):
             messagebox.showerror("Error", "Please fill all fields!")
             return
-        
-        # Success message
-        messagebox.showinfo("Success", "Lost item report submitted successfully!")
-        
-        # Clear fields
-        item_name.delete(0, END)
-        item_category.delete(0, END)
-        date_lost.delete(0, END)
-        location_lost.delete(0, END)
-        description.delete("1.0", END)
-        
-        # Close window
-        on_closing()
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO lost_items (item_name, category, date_lost, location_lost, description, contact_info) VALUES (?, ?, ?, ?, ?, ?)",
+                (name, category, date, location, desc, ''))
+            conn.commit()
+            conn.close()
+            messagebox.showinfo("Success", "Lost item report submitted successfully!")
+            # Clear fields
+            item_name.delete(0, END)
+            item_category.delete(0, END)
+            date_lost.delete(0, END)
+            location_lost.delete(0, END)
+            description.delete("1.0", END)
+            on_closing()
+        except Exception as e:
+            messagebox.showerror("Database Error", str(e))
 
     submit_button = Button(lost_window, text="Submit Report", width=12, font=("Arial", 12), bg="#4CAF50", fg="white", bd=2, relief="raised", command=submit_lost_item)
     submit_button.place(x=200, y=420)
@@ -260,18 +266,23 @@ def report_found_item():
             messagebox.showerror("Error", "Please fill all fields!")
             return
         
-        # Success message
-        messagebox.showinfo("Success", "Found item report submitted successfully!")
-        
-        # Clear fields
-        item_name.delete(0, END)
-        item_category.delete(0, END)
-        date_found.delete(0, END)
-        location_found.delete(0, END)
-        description.delete("1.0", END)
-
-        # Close window
-        on_closing()
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO found_items (item_name, category, date_found, location_found, description, contact_info) VALUES (?, ?, ?, ?, ?, ?)",
+                (name, category, date, location, desc, ''))
+            conn.commit()
+            conn.close()
+            messagebox.showinfo("Success", "Found item report submitted successfully!")
+            # Clear fields
+            item_name.delete(0, END)
+            item_category.delete(0, END)
+            date_found.delete(0, END)
+            location_found.delete(0, END)
+            description.delete("1.0", END)
+            on_closing()
+        except Exception as e:
+            messagebox.showerror("Database Error", str(e))
 
     submit_button = Button(found_window, text="Submit Report", width=12, font=("Arial", 12), 
                           bg="#4CAF50", fg="white", bd=2, relief="raised", command=submit_found_item)
@@ -291,9 +302,27 @@ def quick_search():
         messagebox.showerror("Error", "Please enter a search term!")
         return
     
-    # TODO: to Add database search functionality here
-    # For now, just showing what would be searched
-    messagebox.showinfo("Quick Search", f"Searching for: '{search_term}'\n\n(Database search functionality will be added later)")
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        # Search both lost and found items
+        cursor.execute("SELECT 'Lost' as type, item_name, category, date_lost as date, location_lost as location, description FROM lost_items WHERE item_name LIKE ? OR category LIKE ? OR location_lost LIKE ? OR description LIKE ?",
+            (f'%{search_term}%', f'%{search_term}%', f'%{search_term}%', f'%{search_term}%'))
+        lost_results = cursor.fetchall()
+        cursor.execute("SELECT 'Found' as type, item_name, category, date_found as date, location_found as location, description FROM found_items WHERE item_name LIKE ? OR category LIKE ? OR location_found LIKE ? OR description LIKE ?",
+            (f'%{search_term}%', f'%{search_term}%', f'%{search_term}%', f'%{search_term}%'))
+        found_results = cursor.fetchall()
+        conn.close()
+        results = lost_results + found_results
+        if not results:
+            messagebox.showinfo("Search Results", "No items found matching your search.")
+        else:
+            msg = ""
+            for r in results:
+                msg += f"[{r[0]}] {r[1]} | {r[2]} | {r[3]} | {r[4]}\n{r[5]}\n\n"
+            messagebox.showinfo("Search Results", msg)
+    except Exception as e:
+        messagebox.showerror("Database Error", str(e))
 
 # Function for show all items
 def show_all_items():
