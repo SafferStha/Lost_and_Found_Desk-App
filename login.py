@@ -17,9 +17,15 @@ def initialize_db():
                 username TEXT NOT NULL UNIQUE,
                 password TEXT NOT NULL,
                 full_name TEXT,
-                email TEXT
+                email TEXT,
+                user_type TEXT DEFAULT 'user'
             )
             ''')
+            # Add user_type column if not exists (for existing DBs)
+            try:
+                cursor.execute("ALTER TABLE users ADD COLUMN user_type TEXT DEFAULT 'user'")
+            except sqlite3.OperationalError:
+                pass  # Column already exists
             conn.commit()
     except sqlite3.Error as e:
         print(f"Database error: {e}")
@@ -31,8 +37,8 @@ def register_user_to_db(username, password, full_name, email):
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
-        cursor.execute("INSERT INTO users (username, password, full_name, email) VALUES (?, ?, ?, ?)",
-                       (username, password, full_name, email))
+        cursor.execute("INSERT INTO users (username, password, full_name, email, user_type) VALUES (?, ?, ?, ?, ?)",
+                       (username, password, full_name, email, 'user'))
         conn.commit()
         return True
     except sqlite3.IntegrityError:
@@ -82,35 +88,38 @@ def open_admin_panel():
         
         current_dir = os.path.dirname(os.path.abspath(__file__))
         admin_panel_path = os.path.join(current_dir, "admin_page.py")
-        user_page_path = os.path.join(current_dir, "user_page_prototype.py")
         
         # Clear login fields for security
         username_entry.delete(0, END)
         password_entry.delete(0, END)
-        
-        # Hide the login window
-        root.withdraw()
-        
-        # Open admin control panel
+        root.destroy()
         subprocess.run([sys.executable, admin_panel_path])
-        
-        # After admin panel closes, open user page prototype
-        subprocess.Popen([sys.executable, user_page_path])
-
+    except Exception as e:
+        messagebox.showerror("Error", f"Could not open admin page: {str(e)}")
         root.deiconify()
         
+def open_user_page():
+    try:
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        user_page_path = os.path.join(current_dir, "user_page_prototype.py")
+        username_entry.delete(0, END)
+        password_entry.delete(0, END)
+        root.destroy()
+        subprocess.run([sys.executable, user_page_path])
     except Exception as e:
-        messagebox.showerror("Error", f"Could not open admin or user page: {str(e)}")
-        root.deiconify()  # Show login window if error occurs
+        messagebox.showerror("Error", f"Could not open user page: {str(e)}")
+        root.deiconify() 
 
 # Function to handle login
 def authenticate_user(username, password):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
+    cursor.execute("SELECT user_type FROM users WHERE username=? AND password=?", (username, password))
     user = cursor.fetchone()
     conn.close()
-    return user is not None
+    if user:
+        return user[0]  # user_type
+    return None
 def handle_login():
     username = username_entry.get().strip()
     password = password_entry.get()
@@ -120,12 +129,16 @@ def handle_login():
         messagebox.showerror("Error", "Please enter both username and password!")
         return
     
-    if authenticate_user(username, password):
+    user_type = authenticate_user(username, password)
+    if user_type:
         messagebox.showinfo("Success", f"Welcome back, {username}!")
-        open_admin_panel()  # Open admin control panel
+        if user_type == 'admin':
+            open_admin_panel()
+        else:
+            open_user_page()
     else:
         messagebox.showerror("Error", "Invalid username or password!")
-        password_entry.delete(0, END)  # Clearing password field for security
+        password_entry.delete(0, END)  
 
 # function for registering a new user
 def register_user():
@@ -239,7 +252,15 @@ def register_user():
             phone_entry.delete(0, END)
             password_entry_reg.delete(0, END)
             confirm_password_entry.delete(0, END)
-            on_closing()
+            register_window.destroy()
+            try:
+                root.destroy()
+            except:
+                pass
+            # Open user page after registration
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            user_page_path = os.path.join(current_dir, "user_page_prototype.py")
+            subprocess.run([sys.executable, user_page_path])
         else:
             messagebox.showerror("Error", result)
 
