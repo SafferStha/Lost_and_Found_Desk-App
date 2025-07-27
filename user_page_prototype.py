@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+# Database connection
+from db_connection import get_db_connection
 
 root = Tk()
 root.geometry("1200x700")
@@ -77,11 +79,39 @@ def advanced_search():
             messagebox.showerror("Error", "Please enter a search term!")
             return
         
-        # TODO: to Add database search functionality here
-        # For now, just showing what would be searched
-        messagebox.showinfo("Search", f"Searching for: '{search_term}'\nType: {item_type}\nCategory: {category}\n\n(Database search functionality will be added later)")
-                # Close search window after successful search
-        on_closing()
+        # Clear main table
+        for item in tree.get_children():
+            tree.delete(item)
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            results = []
+            # Build queries
+            if item_type in ("Lost", "All"):
+                sql = "SELECT id, item_name, category, 'Lost' as type, date_lost as date, location_lost as location, 'active' as status FROM lost_items WHERE (item_name LIKE ? OR category LIKE ? OR location_lost LIKE ? OR description LIKE ?)"
+                params = [f'%{search_term}%'] * 4
+                if category != "All":
+                    sql += " AND category = ?"
+                    params.append(category)
+                cursor.execute(sql, params)
+                results += cursor.fetchall()
+            if item_type in ("Found", "All"):
+                sql = "SELECT id, item_name, category, 'Found' as type, date_found as date, location_found as location, 'active' as status FROM found_items WHERE (item_name LIKE ? OR category LIKE ? OR location_found LIKE ? OR description LIKE ?)"
+                params = [f'%{search_term}%'] * 4
+                if category != "All":
+                    sql += " AND category = ?"
+                    params.append(category)
+                cursor.execute(sql, params)
+                results += cursor.fetchall()
+            conn.close()
+            if not results:
+                messagebox.showinfo("Search Results", "No items found matching your search.")
+            else:
+                for row in results:
+                    tree.insert('', 'end', values=row)
+            on_closing()
+        except Exception as e:
+            messagebox.showerror("Database Error", str(e))
 
     # Buttons
     btn_search = Button(search_window, text="Search", font=("Arial", 12, "bold"), bg="#21759b", fg="white", width=10, command=do_search)
@@ -164,19 +194,23 @@ def report_lost_item():
         if not all([name, category, date, location, desc]):
             messagebox.showerror("Error", "Please fill all fields!")
             return
-        
-        # Success message
-        messagebox.showinfo("Success", "Lost item report submitted successfully!")
-        
-        # Clear fields
-        item_name.delete(0, END)
-        item_category.delete(0, END)
-        date_lost.delete(0, END)
-        location_lost.delete(0, END)
-        description.delete("1.0", END)
-        
-        # Close window
-        on_closing()
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO lost_items (item_name, category, date_lost, location_lost, description, contact_info) VALUES (?, ?, ?, ?, ?, ?)",
+                (name, category, date, location, desc, ''))
+            conn.commit()
+            conn.close()
+            messagebox.showinfo("Success", "Lost item report submitted successfully!")
+            # Clear fields
+            item_name.delete(0, END)
+            item_category.delete(0, END)
+            date_lost.delete(0, END)
+            location_lost.delete(0, END)
+            description.delete("1.0", END)
+            on_closing()
+        except Exception as e:
+            messagebox.showerror("Database Error", str(e))
 
     submit_button = Button(lost_window, text="Submit Report", width=12, font=("Arial", 12), bg="#4CAF50", fg="white", bd=2, relief="raised", command=submit_lost_item)
     submit_button.place(x=200, y=420)
@@ -260,18 +294,23 @@ def report_found_item():
             messagebox.showerror("Error", "Please fill all fields!")
             return
         
-        # Success message
-        messagebox.showinfo("Success", "Found item report submitted successfully!")
-        
-        # Clear fields
-        item_name.delete(0, END)
-        item_category.delete(0, END)
-        date_found.delete(0, END)
-        location_found.delete(0, END)
-        description.delete("1.0", END)
-
-        # Close window
-        on_closing()
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO found_items (item_name, category, date_found, location_found, description, contact_info) VALUES (?, ?, ?, ?, ?, ?)",
+                (name, category, date, location, desc, ''))
+            conn.commit()
+            conn.close()
+            messagebox.showinfo("Success", "Found item report submitted successfully!")
+            # Clear fields
+            item_name.delete(0, END)
+            item_category.delete(0, END)
+            date_found.delete(0, END)
+            location_found.delete(0, END)
+            description.delete("1.0", END)
+            on_closing()
+        except Exception as e:
+            messagebox.showerror("Database Error", str(e))
 
     submit_button = Button(found_window, text="Submit Report", width=12, font=("Arial", 12), 
                           bg="#4CAF50", fg="white", bd=2, relief="raised", command=submit_found_item)
@@ -285,21 +324,54 @@ def report_found_item():
 # Function for main search bar
 def quick_search():
     search_term = search_entry.get().strip()
-    
+   # Clear table
+    for item in tree.get_children():
+        tree.delete(item) 
     # Check if search term is empty
     if not search_term:
         messagebox.showerror("Error", "Please enter a search term!")
         return
     
-    # TODO: to Add database search functionality here
-    # For now, just showing what would be searched
-    messagebox.showinfo("Quick Search", f"Searching for: '{search_term}'\n\n(Database search functionality will be added later)")
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        # Search lost items
+        cursor.execute("SELECT id, item_name, category, 'Lost' as type, date_lost as date, location_lost as location, 'active' as status FROM lost_items WHERE item_name LIKE ? OR category LIKE ? OR location_lost LIKE ? OR description LIKE ?",
+            (f'%{search_term}%', f'%{search_term}%', f'%{search_term}%', f'%{search_term}%'))
+        lost_results = cursor.fetchall()
+        cursor.execute("SELECT 'Found' as type, item_name, category, date_found as date, location_found as location, description FROM found_items WHERE item_name LIKE ? OR category LIKE ? OR location_found LIKE ? OR description LIKE ?",
+            (f'%{search_term}%', f'%{search_term}%', f'%{search_term}%', f'%{search_term}%'))
+        found_results = cursor.fetchall()
+        conn.close()
+        results = lost_results + found_results
+        if not results:
+            messagebox.showinfo("Search Results", "No items found matching your search.")
+        else:
+           for row in results:
+                tree.insert('', 'end', values=row)
+    except Exception as e:
+        messagebox.showerror("Database Error", str(e))
 
 # Function for show all items
 def show_all_items():
-    # TODO: to Add database functionality to show all items
-    # For now, just showing a message
-    messagebox.showinfo("Show All", "Loading all items...\n\n(Database functionality will be added later)")
+    # Clear table
+    for item in tree.get_children():
+        tree.delete(item)
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        # Fetch lost items
+        cursor.execute("SELECT id, item_name, category, 'Lost' as type, date_lost as date, location_lost as location, 'active' as status FROM lost_items")
+        lost_items = cursor.fetchall()
+        # Fetch found items
+        cursor.execute("SELECT id, item_name, category, 'Found' as type, date_found as date, location_found as location, 'active' as status FROM found_items")
+        found_items = cursor.fetchall()
+        conn.close()
+        # Insert all items into the table
+        for row in lost_items + found_items:
+            tree.insert('', 'end', values=row)
+    except Exception as e:
+        messagebox.showerror("Database Error", str(e))
 
 
 # Header Frame
@@ -431,5 +503,8 @@ style = ttk.Style()
 style.theme_use("clam")
 style.configure("Treeview.Heading", font=("Arial", 11, "bold"), background="#f0f0f0")
 style.configure("Treeview", font=("Arial", 10), rowheight=25)
+
+# Show all items by default
+show_all_items()
 
 root.mainloop()
