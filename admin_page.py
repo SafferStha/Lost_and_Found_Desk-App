@@ -3,6 +3,22 @@ from tkinter import ttk, messagebox
 # Database connection
 from db_connection import get_db_connection
 
+# --- MIGRATION: Ensure 'phone' column exists in users table ---
+def ensure_phone_column():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        # Check if 'phone' column exists
+        cursor.execute("PRAGMA table_info(users)")
+        columns = [col[1] for col in cursor.fetchall()]
+        if 'phone' not in columns:
+            cursor.execute("ALTER TABLE users ADD COLUMN phone TEXT")
+            conn.commit()
+        conn.close()
+    except Exception as e:
+        messagebox.showerror("Database Error", f"Migration error: {e}")
+
+ensure_phone_column()
 # Main window setup
 root = Tk()
 root.geometry("1200x700")
@@ -361,6 +377,30 @@ tree.configure(yscrollcommand=scrollbar.set)
 tree.pack(side=LEFT, fill=BOTH, expand=True)
 scrollbar.pack(side=RIGHT, fill=Y)
 
+# Function to load all items from the database into the items table
+def load_items():
+    # Clear existing items
+    for item in tree.get_children():
+        tree.delete(item)
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        # Fetch lost items
+        cursor.execute("SELECT id, item_name, category, 'Lost' as type, date_lost as date, 'active' as status FROM lost_items")
+        lost_items = cursor.fetchall()
+        # Fetch found items
+        cursor.execute("SELECT id, item_name, category, 'Found' as type, date_found as date, 'active' as status FROM found_items")
+        found_items = cursor.fetchall()
+        conn.close()
+        # Insert all items into the table
+        for row in lost_items + found_items:
+            tree.insert('', 'end', values=row)
+    except Exception as e:
+        messagebox.showerror("Database Error", str(e))
+
+# Load items on startup
+load_items()
+
 # Users Management Tab Content
 def edit_user():
     global edit_user_window
@@ -375,9 +415,23 @@ def edit_user():
         edit_user_window.lift()
         return
     
-    # Get selected user data
+    # Get selected user ID
     item = users_tree.item(selected[0])
-    user_data = item['values']
+    user_id_val = item['values'][0]
+    
+    # Fetch user data from database
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, full_name, email, phone, user_type FROM users WHERE id=?", (user_id_val,))
+        user_data = cursor.fetchone()
+        conn.close()
+        if not user_data:
+            messagebox.showerror("Error", "User not found in database!")
+            return
+    except Exception as e:
+        messagebox.showerror("Database Error", str(e))
+        return
     
     edit_user_window = Toplevel()
     edit_user_window.title("Edit User")
@@ -394,8 +448,7 @@ def edit_user():
     
     edit_user_window.protocol("WM_DELETE_WINDOW", on_closing)
     
-    messagebox.showinfo("Info", "Edit user dialog opened (placeholder)")
-    on_closing()
+    # Show the edit user form with details from the database
     # Header
     header_frame = Frame(edit_user_window, bg="#5DADE2", height=60)
     header_frame.pack(fill=X)
@@ -492,7 +545,16 @@ def load_users():
     for item in users_tree.get_children():
         users_tree.delete(item)
     
-    # Users table is now empty - ready for real data
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, full_name, email, phone, user_type FROM users")
+        users = cursor.fetchall()
+        conn.close()
+        for row in users:
+            users_tree.insert('', 'end', values=row)
+    except Exception as e:
+        messagebox.showerror("Database Error", str(e))
 
 # Users action buttons frame
 users_action_frame = Frame(users_frame, bg="white", height=80)
@@ -503,6 +565,10 @@ users_action_frame.pack_propagate(False)
 Button(users_action_frame, text="Edit User", font=("Arial", 12, "bold"), bg="#FF9800", 
        fg="white", width=15, height=2, command=edit_user).pack(side=LEFT, padx=10, pady=10)
 
+# Refresh Users button
+Button(users_action_frame, text="Refresh", font=("Arial", 12, "bold"), bg="#2196F3", 
+       fg="white", width=15, height=2, command=load_users).pack(side=LEFT, padx=10, pady=10)
+
 # Users table
 users_columns = ("ID", "Full Name", "Email", "Phone", "Type")
 users_tree = ttk.Treeview(users_frame, columns=users_columns, show="headings", height=20)
@@ -512,6 +578,8 @@ for col in users_columns:
     users_tree.column(col, width=200, anchor=W)
 
 users_tree.pack(fill=BOTH, expand=True, padx=20, pady=20)
+# Load users from database on startup
+load_users()
 
 # Reports Tab Content
 # Create simple stats display
@@ -519,20 +587,38 @@ reports_content = Frame(reports_frame, bg="white")
 reports_content.pack(fill=BOTH, expand=True, padx=50, pady=50)
 
 # Stats display
-stats_text = """
-Total Items: 0
-Lost Items: 0
-Found Items: 0
-Active Items: 0
-Claimed Items: 0
+# Function to update stats from the database
+def update_stats():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM lost_items")
+        lost_count = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM found_items")
+        found_count = cursor.fetchone()[0]
+        total_count = lost_count + found_count
+        # For demo, treat all as active, none as claimed
+        active_count = total_count
+        claimed_count = 0
+        stats_text = f"""
+Total Items: {total_count}
+Lost Items: {lost_count}
+Found Items: {found_count}
+Active Items: {active_count}
+Claimed Items: {claimed_count}
 """
+        stats_label.config(text=stats_text)
+        conn.close()
+    except Exception as e:
+        stats_label.config(text="Error loading stats: " + str(e))
 
-stats_label = Label(reports_content, text=stats_text, font=("Arial", 14), 
+stats_label = Label(reports_content, text="Loading stats...", font=("Arial", 14), 
                    bg="white", fg="black", justify=LEFT)
 stats_label.pack(pady=50)
 
 
 # Load initial data
 load_users()
+update_stats()
 
 root.mainloop()
