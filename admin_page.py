@@ -1,5 +1,7 @@
 from tkinter import *
 from tkinter import ttk, messagebox
+# Database connection
+from db_connection import get_db_connection
 
 # Main window setup
 root = Tk()
@@ -178,9 +180,25 @@ def add_lost_item():
         ]):
             messagebox.showerror("Error", "Please fill all fields!")
             return
-        #If all validation pass
-        messagebox.showinfo("Success", "Lost item added successfully!")
-        on_closing()
+        # Insert into database
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO lost_items (item_name, category, date_lost, location_lost, description, contact_info) VALUES (?, ?, ?, ?, ?, ?)",
+                (
+                    item_name.get().strip(),
+                    category.get().strip(),
+                    date_lost.get().strip(),
+                    location_lost.get().strip(),
+                    description.get("1.0", END).strip(),
+                    contact_info.get().strip()
+                ))
+            conn.commit()
+            conn.close()
+            messagebox.showinfo("Success", "Lost item added successfully!")
+            on_closing()
+        except Exception as e:
+            messagebox.showerror("Database Error", str(e))
     
     # Buttons
     y_pos += 50
@@ -273,10 +291,25 @@ def add_found_item():
             messagebox.showerror("Error", "Please fill all fields!")
             return
         
-        # If all validations pass
-        messagebox.showinfo("Success", "Found item added successfully!")
-        on_closing()
-    
+       # Insert into database
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO found_items (item_name, category, date_found, location_found, description, contact_info) VALUES (?, ?, ?, ?, ?, ?)",
+                (
+                    item_name.get().strip(),
+                    category.get().strip(),
+                    date_found.get().strip(),
+                    location_found.get().strip(),
+                    description.get("1.0", END).strip(),
+                    contact_info.get().strip()
+                ))
+            conn.commit()
+            conn.close()
+            messagebox.showinfo("Success", "Found item added successfully!")
+            on_closing()
+        except Exception as e:
+            messagebox.showerror("Database Error", str(e))
     # Buttons
     y_pos += 50
     Button(form_frame, text="Submit", font=("Arial", 12, "bold"), bg="#28a745", fg="white", 
@@ -425,11 +458,24 @@ def edit_user():
             messagebox.showerror("Error", "Please enter a valid email address!")
             return
         
-        # Refresh the users table
-        load_users()
-        
-        messagebox.showinfo("Success", "User updated successfully!")
-        on_closing()
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("UPDATE users SET full_name=?, email=?, phone=?, user_type=? WHERE id=?",
+                (
+                    full_name.get().strip(),
+                    email.get().strip(),
+                    phone.get().strip(),
+                    user_type.get(),
+                    user_id.get()
+                ))
+            conn.commit()
+            conn.close()
+            load_users()
+            messagebox.showinfo("Success", "User updated successfully!")
+            on_closing()
+        except Exception as e:
+            messagebox.showerror("Database Error", str(e))
     
     # Buttons
     y_pos += 80
