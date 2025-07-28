@@ -502,7 +502,7 @@ def edit_user():
     Label(form_frame, text="Phone:", font=("Arial", 12), bg="black", fg="white").place(x=50, y=y_pos)
     phone = Entry(form_frame, width=30, font=("Arial", 11), bd=1, relief="solid")
     phone.place(x=200, y=y_pos)
-    phone.insert(0, user_data[3] if len(user_data) > 3 else "")
+    phone.insert(0, str(user_data[3]) if user_data[3] is not None else "")
     
     # User Type
     y_pos += 40
@@ -510,7 +510,7 @@ def edit_user():
     user_type = ttk.Combobox(form_frame, width=28, font=("Arial", 11), state="readonly")
     user_type['values'] = ('admin', 'user')
     user_type.place(x=200, y=y_pos)
-    user_type.set(user_data[4] if len(user_data) > 4 else "user")
+    user_type.set(str(user_data[4]) if len(user_data) > 4 and user_data[4] is not None else "user")
 
     def update_user():
         # Validate fields
@@ -542,7 +542,7 @@ def edit_user():
             messagebox.showerror("Database Error", str(e))
     
     # Buttons
-    y_pos += 80
+    y_pos += 50
     Button(form_frame, text="Update", font=("Arial", 12, "bold"), bg="#28a745", fg="white", 
            width=12, command=update_user).place(x=200, y=y_pos)
     Button(form_frame, text="Cancel", font=("Arial", 12, "bold"), bg="#dc3545", fg="white",
