@@ -110,7 +110,7 @@ def open_admin_panel():
 def open_user_page():
     try:
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        user_page_path = os.path.join(current_dir, "user_page_prototype.py")
+        user_page_path = os.path.join(current_dir, "user_page.py")
         username_entry.delete(0, END)
         password_entry.delete(0, END)
         root.destroy()
