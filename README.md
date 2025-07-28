@@ -51,14 +51,14 @@ A modern Lost & Found management system built with Python Tkinter. This applicat
 
 ### Application Components
 
-1. **Login System** (`login.py`):
+1. **Login System** (`main.py`):
    - User authentication interface with gradient background
    - Animated typewriter effects and blinking text
    - User registration functionality with validation
    - Admin panel access for authorized users
    - Secure database integration
 
-2. **User Interface** (`user_page_prototype.py`):
+2. **User Interface** (`user_page.py`):
    - Report lost/found items with detailed forms
    - Advanced search functionality with multiple filters
    - Dark/light mode toggle with theme persistence
@@ -110,14 +110,14 @@ A modern Lost & Found management system built with Python Tkinter. This applicat
 **Main Entry Point (Recommended):**
 
 ```bash
-python login.py
+python main.py
 ```
 
 **Direct Access Options:**
 
 ```bash
 # Access user interface directly
-python user_page_prototype.py
+python user_page.py
 
 # Access admin panel directly (requires authentication)
 python admin_page.py
@@ -125,7 +125,7 @@ python admin_page.py
 
 ### Application Flow
 
-1. **Start with Login** (`login.py`) - Main entry point with authentication and registration
+1. **Start with Login** (`main.py`) - Main entry point with authentication and registration
 2. **User Authentication** - Login with username/password or register new account
 3. **User Interface** - Report lost/found items, search database, and view results
 4. **Admin Panel** - Administrative controls, user management, and system reports
