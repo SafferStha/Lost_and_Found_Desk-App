@@ -391,9 +391,20 @@ def load_items():
         # Fetch found items
         cursor.execute("SELECT id, item_name, category, 'Found' as type, date_found as date, 'active' as status FROM found_items")
         found_items = cursor.fetchall()
+
+
+
+        # Fetch claimed items directly from claimed_items table
+        cursor.execute("SELECT id, item_name, category, 'Claimed' as type, date_claimed as date, 'claimed' as status FROM claimed_items")
+        claimed_items = cursor.fetchall()
+
         conn.close()
+
         # Insert all items into the table
         for row in lost_items + found_items:
+            tree.insert('', 'end', values=row)
+        # Insert claimed items (show after active items)
+        for row in claimed_items:
             tree.insert('', 'end', values=row)
     except Exception as e:
         messagebox.showerror("Database Error", str(e))
@@ -596,10 +607,10 @@ def update_stats():
         lost_count = cursor.fetchone()[0]
         cursor.execute("SELECT COUNT(*) FROM found_items")
         found_count = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM claimed_items")
+        claimed_count = cursor.fetchone()[0]
         total_count = lost_count + found_count
-        # For demo, treat all as active, none as claimed
-        active_count = total_count
-        claimed_count = 0
+        active_count = total_count - claimed_count
         stats_text = f"""
 Total Items: {total_count}
 Lost Items: {lost_count}
