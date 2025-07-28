@@ -338,7 +338,8 @@ def refresh_table():
     # Clear existing items
     for item in tree.get_children():
         tree.delete(item)
-    # Table is now empty - ready for real data
+    # Reload items from the database
+    load_items()
     messagebox.showinfo("Refresh", "Table refreshed successfully!")
 
 # Action buttons frame
@@ -400,12 +401,15 @@ def load_items():
 
         conn.close()
 
-        # Insert all items into the table
-        for row in lost_items + found_items:
-            tree.insert('', 'end', values=row)
-        # Insert claimed items (show after active items)
-        for row in claimed_items:
-            tree.insert('', 'end', values=row)
+        # Combine all items
+        all_items = lost_items + found_items + claimed_items
+        # Assign unique sequential IDs for display
+        display_id = 1
+        for row in all_items:
+            # Replace the database id with display_id
+            new_row = (display_id,) + row[1:]
+            tree.insert('', 'end', values=new_row)
+            display_id += 1
     except Exception as e:
         messagebox.showerror("Database Error", str(e))
 

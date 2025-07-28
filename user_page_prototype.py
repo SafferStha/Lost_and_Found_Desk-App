@@ -82,36 +82,39 @@ def advanced_search():
         # Clear main table
         for item in tree.get_children():
             tree.delete(item)
-        try:
-            conn = get_db_connection()
-            cursor = conn.cursor()
-            results = []
-            # Build queries
-            if item_type in ("Lost", "All"):
-                sql = "SELECT id, item_name, category, 'Lost' as type, date_lost as date, location_lost as location, 'active' as status FROM lost_items WHERE (item_name LIKE ? OR category LIKE ? OR location_lost LIKE ? OR description LIKE ?)"
-                params = [f'%{search_term}%'] * 4
-                if category != "All":
-                    sql += " AND category = ?"
-                    params.append(category)
-                cursor.execute(sql, params)
-                results += cursor.fetchall()
-            if item_type in ("Found", "All"):
-                sql = "SELECT id, item_name, category, 'Found' as type, date_found as date, location_found as location, 'active' as status FROM found_items WHERE (item_name LIKE ? OR category LIKE ? OR location_found LIKE ? OR description LIKE ?)"
-                params = [f'%{search_term}%'] * 4
-                if category != "All":
-                    sql += " AND category = ?"
-                    params.append(category)
-                cursor.execute(sql, params)
-                results += cursor.fetchall()
-            conn.close()
-            if not results:
-                messagebox.showinfo("Search Results", "No items found matching your search.")
-            else:
-                for row in results:
-                    tree.insert('', 'end', values=row)
-            on_closing()
-        except Exception as e:
-            messagebox.showerror("Database Error", str(e))
+            try:
+                conn = get_db_connection()
+                cursor = conn.cursor()
+                results = []
+                # Build queries
+                if item_type in ("Lost", "All"):
+                    sql = "SELECT id, item_name, category, 'Lost' as type, date_lost as date, location_lost as location, 'active' as status FROM lost_items WHERE (item_name LIKE ? OR category LIKE ? OR location_lost LIKE ? OR description LIKE ?)"
+                    params = [f'%{search_term}%'] * 4
+                    if category != "All":
+                        sql += " AND category = ?"
+                        params.append(category)
+                    cursor.execute(sql, params)
+                    results += cursor.fetchall()
+                if item_type in ("Found", "All"):
+                    sql = "SELECT id, item_name, category, 'Found' as type, date_found as date, location_found as location, 'active' as status FROM found_items WHERE (item_name LIKE ? OR category LIKE ? OR location_found LIKE ? OR description LIKE ?)"
+                    params = [f'%{search_term}%'] * 4
+                    if category != "All":
+                        sql += " AND category = ?"
+                        params.append(category)
+                    cursor.execute(sql, params)
+                    results += cursor.fetchall()
+                conn.close()
+                if not results:
+                    messagebox.showinfo("Search Results", "No items found matching your search.")
+                else:
+                    display_id = 1
+                    for row in results:
+                        new_row = (display_id,) + row[1:]
+                        tree.insert('', 'end', values=new_row)
+                        display_id += 1
+                on_closing()
+            except Exception as e:
+                messagebox.showerror("Database Error", str(e))
 
     # Buttons
     btn_search = Button(search_window, text="Search", font=("Arial", 12, "bold"), bg="#21759b", fg="white", width=10, command=do_search)
@@ -339,7 +342,7 @@ def quick_search():
         cursor.execute("SELECT id, item_name, category, 'Lost' as type, date_lost as date, location_lost as location, 'active' as status FROM lost_items WHERE item_name LIKE ? OR category LIKE ? OR location_lost LIKE ? OR description LIKE ?",
             (f'%{search_term}%', f'%{search_term}%', f'%{search_term}%', f'%{search_term}%'))
         lost_results = cursor.fetchall()
-        cursor.execute("SELECT 'Found' as type, item_name, category, date_found as date, location_found as location, description FROM found_items WHERE item_name LIKE ? OR category LIKE ? OR location_found LIKE ? OR description LIKE ?",
+        cursor.execute("SELECT id, item_name, category, 'Found' as type, date_found as date, location_found as location, 'active' as status FROM found_items WHERE item_name LIKE ? OR category LIKE ? OR location_found LIKE ? OR description LIKE ?",
             (f'%{search_term}%', f'%{search_term}%', f'%{search_term}%', f'%{search_term}%'))
         found_results = cursor.fetchall()
         conn.close()
@@ -347,8 +350,11 @@ def quick_search():
         if not results:
             messagebox.showinfo("Search Results", "No items found matching your search.")
         else:
-           for row in results:
-                tree.insert('', 'end', values=row)
+            display_id = 1
+            for row in results:
+                new_row = (display_id,) + row[1:]
+                tree.insert('', 'end', values=new_row)
+                display_id += 1
     except Exception as e:
         messagebox.showerror("Database Error", str(e))
 
@@ -368,8 +374,12 @@ def show_all_items():
         found_items = cursor.fetchall()
         conn.close()
         # Insert all items into the table
-        for row in lost_items + found_items:
-            tree.insert('', 'end', values=row)
+        all_items = lost_items + found_items
+        display_id = 1
+        for row in all_items:
+            new_row = (display_id,) + row[1:]
+            tree.insert('', 'end', values=new_row)
+            display_id += 1
     except Exception as e:
         messagebox.showerror("Database Error", str(e))
 
@@ -446,6 +456,7 @@ report_found_btn.pack(side=LEFT, padx=30, pady=10)
 search_items_btn = Button(button_frame, text="Search Items", width=18, height=2, font=("Arial", 12, "bold"), bg="#00BCD4", fg="white", relief="flat", cursor="hand2", command=advanced_search)
 search_items_btn.pack(side=LEFT, padx=30, pady=10)
 
+
 # Search Frame
 search_frame = Frame(root, bg="white", height=60)
 search_frame.pack(fill=X, pady=(0, 20))
@@ -463,6 +474,14 @@ search_btn.pack(side=LEFT, padx=10, pady=15)
 
 show_all_btn = Button(search_frame, text="Show All", width=10, font=("Arial", 10), bg="#E91E63", fg="white", relief="flat", cursor="hand2", command=show_all_items)
 show_all_btn.pack(side=LEFT, padx=5, pady=15)
+
+# Refresh Button for user page
+def refresh_items():
+    show_all_items()
+    messagebox.showinfo("Refresh", "Table refreshed successfully!")
+
+refresh_btn = Button(search_frame, text="Refresh", width=10, font=("Arial", 10), bg="#4CAF50", fg="white", relief="flat", cursor="hand2", command=refresh_items)
+refresh_btn.pack(side=LEFT, padx=5, pady=15)
 
 # Table Frame
 table_frame = Frame(root, bg="white")
