@@ -1,5 +1,15 @@
+# --- Tkinter imports ---
 from tkinter import *
 from tkinter import ttk, messagebox
+
+# --- Utility: Center window on screen ---
+def center_window(win, width=1100, height=600):
+    win.update_idletasks()
+    screen_width = win.winfo_screenwidth()
+    screen_height = win.winfo_screenheight()
+    x = (screen_width // 2) - (width // 2)
+    y = (screen_height // 2) - (height // 2)
+    win.geometry(f"{width}x{height}+{x}+{y}")
 # Database connection
 from db_connection import get_db_connection
 
@@ -21,7 +31,7 @@ def ensure_phone_column():
 ensure_phone_column()
 # Main window setup
 root = Tk()
-root.geometry("1200x700")
+center_window(root, 1100, 600)
 root.title("Lost & Found - Admin Control Panel")
 root.resizable(0, 0)
 root.configure(bg="white")
@@ -121,7 +131,7 @@ def add_lost_item():
     
     add_lost_window = Toplevel()
     add_lost_window.title("Add Lost Item")
-    add_lost_window.geometry("600x550")
+    center_window(add_lost_window, 1100, 600)
     add_lost_window.resizable(0, 0)
     add_lost_window.configure(bg="black")
     add_lost_window.grab_set()
@@ -231,7 +241,7 @@ def add_found_item():
     
     add_found_window = Toplevel()
     add_found_window.title("Add Found Item")
-    add_found_window.geometry("600x550")
+    center_window(add_found_window, 1100, 600)
     add_found_window.resizable(0, 0)
     add_found_window.configure(bg="black")
     add_found_window.grab_set()
@@ -450,7 +460,7 @@ def edit_user():
     
     edit_user_window = Toplevel()
     edit_user_window.title("Edit User")
-    edit_user_window.geometry("600x500")
+    center_window(edit_user_window, 1100, 600)
     edit_user_window.resizable(0, 0)
     edit_user_window.configure(bg="black")
     edit_user_window.grab_set()

@@ -1,3 +1,11 @@
+# Utility function to center a window on the screen
+def center_window(win, width, height):
+    win.update_idletasks()
+    screen_width = win.winfo_screenwidth()
+    screen_height = win.winfo_screenheight()
+    x = (screen_width // 2) - (width // 2)
+    y = (screen_height // 2) - (height // 2)
+    win.geometry(f"{width}x{height}+{x}+{y}")
 from tkinter import *
 from tkinter import messagebox
 import subprocess
@@ -46,9 +54,10 @@ def register_user_to_db(username, password, full_name, email):
     finally:
         conn.close()
 
+
 root = Tk()
 root.title("Lost & Found Desktop - Login")
-root.geometry("1100x600")
+center_window(root, 1100, 600)
 root.resizable(0, 0)
 
 # Setting the background color
@@ -146,9 +155,10 @@ def register_user():
     if register_window is not None and register_window.winfo_exists():
         register_window.lift()
         return
+
     register_window = Toplevel()
     register_window.title("User Registration")
-    register_window.geometry("1100x600")
+    center_window(register_window, 1100, 600)
     register_window.resizable(0, 0)
     register_window.grab_set()  # Make window modal
     register_window.transient(root)  # Keep on top of parent

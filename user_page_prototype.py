@@ -1,11 +1,21 @@
+# --- Tkinter imports ---
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+
+# --- Utility: Center window on screen ---
+def center_window(win, width=1100, height=600):
+    win.update_idletasks()
+    screen_width = win.winfo_screenwidth()
+    screen_height = win.winfo_screenheight()
+    x = (screen_width // 2) - (width // 2)
+    y = (screen_height // 2) - (height // 2)
+    win.geometry(f"{width}x{height}+{x}+{y}")
 # Database connection
 from db_connection import get_db_connection
 
 root = Tk()
-root.geometry("1200x700")
+center_window(root, 1100, 600)
 root.title("Lost & Found - Welcome User")
 root.resizable(0, 0)
 root.configure(bg="white")  # Set initial background to light mode
@@ -24,7 +34,7 @@ def advanced_search():
         return    
     search_window = Toplevel()
     search_window.title("Advanced Search")
-    search_window.geometry("400x320")
+    center_window(search_window, 1100, 600)
     search_window.resizable(0, 0)
     
     # Set background based on current mode
@@ -134,7 +144,7 @@ def report_lost_item():
     
     lost_window = Toplevel()  # --> Create new window
     lost_window.title("Report Lost Item")
-    lost_window.geometry("600x500")
+    center_window(lost_window, 1100, 600)
     
     # Set background based on current mode
     window_bg = "#2b2b2b" if dark_mode else "white"
@@ -232,13 +242,12 @@ def report_found_item():
         return
 
     found_window = Toplevel()  # --> Create new window
-    
+    found_window.title("Report Found Item")
+    center_window(found_window, 1100, 600)
     # Set background based on current mode
     window_bg = "#2b2b2b" if dark_mode else "white"
     text_color = "white" if dark_mode else "black"
     found_window.configure(bg=window_bg)
-    found_window.title("Report Found Item")
-    found_window.geometry("600x500")
     found_window.resizable(0, 0)
 
     # Handle window close event to reset the global variable
