@@ -26,9 +26,15 @@ def initialize_db():
                 password TEXT NOT NULL,
                 full_name TEXT,
                 email TEXT,
+                phone TEXT,
                 user_type TEXT DEFAULT 'user'
             )
             ''')
+            # Add phone column if not exists (for existing DBs)
+            try:
+                cursor.execute("ALTER TABLE users ADD COLUMN phone TEXT")
+            except sqlite3.OperationalError:
+                pass  # Column already exists
             # Add user_type column if not exists (for existing DBs)
             try:
                 cursor.execute("ALTER TABLE users ADD COLUMN user_type TEXT DEFAULT 'user'")
@@ -41,12 +47,12 @@ def initialize_db():
 initialize_db()
 
 # User registration logic
-def register_user_to_db(username, password, full_name, email):
+def register_user_to_db(username, password, full_name, email, phone):
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
-        cursor.execute("INSERT INTO users (username, password, full_name, email, user_type) VALUES (?, ?, ?, ?, ?)",
-                       (username, password, full_name, email, 'user'))
+        cursor.execute("INSERT INTO users (username, password, full_name, email, phone, user_type) VALUES (?, ?, ?, ?, ?, ?)",
+                       (username, password, full_name, email, phone, 'user'))
         conn.commit()
         return True
     except sqlite3.IntegrityError:
@@ -248,7 +254,7 @@ def register_user():
             result = "Passwords do not match!"
         elif len(password) < 6:
             result = "Password must be at least 6 characters!"
-        elif register_user_to_db(username, password, full_name, email):
+        elif register_user_to_db(username, password, full_name, email, phone):
             result = f"Registration successful! Welcome, {full_name}!"
         else:
             result = "Username or email already exists!"
