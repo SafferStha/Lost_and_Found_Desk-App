@@ -263,14 +263,8 @@ def register_user():
             password_entry_reg.delete(0, END)
             confirm_password_entry.delete(0, END)
             register_window.destroy()
-            try:
-                root.destroy()
-            except:
-                pass
-            # Open user page after registration
-            current_dir = os.path.dirname(os.path.abspath(__file__))
-            user_page_path = os.path.join(current_dir, "user_page_prototype.py")
-            subprocess.run([sys.executable, user_page_path])
+            # After registration, just close the registration window and show the login page again
+            # (root window remains open)
         else:
             messagebox.showerror("Error", result)
 
