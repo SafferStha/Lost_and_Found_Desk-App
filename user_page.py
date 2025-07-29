@@ -92,39 +92,39 @@ def advanced_search():
         # Clear main table
         for item in tree.get_children():
             tree.delete(item)
-            try:
-                conn = get_db_connection()
-                cursor = conn.cursor()
-                results = []
-                # Build queries
-                if item_type in ("Lost", "All"):
-                    sql = "SELECT id, item_name, category, 'Lost' as type, date_lost as date, location_lost as location, 'active' as status FROM lost_items WHERE (item_name LIKE ? OR category LIKE ? OR location_lost LIKE ? OR description LIKE ?)"
-                    params = [f'%{search_term}%'] * 4
-                    if category != "All":
-                        sql += " AND category = ?"
-                        params.append(category)
-                    cursor.execute(sql, params)
-                    results += cursor.fetchall()
-                if item_type in ("Found", "All"):
-                    sql = "SELECT id, item_name, category, 'Found' as type, date_found as date, location_found as location, 'active' as status FROM found_items WHERE (item_name LIKE ? OR category LIKE ? OR location_found LIKE ? OR description LIKE ?)"
-                    params = [f'%{search_term}%'] * 4
-                    if category != "All":
-                        sql += " AND category = ?"
-                        params.append(category)
-                    cursor.execute(sql, params)
-                    results += cursor.fetchall()
-                conn.close()
-                if not results:
-                    messagebox.showinfo("Search Results", "No items found matching your search.")
-                else:
-                    display_id = 1
-                    for row in results:
-                        new_row = (display_id,) + row[1:]
-                        tree.insert('', 'end', values=new_row)
-                        display_id += 1
-                on_closing()
-            except Exception as e:
-                messagebox.showerror("Database Error", str(e))
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            results = []
+            # Build queries
+            if item_type in ("Lost", "All"):
+                sql = "SELECT id, item_name, category, 'Lost' as type, date_lost as date, location_lost as location, 'active' as status FROM lost_items WHERE (item_name LIKE ? OR category LIKE ? OR location_lost LIKE ? OR description LIKE ?)"
+                params = [f'%{search_term}%'] * 4
+                if category != "All":
+                    sql += " AND category = ?"
+                    params.append(category)
+                cursor.execute(sql, params)
+                results += cursor.fetchall()
+            if item_type in ("Found", "All"):
+                sql = "SELECT id, item_name, category, 'Found' as type, date_found as date, location_found as location, 'active' as status FROM found_items WHERE (item_name LIKE ? OR category LIKE ? OR location_found LIKE ? OR description LIKE ?)"
+                params = [f'%{search_term}%'] * 4
+                if category != "All":
+                    sql += " AND category = ?"
+                    params.append(category)
+                cursor.execute(sql, params)
+                results += cursor.fetchall()
+            conn.close()
+            if not results:
+                messagebox.showinfo("Search Results", "No items found matching your search.")
+            else:
+                display_id = 1
+                for row in results:
+                    new_row = (display_id,) + row[1:]
+                    tree.insert('', 'end', values=new_row)
+                    display_id += 1
+            on_closing()
+        except Exception as e:
+            messagebox.showerror("Database Error", str(e))
 
     # Buttons
     btn_search = Button(search_window, text="Search", font=("Arial", 12, "bold"), bg="#21759b", fg="white", width=10, command=do_search)
