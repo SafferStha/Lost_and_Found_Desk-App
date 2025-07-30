@@ -36,10 +36,12 @@ A modern Lost & Found management system built with Python Tkinter. This applicat
 ### Administrative Features
 
 - **Admin Control Panel**: Complete administrative interface with tabbed navigation
-- **User Management**: Edit user accounts, manage permissions, and view user data
+- **User Management**: Edit user accounts, delete users, manage permissions, and view user data
 - **Item Management**: Add lost/found items directly through admin interface
 - **Reports & Statistics**: View comprehensive statistics including total items, active items, and claimed items
 - **Dark Mode Support**: Theme switching available in admin panel
+- **User Type Management**: Distinguish between admin and regular users
+- **Database Oversight**: Complete CRUD operations for all data tables
 
 ### Database Features
 
@@ -48,6 +50,8 @@ A modern Lost & Found management system built with Python Tkinter. This applicat
 - **Data Validation**: Form validation and error handling throughout the application
 - **CRUD Operations**: Complete Create, Read, Update, Delete functionality
 - **Automatic Table Creation**: Database initialization with proper schema setup
+- **User Authentication**: Secure credential storage with role-based access (admin/user)
+- **Phone Number Support**: Complete user profile management including contact information
 
 ### Application Components
 
@@ -89,6 +93,12 @@ A modern Lost & Found management system built with Python Tkinter. This applicat
 - **Modal Dialogs**: Professional popup windows for forms and data entry
 - **Form Validation**: Comprehensive input validation with user-friendly error messages
 - **Responsive Design**: Consistent layout across different window sizes
+- **Modal Window Management**: Prevents multiple instances of the same window
+- **Error Handling**: Robust database error handling throughout the application
+- **Responsive Tables**: Automatic table refresh and data synchronization
+- **Sequential ID Display**: User-friendly ID numbering in table displays
+- **Window Centering**: All windows automatically center on screen
+- **Gradient Backgrounds**: Beautiful gradient effects in login and registration windows
 
 ## Getting Started
 
@@ -132,7 +142,7 @@ python admin_page.py
 
 ### Database Structure
 
-- **Users Table**: Stores user accounts with authentication and profile information
+- **Users Table**: Stores user accounts with authentication and profile information (username, password, full_name, email, phone, user_type)
 - **Lost Items Table**: Records of reported lost items with detailed descriptions
 - **Found Items Table**: Records of submitted found items with location data
 - **Claimed Items Table**: Tracking of successfully reunited items
