@@ -586,9 +586,35 @@ users_action_frame = Frame(users_frame, bg="white", height=80)
 users_action_frame.pack(fill=X, padx=20, pady=10)
 users_action_frame.pack_propagate(False)
 
+
 # Edit User button
 Button(users_action_frame, text="Edit User", font=("Arial", 12, "bold"), bg="#FF9800", 
        fg="white", width=15, height=2, command=edit_user).pack(side=LEFT, padx=10, pady=10)
+
+# Delete User function and button
+def delete_user():
+    selected = users_tree.selection()
+    if not selected:
+        messagebox.showerror("Error", "Please select a user to delete!", parent=root)
+        return
+    item = users_tree.item(selected[0])
+    user_id_val = item['values'][0]
+    user_name = item['values'][1]
+    if not messagebox.askyesno("Confirm Delete", f"Are you sure you want to delete user '{user_name}' (ID: {user_id_val})?", parent=root):
+        return
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM users WHERE id=?", (user_id_val,))
+        conn.commit()
+        conn.close()
+        load_users()
+        messagebox.showinfo("Success", f"User '{user_name}' deleted successfully!", parent=root)
+    except Exception as e:
+        messagebox.showerror("Database Error", str(e), parent=root)
+
+Button(users_action_frame, text="Delete User", font=("Arial", 12, "bold"), bg="#e53935", 
+       fg="white", width=15, height=2, command=delete_user).pack(side=LEFT, padx=10, pady=10)
 
 # Refresh Users button
 Button(users_action_frame, text="Refresh", font=("Arial", 12, "bold"), bg="#2196F3", 

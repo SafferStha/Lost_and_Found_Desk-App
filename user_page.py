@@ -205,7 +205,7 @@ def report_lost_item():
         
         # Basic validation
         if not all([name, category, date, location, desc]):
-            messagebox.showerror("Error", "Please fill all fields!")
+            messagebox.showerror("Error", "Please fill all fields!", parent=lost_window)
             return
         try:
             conn = get_db_connection()
@@ -214,8 +214,8 @@ def report_lost_item():
                 (name, category, date, location, desc, ''))
             conn.commit()
             conn.close()
-            messagebox.showinfo("Success", "Lost item report submitted successfully!")
-            # Clear fields
+            # Show notification, then clear fields and close window only after user clicks OK
+            messagebox.showinfo("Success", "Lost item report submitted successfully!", parent=lost_window)
             item_name.delete(0, END)
             item_category.delete(0, END)
             date_lost.delete(0, END)
@@ -223,7 +223,7 @@ def report_lost_item():
             description.delete("1.0", END)
             on_closing()
         except Exception as e:
-            messagebox.showerror("Database Error", str(e))
+            messagebox.showerror("Database Error", str(e), parent=lost_window)
 
     submit_button = Button(lost_window, text="Submit Report", width=12, font=("Arial", 12), bg="#4CAF50", fg="white", bd=2, relief="raised", command=submit_lost_item)
     submit_button.place(x=200, y=420)
@@ -303,7 +303,7 @@ def report_found_item():
         
         # Basic validation
         if not all([name, category, date, location, desc]):
-            messagebox.showerror("Error", "Please fill all fields!")
+            messagebox.showerror("Error", "Please fill all fields!", parent=found_window)
             return
         
         try:
@@ -313,8 +313,8 @@ def report_found_item():
                 (name, category, date, location, desc, ''))
             conn.commit()
             conn.close()
-            messagebox.showinfo("Success", "Found item report submitted successfully!")
-            # Clear fields
+            # Show notification, then clear fields and close window only after user clicks OK
+            messagebox.showinfo("Success", "Found item report submitted successfully!", parent=found_window)
             item_name.delete(0, END)
             item_category.delete(0, END)
             date_found.delete(0, END)
@@ -322,7 +322,7 @@ def report_found_item():
             description.delete("1.0", END)
             on_closing()
         except Exception as e:
-            messagebox.showerror("Database Error", str(e))
+            messagebox.showerror("Database Error", str(e), parent=found_window)
 
     submit_button = Button(found_window, text="Submit Report", width=12, font=("Arial", 12), 
                           bg="#4CAF50", fg="white", bd=2, relief="raised", command=submit_found_item)
